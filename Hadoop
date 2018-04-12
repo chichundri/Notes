@@ -29,5 +29,12 @@ Oozie
 A service for running and scheduling workflows of Hadoop jobs (including Map-Reduce, Pig, Hive, and Sqoop jobs).
 
 
-
+-- Hadoop Commands --
+hadoop namenode -format
+hdfs dfs -ls /
+move local to hadoop fs - "bin/hadoop fs -get /hdfs/source/path /localfs/destination/path"
+copy to local from hadoop fs - "bin/hadoop fs -copyToLocal /hdfs/source/path /localfs/destination/path"
+remove directory from hdfs - hadoop fs -rm -r -skipTrash /path_to_file/file_name
+content of file in hdfs - hdfs dfs -cat /output/*
+Access the logs - http://localhost:50030/jobtracker.jsp
 
