@@ -1,0 +1,365 @@
+DI/IOC - removes hard coded dependencies and make application loosely coupled and dynamic binding of objects.
+spring module - core,context,aop,dao,jdbc,orm,web module,web mvc
+Aspect - class that implements cross cutting concern ex.tx mananagement,logging
+Advice(method) - action taken for particular join point.methods get executed when specific join point matches with pointcut in app.
+pointcut - is the regular expression that matches with join point to determine whether advice needs to execute or not.
+Join point - specific point in appl such as method execution,exception handling etc
+advice arguement - arguement passed to advice 
+* ApplicationContext implementations are - 
+1. AnnotationConfigApplicationContext - For standalone java applications using annotations based configuration.
+2. ClassPathXmlApplicationContext - For standalone java applications using XML based configuration.
+3. FileSystemXmlApplicationContext - Similar to ClassPathXmlApplicationContext except that the xml configuration file can be loaded 
+   from anywhere in the file system.
+4. AnnotationConfigWebApplicationContext and XmlWebApplicationContext for web applications.
+* Spring Bean - any java class that is initialized by spring IoC container.It's life cycle,bean scope and injecting any required dependencies is 
+  responsibility of IoC.
+* Different ways to configure class as spring Bean-
+1. XML Configuration example - <bean name="myBean" class="com.journaldev.spring.beans.MyBean"></bean>
+2. Java based configuration - @Bean annoation always with @configuration to configure spring bean
+	Example - 
+	@Configuration
+	@ComponentScan(value="com._._._")
+	public class MyConfiguration {
+		@Bean
+		public MyService getService(){
+			return new MyService();
+		}
+	}
+	To get this bean from spring context,use snippet
+	AnnotationConfigApplicationContext ctx = new AnnotationConfigApplicationContext(MyConfiguration.class);
+	MyService service = ctx.getBean(MyService.class);
+3. Annotation Based Configuration - We can also use @Component, @Service, @Repository and @Controller annotations with classes to configure them to be as spring
+	bean.Example-
+	<context:component-scan base-package="com.journaldev.spring" />
+* Scopes of spring bean
+1. Singleton - only one insance of bean is created for each container.This is default scope.do not use with shared variable.
+2. Prototype - new instance will be created every time the bean is requested.
+3. request - same as prototype,used in web appln.New instance of bean is created for every request.
+4. session - New bean instance is created for every session created by container.
+5. global-session -  global-session is something which is connected to Portlet applications. 
+* Auto Wiring - The process of injection spring bean dependencies while initializing it called Spring Bean Wiring.
+* Spring bean lifecycle - 2 callback methods 1) Post initialization 2) pre destruction
+* 4 ways to control lifecycle events 
+1. InitializingBean and DisposableBean interfaces
+2. Aware interfaces
+3. custom init() and destroy() methods in conf. file
+4. @PostConstruct ans @PreDestroy
+* Inner bean - whenever a bean is used for only one particular property, it’s advise to declare it as an inner bean. 
+	public class Customer{
+		private Person person
+		...//setter & getters
+	}
+	public class Person{
+		private String name;
+		priavte String address;
+		private int age;
+		...//getters & setters
+	}
+	Inner bean declaration-
+	<bean id="CustomerBean" class="com.howtodoinjava.common.Customer">
+		<property name="person">
+			<!-- This is inner bean -->
+			<bean class="com.howtodoinjava.common.Person">
+				<property name="name" value="adminis"></property>
+				<property name="address" value="India"></property>
+				<property name="age" value="34"></property>
+			</bean>
+		</property>
+	</bean>
+	
+* spring bean post processor - allows additional processing before and after the bean initialization callback method.bean post processors are used for checking
+	the validity of bean properties or altering bean properties according to certain criteria.
+	Implement BeanPostProcessor interface and it's postProcessBeforeInitialization() and postProcessAfterInitialization() methods.
+* Autowiring
+	1)No - No wiring at all.Bean reference must be defined via ref element.\
+	2)byName - Autowiring by property name will look for bean named exactly the same as property which needs to autowired.
+	3)byType - allows property to be autowired if there is exactly one bean of property type in the container.if there is more than one exception raised.default constructor is must if you have other constructors.
+	4)constructor - analoguous to byType but applies to constructor arguement.
+	5)autodetect - chooses consructor or byType through interospection of bean class.If default constructor is found,byType mode will be applied.
+	
+* How many instances created for singleton bean referring to a session bean/prototype bean?
+	https://stackoverflow.com/questions/25000406/how-many-instances-created-for-singleton-bean-referring-to-a-session-bean-protot
+	Instance of prototype/session scoped bean created only once but if we require different instances of prototype/session we can make use of 
+	1) <aop:scoped-proxy/> 
+		<bean name="singletonBean" class="somepkg.SingletonBean">
+			<property name="someProperty" ref="sessionBean"/>
+		</bean>
+
+		<bean name="sessionBean" class="somepkg.SessionBean" scope="session">
+			<aop:scoped-proxy/>
+		</bean>
+	
+	2)lookup-method-
+		<!-- Lookup way  -->
+		<bean id="requestProcessor" class="com.injection.testing.RequestProcessor" >
+			<lookup-method name="getValidator" bean="validator" />
+		</bean>
+
+		<bean id="validator" class="com.injection.testing.RequestValidator" scope="prototype" />
+		
+* Enabling annotations- To discover @Autowired annotation
+	1)<context:annotation-config /> 2) <bean class ="org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor"/>
+* Resource Interface - for custom resource loader implement ApplicationContextAware or ResourceLoaderAware interface.
+	Register coustomResourceLoader in appln context file as 
+	<bean id="customResourceLoader" class="com.howtodoinjava.demo.CustomResourceLoader" />
+	from appln folder ex. Resource banner = resourceLoader.getResource("file:data.txt");
+	from classpath ex. Resource banner = resourceLoader.getResource("classpath:classpathdata.txt");
+	from filesystem ex. Resource banner = resourceLoader.getResource("file:c:/temp/filesystemdata.txt");
+	from url ex. Resource banner = resourceLoader.getResource("http://howtodoinjava.com/readme.txt");
+* @Required and RequiedAnnotationBeanPostProcessor - RequiredAnnotationBeanPostProcessor is a spring bean post processor that checks if all the bean properties
+	with the @Required annotation have been set.Enable beanpost processor as - 
+	<bean class="org.springframework.beans.factory.annotation.RequiredAnnotationBeanPostProcessor" />
+	Note - This processor can check only if the properties have been set, but can’t check if their value is not null.
+	If any proprty with @Required is not set then BeanInitializationException is raised.
+* @Scheduled - used for task scheduling.we can trigger task by providing following properties.
+	1. FixedRate - makes Spring run the task on periodic intervals even if the last invocation may be still running.
+	2. fixedDelay - specifically controls the next execution time when the last execution finishes.
+	3. cron - is a feature originating from Unix cron utility and has various options based on your requirements.
+	Note - 1.Methods annotated with @Scheduled should not have parameters passed to them.
+		   2.They should not return any values too.
+		   3.If external objects are required,that can be injected by auto wiring rather than passing as parameter.
+* Timer Task - 2 ways to execute timer 
+	1. Configuring method name of timer task bean - 
+* Java based bean configuration - 
+	@Configuration
+	public class AppConfig {
+		@Bean
+		public MyService myService() {
+			return new MyServiceImpl();
+		}
+	}
+	To read annotation based bean conf.
+	ApplicationContext ctx = new AnnotationConfigApplicationContext(AppConfig.class);
+	If we want to use above configuration define following tag in web.xml
+	<context-param>
+        <param-name>contextClass</param-name>
+        <param-value>
+            org.springframework.web.context.support.AnnotationConfigWebApplicationContext
+        </param-value>
+    </context-param>
+	<context-param>
+        <param-name>contextConfigLocation</param-name>
+        <param-value>com.howtodoinjava.AppConfig</param-value>
+    </context-param>
+* Annotation injection is performed before XML injection, thus the latter configuration will override the former for properties wired through both approaches.
+* Five type of advice
+	1. Before advice: Advice that executes before a join point, but which does not have the ability to prevent execution flow proceeding to the join 
+		point(unless it throws an exception).
+    2. After returning advice: Advice to be executed after a join point completes normally: for example, if a method returns without throwing an exception.
+    3. After throwing advice: Advice to be executed if a method exits by throwing an exception.
+    4. After advice: Advice to be executed regardless of the means by which a join point exits (normal or exceptional return).
+    5. Around advice: Advice that surrounds a join point such as a method invocation. This is the most powerful kind of advice. Around advice can perform custom behavior before 
+    and after the method invocation. It is also responsible for choosing whether to proceed to the join point or to
+    shortcut the advised method execution by returning its own return value or throwing an exception.
+    
+    
+    
+  --------------------------------------------------------------------------------
+  --- MVC Controllers ----
+1) Using @Controller stereotype - 
+	Use <annotation-driven /> in mapping,scan for annotaton packages <context:component-scan base-package="...">
+	we can map multiple request using e.g @RequestMapping("/saveUser")
+2) Using implementing Controller interface - 	
+	public class MainController implements Controller {
+    @Override
+    public ModelAndView handleRequest(HttpServletRequest request,
+            HttpServletResponse response) throws Exception {
+			System.out.println("Welcome main");
+			return new ModelAndView("main");
+		}
+	}
+	* must override handleRequest()
+	* Controller Class(MainController) must configure in spring xml
+	* Multiple request can't handle.
+3) Extending AbstractController Class - 
+	* controls HTTP methods(get,post,put..),session,content Caching etc
+	e.g.
+	public class BigController extends AbstractController {
+    @Override
+    protected ModelAndView handleRequestInternal(HttpServletRequest request,
+            HttpServletResponse response) throws Exception {
+	        System.out.println("You're big!");
+	        return new ModelAndView("big");
+    	}
+	}
+	* This creates a single-action controller with configurations regarding supported methods, session and caching can be specified in the bean declaration of the controller.e.g.
+	<bean name="/big" class="net.codejava.spring.BigController">
+		<property name="supportedMethods" value="POST"/>
+	</bean>
+	* This configuration indicates that the only POST method is supported by this controller’s hander method
+	* Other configuration properties are - requireSession,cacheSeconds,synchronizeOnSession
+	* Spring MVC also offers several controller classes which are designed for specific purposes: AbstractUrlViewController, MultiActionController, ParameterizableViewController, ServletForwardingController, ServletWrappingController, UrlFilenameViewController.
+4) Specifying URL Mapping for Handler Method - 
+	* @RequestMapping annotation is used for specifying URL mapping.
+	* When this annotation is used at class level, the class becomes a    		single-action controller e.g.
+	@Controller
+	@RequestMapping("/hello")
+	public class SingleActionController {
+		@RequestMapping(method = RequestMethod.GET)
+		public String sayHello() {
+			return "hello";
+		}
+	}
+	* When the @RequestMapping annotation is used at method level, you can have a multi-action controller
+5) Specifying HTTP Request Methods for Handler Method - 
+	Example - handle the same url but with different method
+	@Controller
+	public class LoginController {
+		@RequestMapping(value = "/login", method = RequestMethod.GET)
+		public String viewLogin() {
+			return "LoginForm";
+		}
+		@RequestMapping(value = "/login", method = RequestMethod.POST)
+		public String doLogin() {
+			return "Home";
+		}
+	}
+6) Mapping Request Parameters to Handler Method - 
+	@RequestMapping(value = "/login", method = RequestMethod.POST)
+	public String doLogin(@RequestParam String username,@RequestParam String password) {
+		///code ...
+	}
+	* type conversion done automatically
+	* if parameter name is different than variable name,specify actual name as
+		@RequestParam("SSN") int securityNumber
+	* required attribute for validations
+		@RequestParam(required = false) String country
+	* defaultValue attribute
+		@RequestParam(defaultValue = "18") int age
+	* Spring also allows us to access all parameters as a Map object if the method parameter is of type Map<String, String>.
+		Example - doLogin(@RequestParam Map<String, String> params)
+7) Returning Model And View - After business logic is processed, a handler method should return a view which is then resolved by the Spring’s dispatcher servlet. Spring allows us to return either a String or a ModelAndView object from the hander method
+	example - @RequestMapping(value = "/login", method = RequestMethod.GET)
+				public String viewLogin() {
+					return "LoginForm";
+				}
+8) Putting Objects into the Model - 
+	modelView.addObject("listUser", listUser);
+	modelView.addObject("siteName", new String("CodeJava.net"));
+	modelView.addObject("users", 1200000);
+	modified with map - 
+	@RequestMapping(method = RequestMethod.GET)
+	public String viewStats(Map<String, Object> model) {
+	    model.put("siteName", "CodeJava.net");
+	    model.put("pageviews", 320000);
+	    return "Stats";
+	}
+9) Redirection in Handler Method - redirect:/viewname 
+	// check login status....
+	if (!isLogin) {
+	    return new ModelAndView("redirect:/login");
+	}
+10) Handling Form Submission and Form Validation - 
+	Spring makes it easy to handle form submission, by providing the @ModelAttribute annotation for binding form fields to a form backing object, and the BindingResult interface for validating form fields. The following code snippet shows a typical handler method that is responsible for handling and validating form data:
+	Example - 
+	@Controller
+	public class RegistrationController {
+	    @RequestMapping(value = "/doRegister", method = RequestMethod.POST)
+	    public String doRegister(
+	        @ModelAttribute("userForm") User user, BindingResult bindingResult) {
+	        if (bindingResult.hasErrors()) {
+	            // form validation error
+	        } else {
+	            // form input is OK
+	        }
+	        // process registration...
+	        return "Success";
+	    }
+	}
+11) Handling File Upload - 
+	Example - 
+	@RequestMapping(value = "/uploadFiles", method = RequestMethod.POST)
+	public String handleFileUpload(
+	        @RequestParam CommonsMultipartFile[] fileUpload) throws Exception {
+	    for (CommonsMultipartFile aFile : fileUpload){
+	        // stores the uploaded file
+	        aFile.transferTo(new File(aFile.getOriginalFilename()));
+	    }
+	    return "Success";
+	}
+12) Autowiring Business Classes in the Controller - 
+	Example
+	@Controller
+	public class UserController {
+	    @Autowired
+	    private UserDAO userDAO;
+	    public String listUser() {
+	        // handler method to list all users
+	        userDAO.list();
+	    }
+	    public String saveUser(User user) {
+	        // handler method to save/update a user
+	        userDAO.save(user);
+	    }
+	    public String deleteUser(User user) {
+	        // handler method to delete a user
+	        userDAO.delete(user);
+	    }
+	    public String getUser(int userId) {
+	        // handler method to get a user
+	        userDAO.get(userId);
+	    }
+	}
+13) Accessing HttpServletRequest and HttpServletResponse - 
+	Example - 
+	@RequestMapping("/download")
+	public String doDownloadFile(
+			HttpServletRequest request, HttpServletResponse response) {
+			// ....
+			}
+
+14) Following the Single Responsibility Principle - 
+	A controller class should not execute business logic
+	
+<form:form action="/form" modelattribute="subscriber">
+</form:form>
+
+ContentNegotiatingViewResolver does not perform the view resolution itself but instead delegates to a list of view resolvers that you specify through the bean property ViewResolvers.
+
+<property name="defaultViews">
+	<list>
+		<bean class="org.springframework.web.servlet.view.json.MappingJackson2JsonView" />
+	</list>
+</property>
+
+
+* static resource handling in spring
+1)  
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<html>
+<head>
+    <link href="<c:url value="/resources/myCss.css" />" rel="stylesheet">
+</head>
+</html>
+
+2) extend WebMvcConfigurerAdapter
+	@Override
+	public void addResourceHandlers(ResourceHandlerRegistry registry) {
+       registry.addResourceHandler("/css/**").addResourceLocations("/css/").setCachePeriod(31556926);
+       registry.addResourceHandler("/img/**").addResourceLocations("/img/").setCachePeriod(31556926);
+       registry.addResourceHandler("/js/**").addResourceLocations("/js/").setCachePeriod(31556926);
+    }
+	
+
+* @PropertySource("classpath:datasource-cfg.properties") - read databse configuraton property file from classpath
+
+----------- JSF ---------------
+bean scopes in jsf
+@RequestScoped
+@ViewScoped
+@FlowScoped - removed later
+@SessionScoped
+@ApplicationScoped
+
+managed property of bean can be injected into another bean 
+e.g   
+	@ManagedProperty(value="#{message}")
+	
+	1) Restore view phase
+	2) apply request values phase
+	3) process validation phase
+	4) update model values phase
+	5) invoke application phase
+	6) render response
+	
+	
