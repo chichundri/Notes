@@ -343,6 +343,85 @@ ContentNegotiatingViewResolver does not perform the view resolution itself but i
 
 * @PropertySource("classpath:datasource-cfg.properties") - read databse configuraton property file from classpath
 
+--------------------------------------------------
+What is Actuator in Spring Boot?
+pring Boot Actuator is a sub-project of Spring Boot. It adds several production grade services to your application with little effort on your part. 
+There are also has many features added to your application out-of-the-box for managing the service in a production (or other) environment. 
+They’re mainly used to expose different types of information about the running application – health, metrics, info, dump, env etc.
+
+**The ApplicationContext is where your Spring beans live. The purpose of the ContextLoaderListener is two-fold:
+1.to tie the lifecycle of the ApplicationContext to the lifecycle of the ServletContext and
+2.to automate the creation of the ApplicationContext, so you don't have to write explicit code to do create it - it's a convenience function.
+Another convenient thing about the ContextLoaderListener is that it creates a WebApplicationContext and WebApplicationContext provides access to the ServletContext via ServletContextAware beans and the getServletContext method.
+
+*default static resources are served from folders -/static,/public,/resources,/META-INF/resources.
+*Spring MVC auto-configuration benifits - 
+	
+1.Inclusion of ContentNegotiatingViewResolver and BeanNameViewResolver beans.
+2.Support for serving static resources, including support for WebJars. By default Spring Boot will serve static content from a directory called /static (or
+	/public or /resources or /META-INF/resources) in the classpath or from the root of the ServletContext. It uses the ResourceHttpRequestHandler from Spring MVC
+	so you can modify that behavior by adding your own WebMvcConfigurerAdapter and overriding the addResourceHandlers method. Any resources with a path in
+	/webjars/** will be served from jar files if they are packaged in the Webjars format.
+3. Automatic registration of Converter, GenericConverter, Formatter beans.
+4. Support for HttpMessageConverters. Spring MVC uses the HttpMessageConverter interface to convert HTTP requests and responses.
+5. Automatic registration of MessageCodesResolver. Spring MVC has a strategy for generating error codes for rendering error messages from binding errors:
+	MessageCodesResolver
+6. Static index.html support. If you do this the default welcome page detection will switch to your custom locations, so if there is an index.html in any of 
+	your locations on startup, it will be the home page of the application.
+7. Custom Favicon support.
+8. Automatic use of a ConfigurableWebBindingInitializer bean. Spring MVC uses a WebBindingInitializer to initialize a WebDataBinder for a particular request.
+	If you create your own ConfigurableWebBindingInitializer @Bean, Spring Boot will automatically configure Spring MVC to use it.
+9. When you’re using one of these templating engines (thymeleaf, freemarker, velocity, Groovy etc.) with the default configuration, your templates will be
+	picked up automatically from src/main/resources/templates.
+10.Error Handling Spring Boot provides an /error mapping by default that handles all errors in a sensible way, and it is registered as a ‘global’ error page in
+	the servlet container. For machine clients it will produce a JSON response with details of the error, the HTTP status and the exception message. For
+	browser clients there is a ‘whitelabel’ error view that renders the same data in HTML format. If you want to display a custom HTML error page for a given
+	status code, you add a file to an /error folder. Error pages can either be static HTML (i.e. added under any of the static resource folders) or built using
+	templates. The name of the file should be the exact status code or a series mask.
+11.Spring Boot includes support for embedded Tomcat, Jetty, and Undertow servers. Most developers will simply use the appropriate ‘Starter’ to obtain a fully
+	configured instance. By default the embedded server will listen for HTTP requests on port 8080.
+12.Any Servlet, Filter or Servlet *Listener instance that is a Spring bean will be registered with the embedded container. This can be particularly convenient
+	if you want to refer to a value from your application.properties during configuration.
+13.By default, if the context contains only a single Servlet it will be mapped to /. In the case of multiple Servlet beans the bean name will be used as a path
+	prefix. Filters will map to /*.
+14.EmbeddedWebApplicationContext The EmbeddedWebApplicationContext is a special type of WebApplicationContext that bootstraps itself by searching for a single
+	EmbeddedServletContainerFactory bean.
+---
+customizing spring boot auto configuration-
+Two ways to influence auto configuration - 1.explicit configuration overrides and 2.fine-grained configuration with properties. 
+2.Custom security configuration in the application- write a class that extends WebSecurityConfigurerAdapter
+@Configuration
+@EnableWebSecurity
+public class SecurityConfig extends WebSecurityConfigurerAdapter {
+    @Autowired
+    UserRepository userRepository;
+    
+    @Override
+    protected void configure(HttpSecurity http) throws Exception {
+        http
+        .authorizeRequests()
+        .antMatchers("/").access("hasRole(ADMIN)")
+        .antMatchers("/**").permitAll()
+        .and()
+        .formLogin()
+        .loginPage("/login")
+        .failureUrl("/login?error=true");
+  }
+        @Override
+       protected void configure(
+          AuthenticationManagerBuilder auth) throws Exception {
+     auth
+       .userDetailsService(new UserDetailsService() {
+       @Override
+       public UserDetails loadUserByUsername(String username)
+                  throws UsernameNotFoundException {
+           return userRepository.findUserName(username);
+       }
+    });
+  }
+}
+
+
 ----------- JSF ---------------
 bean scopes in jsf
 @RequestScoped
@@ -361,5 +440,6 @@ e.g
 	4) update model values phase
 	5) invoke application phase
 	6) render response
+	
 	
 	
