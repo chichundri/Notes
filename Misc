@@ -1,0 +1,213 @@
+
+github 
+u - goks.nagare@gmail.com
+
+process running on port
+netstat -a -n -o | find "123456"
+to kill process
+Taskkill /PID 26356 /F
+To check port open or not - netstat -aon | more
+-- oracle --
+port changed to 3010
+Exec DBMS_XDB.SETHTTPPORT(3010);
+
+run jenkins - 
+java -jar jenkins-2.38.war --ajp13Port=-1 --httpPort=9090
+
+https://updates.jenkins-ci.org/download/war/
+Jenkins URL:http://localhost:9090/
+SonarQube URL:http://localhost:9000/projects
+
+service and factory in angular?
+
+Build -> Analysis properties
+#Required Metadata
+sonar.projectKey=gokul
+sonar.projectName=gokul
+sonar.projectVersion=1.0
+#Path to source dir
+sonar.sources=C:/Users/xxx/.jenkins/workspace/$JOB_NAME/src
+
+SELECT User FROM mysql.user;
+select User,Host from mysql.user;
+describe sonar.issues;
+SHOW CREATE TABLE issues;
+select * from mysql.user;
+SHOW GRANTS FOR 'root'@'localhost';
+GRANT ALL PRIVILEGES ON sonar.* TO 'sonar'@'localhost' WITH GRANT OPTION;
+grant all privileges on sonar.* to 'sonar'@'%' identified by 'sonar';
+flush privileges;
+
+DROP USER sonar@localhost;
+
+CREATE USER 'sonar'@'localhost' IDENTIFIED BY 'sonar';
+GRANT ALL ON *.* TO 'sonar'@'localhost';
+
+maven eclipse project - mvn eclipse:eclipse
+to run - mvn clean jetty:run
+mvn spring-boot:run
+
+http://websystique.com/java/testing/testng-mockito-example-stubbing-void-methods/
+
+owning side has @joinColumn annotation
+In Spring MVC uses a layered architecture: controllers -> services -> repositories -> models -> database.
+
+https://www.w3schools.com/howto/howto_css_dropdown.asp
+mvn eclipse:clean
+mvn clean install
+mvn eclipse:eclipse
+
+connect / as sysdba
+ALTER USER system IDENTIFIED BY "system";
+
+-- websphere --
+<dependency>
+	<groupId>com.ibm.websphere.appserver.runtime</groupId>
+	<artifactId>wlp-webProfile7</artifactId>
+	<version>17.0.0.1</version>
+  </dependency>
+  
+--- Spring security ---
+https://hellokoding.com/registration-and-login-example-with-spring-security-spring-boot-spring-data-jpa-hsql-jsp/
+https://github.com/hellokoding/registration-login-spring-hsql
+https://github.com/spring-projects/spring-mvc-showcase
+https://github.com/spring-projects
+
+ ----- java based configuration -----
+
+@Configuration
+@ComponentScan(basePackages = "com.howtodoinjava")
+public class AppConfig 
+{
+    @Bean
+    public MyService myService() {
+        return new MyServiceImpl();
+    }
+}
+
+public static void main(String[] args) {
+    ApplicationContext ctx = new AnnotationConfigApplicationContext(AppConfig.class);
+    MyService myService = ctx.getBean(MyService.class);
+    myService.doStuff();
+}
+
+--- web.xml ---
+<web-app>
+    <!-- Configure ContextLoaderListener to use AnnotationConfigWebApplicationContext
+        instead of the default XmlWebApplicationContext -->
+    <context-param>
+        <param-name>contextClass</param-name>
+        <param-value>
+            org.springframework.web.context.support.AnnotationConfigWebApplicationContext
+        </param-value>
+    </context-param>
+ 
+    <!-- Configuration locations must consist of one or more comma- or space-delimited
+        fully-qualified @Configuration classes. Fully-qualified packages may also be
+        specified for component-scanning -->
+    <context-param>
+        <param-name>contextConfigLocation</param-name>
+        <param-value>com.howtodoinjava.AppConfig</param-value>
+    </context-param>
+ 
+    <!-- Bootstrap the root application context as usual using ContextLoaderListener -->
+    <listener>
+        <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+    </listener>
+ 
+    <!-- Declare a Spring MVC DispatcherServlet as usual -->
+    <servlet>
+        <servlet-name>dispatcher</servlet-name>
+        <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+        <!-- Configure DispatcherServlet to use AnnotationConfigWebApplicationContext
+            instead of the default XmlWebApplicationContext -->
+        <init-param>
+            <param-name>contextClass</param-name>
+            <param-value>
+                org.springframework.web.context.support.AnnotationConfigWebApplicationContext
+            </param-value>
+        </init-param>
+        <!-- Again, config locations must consist of one or more comma- or space-delimited
+            and fully-qualified @Configuration classes -->
+        <init-param>
+            <param-name>contextConfigLocation</param-name>
+            <param-value>com.howtodoinjava.web.MvcConfig</param-value>
+        </init-param>
+    </servlet>
+ 
+    <!-- map all requests for /app/* to the dispatcher servlet -->
+    <servlet-mapping>
+        <servlet-name>dispatcher</servlet-name>
+        <url-pattern>/app/*</url-pattern>
+    </servlet-mapping>
+</web-app>
+
+* Annotation injection is performed before XML injection
+
+http://findbugs.cs.umd.edu/eclipse
+JavaFx - http://download.eclipse.org/efxclipse/updates-released/2.4.0/site
+
+https://unifiedportal-emp.epfindia.gov.in/epfo/
+
+remove folder - 'rm -rf foldername'
+
+angular--
+emmmet 
+augury
+ng serve not worrking  - npm install --save-dev @angular/cli@latest
+component communication in ng @Input,@Output
+View encapsulation
+local references for before submit access 
+local ref by method and ViewChild.this pass the value to DOM/component from template
+
+
+added and corrected <vmArg>-Djavax.xml.accessExternalSchema=all</vmArg> in fong-core,pom.xml
+<!-- Needed with JAXP 1.5 added by offshore team-->
+<vmArgs>
+	<vmArg>-Djavax.xml.accessExternalSchema=all</vmArg>
+</vmArgs>
+
+http://pacproxy.vw.vwg/pac/vw-intproxy.pac
+http://tmgate.techm/wpad.dat
+
+look up method vs aop proxy
+
+var data = JSON.stringify(jQuery(formId).serialize());
+	
+	$.ajax({ 
+	    url: url,    
+	    type: "POST",
+	    data:$(formId).serializeObject(),
+	    dataType : "json",
+	    success: function(respose) {
+	    	disableLoadingImage();
+	    	 if(respose.status == 'error') {
+				 showAjaxResponseMessage(respose);
+			  } else {
+				 callback(respose);
+				 showAjaxResponseMessage(respose);
+			  }
+	    },
+	    error: function(){
+			   console.log('error');
+		}
+	});
+$.fn.serializeObject = function()
+{
+   var o = {};
+   var a = this.serializeArray();
+   $.each(a, function() {
+       if (o[this.name]) {
+           if (!o[this.name].push) {
+               o[this.name] = [o[this.name]];
+           }
+           o[this.name].push(this.value || '');
+       } else {
+           o[this.name] = this.value || '';
+       }
+   });
+   return o;
+};
+
+
+
