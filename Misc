@@ -1,6 +1,5 @@
 
 github 
-u - goks.nagare@gmail.com
 
 process running on port
 netstat -a -n -o | find "123456"
@@ -166,9 +165,6 @@ added and corrected <vmArg>-Djavax.xml.accessExternalSchema=all</vmArg> in fong-
 <vmArgs>
 	<vmArg>-Djavax.xml.accessExternalSchema=all</vmArg>
 </vmArgs>
-
-http://pacproxy.vw.vwg/pac/vw-intproxy.pac
-http://tmgate.techm/wpad.dat
 
 look up method vs aop proxy
 
