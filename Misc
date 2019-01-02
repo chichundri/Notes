@@ -1,6 +1,10 @@
 
 github 
 
+https://github.com/jmbataller/spring-boot-soap-webservice-sample
+https://github.com/in28minutes/getting-started-in-5-steps/tree/master/zzz-soap-web-services-in-10-steps
+https://github.com/harismuneer/Flight-Booking-System-JavaServlets_App
+
 process running on port
 netstat -a -n -o | find "123456"
 to kill process
