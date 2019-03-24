@@ -9,6 +9,16 @@ SOAP
 https://zoltanaltfatter.com/2016/04/30/soap-over-https-with-client-certificate-authentication/
 https://github.com/altfatterz/spring-ws-with-keystore
 
+Linux 
+/etc/init.d
+services running - service sshd status
+stop service  - service sshd stop 
+start - service sshd start
+disk file size - df
+
+
+
+
 process running on port
 netstat -a -n -o | find "123456"
 to kill process
