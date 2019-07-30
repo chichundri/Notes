@@ -1,0 +1,43 @@
+#Kubernetes
+Single pod can have single/multiple containers
+#container - package your application and isolate from host. 
+  e.g google kubernetes,docker container.
+#kubernetes - 
+  1.  open source ___container management_ tool which automates container deployment,container scaling and load balancing.
+  2.  developed by Google in golang
+  3.  can group 'n' no. of group in single unit.
+  4.  manages multiple docker containers
+
+#Features
+  1.  Binpackaging.
+  2.  service discovery & load balancing.
+  3.  storage orchestration
+  4.  self healing
+  5.  batch execution
+  6.  secret & configuration management
+  7.  horizontal scaling
+  8.  automatic rollout & rolebacks
+  9.  Configuration management
+
+Kubernetes is not
+  -Docker, Docker is containerization platform and kubernetes is container management platform. Docker swarm does container management
+    similar to kubernetes.
+Kubernetes is 
+  -container orchestration and nothing but
+  -Robust and reliable.
+  -best solution for scaling up containers
+  -backed by huge community.
+
+#Kubernete vs docker swarm
+  1.  kubernetes installation and conf. is complicated than docker swarm
+  2.  kubernete GUI available,docker swarm GUI not available.
+  3.  K8S scaling up is slow but gurantees stronger cluster state,where as docker swarm is faster but cluster strenth is not robust.
+  4.  K8S load balancing is manual, where is load balancing in DS is prebuit.
+  5.  Data volumes cannot shared outside POD,where as it is possible in Docker swarm 
+
+One pod can run multiple container in kubernetes.
+
+#Working of k8s- 
+kubernetes master - controls the cluster and manages the nodes in it.
+Nodes - host the container inside them, containers are inside separate POD's
+POD - logical collection of containers which needs to interact with each other for an application.
