@@ -16,3 +16,17 @@
 16. 
 
 
+======================================================
+Shell Scripting
+ksh - korn shell
+bash - bourne again shell
+sh - bourne shell
+
+#!/bin/bash - bash is in bin folder
+dd - to delete line
+# - comment
+echo - print
+chmod +x "file_name" or chmod 755 "file_name" or chmod +x *
+ls -l
+
+
