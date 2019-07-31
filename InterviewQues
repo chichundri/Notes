@@ -36,7 +36,42 @@
               dynamic.setLoadOnStartup(1);  
          }  
         }
-22.         
+22. How to achieve thread safety in java?
+    a) Stateless Implementation - Method should neither relies on external state nor maintain state at all.Declare all variiables
+    in method only.
+        example - factorial program
+    b) Immutable class
+    c) Thread local fields - we can create thread-safe classes that don’t share state between threads by making their fields 
+        thread-local.
+        public class ThreadA extends Thread {
+            private final List<Integer> numbers = Arrays.asList(1, 2, 3, 4, 5, 6);
+            @Override
+            public void run() {
+                numbers.forEach(System.out::println);
+            }
+        }
+    d) Synchronized collections - Collections.synchronizedCollection(new ArrayList<>());
+    e) Concurrent Collections - Map<String,String> concurrentMap = new ConcurrentHashMap<>();
+    f) Atomic objects - AtomicInteger, AtomicLong, AtomicBoolean, and AtomicReference
+    g) Synchronized methods
+    h) Synchronized blocks
+    i) volatile fileld 
+    j) Extrinsic locking - it uses an external entity to enforce exclusive access to the resource. synchronized methods and blocks
+    rely on the 
+                           this reference.
+        Example - 
+            public class ExtrinsicLockCounter {
+                private int counter = 0;
+                private final Object lock = new Object();
+                public void incrementCounter() {
+                    synchronized(lock) {
+                        counter += 1;
+                    }
+                }
+                // standard getter
+            }
+    k) Reentrant lock - preventing queued threads from suffering some types of resource starvation
+    l) Read/Write lock
     
 
 
