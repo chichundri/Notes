@@ -72,6 +72,13 @@
             }
     k) Reentrant lock - preventing queued threads from suffering some types of resource starvation
     l) Read/Write lock
+23) RequestParam vs Pathvariable?
+    @RequestParam - used to request parameter from URL.Below date is RequestParam
+    http://localhost:8080/shop/order/{orderId}/receipts?date=12-05-2017
+    @PathVariable - used to extract value from URI.Above exmaple orderId is pathvariable
+    Jersey annotations - PathParam & QueryParam
+24) Encapsulation - restricting direct access to variables
+25) Abstraction - hiding internal implementation.
     
 
 
