@@ -104,13 +104,13 @@ Following are the grant types according to OAuth2 specification-
 5.  Refresh token grant
 
 Oauth consists of following actors - 
-1.  Resource owners (User) - An entity capable of granting access to a protected resource. When the resource owner is a person, it is
-    referred to as an end-user.
+1.  Resource owners (User) - An entity capable of granting access to a protected resource. When the resource 
+    owner is a person, it is referred to as an end-user.
 2.  Client Application - The machine that needs to be authenticated.
-3.  Authorization Server - The server issuing access tokens to the client after successfully authenticating the resource owner and 
-    obtaining authorization.
-4.  Resource Server - The resource server is the OAuth 2.0 term for your API server. The resource server handles authenticated requests   
-    after the application has obtained an access token.
+3.  Authorization Server - The server issuing access tokens to the client after successfully authenticating the 
+    resource owner and obtaining authorization.
+4.  Resource Server - The resource server is the OAuth 2.0 term for your API server. The resource server handles
+    authenticated requests after the application has obtained an access token.
     
     
     
