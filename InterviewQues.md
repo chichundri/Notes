@@ -59,8 +59,7 @@
     h) Synchronized blocks
     i) volatile fileld 
     j) Extrinsic locking - it uses an external entity to enforce exclusive access to the resource. synchronized methods and blocks
-    rely on the 
-                           this reference.
+    rely on the this reference.
         Example - 
             public class ExtrinsicLockCounter {
                 private int counter = 0;
@@ -201,7 +200,119 @@
     .filter(age -> age < 25)
     .reduce(0, Integer::sum);
 
-45) 
+45) sort arraylist and print using java8 
+    arrayList.sort((p1, p2) -> p1.compareTo(p2));
+    arrayList.forEach(System.out::print);
+46) How to define inheritance in spring configuration file?
+    <bean id="BaseCustomerMalaysia" class="com.mkyong.common.Customer">
+      <property name="country" value="Malaysia" />
+    </bean>
+    <bean id="CustomerBean" parent="BaseCustomerMalaysia">
+      <property name="action" value="buy" />
+      <property name="type" value="1" />
+    </bean>
+    Here parent class is BaseCustomerMalaysia child class is CustomerBean
+47) How to resolve cyclic/circular dependency in spring?
+    Bean A → Bean B → Bean A
+    when having a circular dependency, Spring cannot decide which of the beans should be created first, since they depend 
+    on one another. In these cases, Spring will raise a BeanCurrentlyInCreationException.It only happens in case of constructor injection.
+    workarounds - 
+    1.  Redesign
+    2.  @Lazy - proxy object created and inserted 
+    3.  use Setter/Field Injection
+
+48) How to create role based method access?
+    * enable global method security
+      @Configuration
+      @EnableGlobalMethodSecurity(prePostEnabled = true, securedEnabled = true, jsr250Enabled = true)
+      public class MethodSecurityConfig extends GlobalMethodSecurityConfiguration {
+      }
+    * Use @Secured annotation to secure the method
+      @Secured("ROLE_VIEWER")
+      public String getUsername() {
+        //...
+      }
+    * Using @RoleAllowed Annotation - this is equal to @Secured
+      @RolesAllowed("ROLE_VIEWER")
+      public String getUsername2() {
+          //...
+      }
+    * Using @PreAuthorize and @PostAuthorize Annotations
+      @PreAuthorize("hasRole('ROLE_VIEWER') or hasRole('ROLE_EDITOR')")
+      public boolean isValidUsername3(String username) {
+          //...
+      }
+    * Security Annotation at the Class Level
+      @PreAuthorize("hasRole('ROLE_ADMIN')")
+      public class SystemService {
+        //...
+      }
+
+49) Exception hnadling in spring?
+    * Using HTTP Status Codes
+      @ResponseStatus(value=HttpStatus.NOT_FOUND, reason="No such Order")  // 404
+      public class OrderNotFoundException extends RuntimeException {
+         // ...
+      }
+    * Controller Based Exception Handling
+      @Controller
+      public class ExceptionHandlingController {
+        //@RequestHandler methods
+        ...
+        // Exception handling methods
+        // Convert a predefined exception to an HTTP Status code
+        @ResponseStatus(value=HttpStatus.CONFLICT,
+                        reason="Data integrity violation")  // 409
+        @ExceptionHandler(DataIntegrityViolationException.class)
+        public void conflict() {
+          // Nothing to do
+        }
+        // Specify name of a specific view that will be used to display the error:
+        @ExceptionHandler({SQLException.class,DataAccessException.class})
+        public String databaseError() {
+          // Nothing to do.  Returns the logical view name of an error page, passed
+          // to the view-resolver(s) in usual way.
+          // Note that the exception is NOT available to this view (it is not added
+          // to the model) but see "Extending ExceptionHandlerExceptionResolver"
+          // below.
+          return "databaseError";
+        }
+        // Total control - setup a model and return the view name yourself. Or
+        // consider subclassing ExceptionHandlerExceptionResolver (see below).
+        @ExceptionHandler(Exception.class)
+        public ModelAndView handleError(HttpServletRequest req, Exception ex) {
+          logger.error("Request: " + req.getRequestURL() + " raised " + ex);
+          ModelAndView mav = new ModelAndView();
+          mav.addObject("exception", ex);
+          mav.addObject("url", req.getRequestURL());
+          mav.setViewName("error");
+          return mav;
+        }
+      }
+    * Global Exception Handling
+      @ControllerAdvice
+      class GlobalDefaultExceptionHandler {
+        public static final String DEFAULT_ERROR_VIEW = "error";
+        @ExceptionHandler(value = Exception.class)
+        public ModelAndView
+        defaultErrorHandler(HttpServletRequest req, Exception e) throws Exception {
+          // If the exception is annotated with @ResponseStatus rethrow it and let
+          // the framework handle it - like the OrderNotFoundException example
+          // at the start of this post.
+          // AnnotationUtils is a Spring Framework utility class.
+          if (AnnotationUtils.findAnnotation
+                      (e.getClass(), ResponseStatus.class) != null)
+            throw e;
+          // Otherwise setup and send the user to a default error-view.
+          ModelAndView mav = new ModelAndView();
+          mav.addObject("exception", e);
+          mav.addObject("url", req.getRequestURL());
+          mav.setViewName(DEFAULT_ERROR_VIEW);
+          return mav;
+        }
+      }
+
+
 
 
 
