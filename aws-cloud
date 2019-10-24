@@ -1,0 +1,54 @@
+*AWS Solution architect
+
+On premise setup disadvantages
+1. Maintence of server
+2. Increase wxpenditure
+3. Data privacy and security
+4. Scalbility and flexibility
+
+Cloud computing - technology where resource is provided as service to user.
+cloud provider - aws, azure, google cloud, alibaba, IBM, VMWare, Salesforce
+AWS Job trends - 
+1. AWS SysOps administrator
+2. cloud developer
+3. AWS solution architecture
+4. cloud software engineer
+
+Service domains in AWS
+1. Compute - servers, workloads management
+2. Storage - Binary files/images/audios/videos
+3. Database - textual data/Non binary/structured data
+4. Security - security to servers
+5. Management - Monitoring
+5. Customer Engagement - sending email/notifications
+6. App integration - Job queue
+-------------------------------
+* Compute -
+1. AWS EC2 - Integral part of aws eco system. enables on demand scalable computing capacity. fresh server machine. Single or multiple instances. Increase/decrease size. It is like IaaS. EC2 instance do not have restrictions, you can make it as DB server/app server etc.Raw server can make anything.
+2. Elastic beanstalk - advance to ec2. It is web application server.It is like PaaS. Automated version of ec2. only used to deploy web service.
+3. AWS Lambda - is a compute service that lets you run code without provisioning or managing server. Automated/advanced version of ec2.restriction - you cannot deploy website/host application.used only for backend processing.ex files storing with compression. Data transformation. It takes a multiple job and execute on multiple server
+4. AWS Loadbalancer - distributes incoming application or network traffic across multiple targets such as amazon ec2 instances, containers, multiple IP addresses, multiple availability zones. 
+5. AWS ECR(Elastic Container Registry) - is a fully managed docker container registry that makes it easy for developers to manage, store and deploy docker container images.
+6. AWS ECS(Elastic Container Service) - is a highly scalable, high performance container orchestration that supports docker containers and allows you to easily run and scale containerized applications in AWS.
+7. Autoscaling - monotors application and automatically adjusts the capacity to maintain steady, predictable performance at lowesr possible cost. It comes with load balancer
+
+aws.amazon.com
+
+* Storage - 
+1. Amazon s3 - Object storage service that offers industry-leading scalability, data availability, security and performance.
+2. Amazon glacier - secure, durable and extremely low cost cloud storage service for data archieving and long term backup. cheap than S3. backup server. time to retrieve object is more than s3. 
+3. Amazon Elastic file system(EFS) - provides a simple, scalable, elastic file system for linus based workloads for use with aws cloud services and on-premise resources.
+4. AWS Storage gateway - 
+
+
+
+
+
+
+
+
+
+
+
+
+
