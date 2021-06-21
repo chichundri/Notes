@@ -421,6 +421,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
   }
 }
 
+15. What is circular dependency?
+16. Transactions in spring?
+17. SSO vs OAuth? (https://lahirukasun666.medium.com/single-sign-on-sso-with-spring-boot-37fd7203240f)
+18. Multitinancy? (https://medium.com/deviniti-technology-driven-blog/implementing-multitenancy-architecture-spring-boot-jpa-hibernate-flyway-8fb19b312a10)
+
+
 
 ----------- JSF ---------------
 bean scopes in jsf
