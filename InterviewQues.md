@@ -119,24 +119,28 @@
     Prefer LinkedList for random middle insertion
 35. singleton pattern?
     https://dzone.com/articles/all-about-the-singleton
-    ```
-    public final class Singleton {
-    private static volatile Singleton instance = null;
-    private Singleton() {
-    }
+    1. Eager Initialization
+    2. Static Block Initialization
+    3. Lazy Initialization
+    4. Thread-Safe Singletons
+    5. Double-Checked Locking
+    6. Bill Pugh Solution
+        ```
+        public class BillPughSingleton {
+            private BillPughSingleton(){}
+            private static class SingletonHelper{
+                private static final BillPughSingleton INSTANCE = new BillPughSingleton();
+            }
 
-    public static Singleton getInstance() {
-        if (instance == null) {
-            synchronized (Singleton.class) {
-                if (instance == null) {
-                    instance = new Singleton();
-                }
+            public static BillPughSingleton getInstance(){
+                return SingletonHelper.INSTANCE;
             }
         }
-        return instance;
-        }
-    }
-    ```
+        ```
+     7. Enum Singleton
+     8. Reflection and singleton
+     9. serialization and singleton
+    
     *Break singleton using reflection*
     ```
     public class ReflectionSingleton {
