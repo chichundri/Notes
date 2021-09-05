@@ -83,23 +83,22 @@
     division of two numbers using minus (-) operator / Java program to find remainder of division using –
 27) Restemplate vs WebClient?
 28) @Secured vs @PreAuthorize?
-
+29. Object class and methods of it? - equals, hascode, toString, wait(), wait(long,int), wait(long), notify, notifyAll, finalize, clone, getClass
 
 
 
 
 
 ======================================================
-Shell Scripting
+``` Shell Scripting
 ksh - korn shell
 bash - bourne again shell
 sh - bourne shell
 
 #!/bin/bash - bash is in bin folder
 dd - to delete line
-# - comment
 echo - print
 chmod +x "file_name" or chmod 755 "file_name" or chmod +x *
 ls -l
-
+```
 
