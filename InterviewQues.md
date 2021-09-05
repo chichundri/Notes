@@ -15,34 +15,40 @@
 15. API gateway?
 16. How to configure spring security?
 17. How to secure a method in spring security using annotation?
-    -> @Secured("ROLE_ADMIN")
-       public void deleteUser(String name);
-18. How to pre-authorize and post-authorize a method in spring security? -> @PreAuthorize ("hasRole('ROLE_WRITE')") and 
+    ```
+    @Secured("ROLE_ADMIN")
+    public void deleteUser(String name);
+    ```
+18. How to pre-authorize and post-authorize a method in spring security? -> 
+    ``` 
+    @PreAuthorize ("hasRole('ROLE_WRITE')") and 
     @PostAuthorize ("returnObject.owner == authentication.name")
+    ```
 19. How to enable method level security in spring?
-    -> <global-method-security secured-annotations="enabled", pre-post-annotations="enabled"/>
+    ``` <global-method-security secured-annotations="enabled", pre-post-annotations="enabled"/> ```
 20. How to enable web security using java configuration in spring?
-    ->  @Configuration
+    ``` @Configuration
         @EnableWebSecurity
-        public class SecurityConfig extends WebSecurityConfigurerAdapter {}
+        public class SecurityConfig extends WebSecurityConfigurerAdapter {} ```
 21. How to configure DispatcherServlet without web.xml in Spring MVC?
-    ->  public class WebAppInitializer implements WebApplicationInitializer {
-         public void onStartup(ServletContext servletContext) throws ServletException {  
+    ```
+        public class WebAppInitializer implements WebApplicationInitializer {
+            public void onStartup(ServletContext servletContext) throws ServletException {  
               AnnotationConfigWebApplicationContext ctx = new AnnotationConfigWebApplicationContext();  
               ctx.register(AppConfig.class);  
               ctx.setServletContext(servletContext);    
               Dynamic dynamic = servletContext.addServlet("dispatcher", new DispatcherServlet(ctx));  
               dynamic.addMapping("/");  
               dynamic.setLoadOnStartup(1);  
-         }  
+             }  
         }
+     ```
 22. How to achieve thread safety in java?
-    a) Stateless Implementation - Method should neither relies on external state nor maintain state at all.Declare all variiables
-    in method only.
-        example - factorial program
-    b) Immutable class
-    c) Thread local fields - we can create thread-safe classes that don’t share state between threads by making their fields 
-        thread-local.
+    a. Stateless Implementation - Method should neither relies on external state nor maintain state at all.Declare all variiables in method only.
+    example - factorial program
+    b. Immutable class
+    c. Thread local fields - we can create thread-safe classes that don’t share state between threads by making their fields thread-local.
+        ```
         public class ThreadA extends Thread {
             private final List<Integer> numbers = Arrays.asList(1, 2, 3, 4, 5, 6);
             @Override
@@ -50,28 +56,30 @@
                 numbers.forEach(System.out::println);
             }
         }
-    d) Synchronized collections - Collections.synchronizedCollection(new ArrayList<>());
-    e) Concurrent Collections - Map<String,String> concurrentMap = new ConcurrentHashMap<>();
-    f) Atomic objects - AtomicInteger, AtomicLong, AtomicBoolean, and AtomicReference
-    g) Synchronized methods
-    h) Synchronized blocks
-    i) volatile fileld 
-    j) Extrinsic locking - it uses an external entity to enforce exclusive access to the resource. synchronized methods and blocks
-    rely on the 
-                           this reference.
-        Example - 
-            public class ExtrinsicLockCounter {
-                private int counter = 0;
-                private final Object lock = new Object();
-                public void incrementCounter() {
-                    synchronized(lock) {
-                        counter += 1;
-                    }
+        ```
+    d. Synchronized collections - Collections.synchronizedCollection(new ArrayList<>());
+    e. Concurrent Collections - Map<String,String> concurrentMap = new ConcurrentHashMap<>();
+    f. Atomic objects - AtomicInteger, AtomicLong, AtomicBoolean, and AtomicReference
+    g. Synchronized methods
+    h. Synchronized blocks
+    i. volatile fileld 
+    j. Extrinsic locking - it uses an external entity to enforce exclusive access to the resource. synchronized methods and blocks
+    rely on the this reference.
+        Example -
+    ```
+        public class ExtrinsicLockCounter {
+            private int counter = 0;
+            private final Object lock = new Object();
+            public void incrementCounter() {
+                synchronized(lock) {
+                    counter += 1;
                 }
-                // standard getter
             }
-    k) Reentrant lock - preventing queued threads from suffering some types of resource starvation
-    l) Read/Write lock
+            // standard getter
+        }
+    ```
+    k. Reentrant lock - preventing queued threads from suffering some types of resource starvation
+    l. Read/Write lock
 23) RequestParam vs Pathvariable?
     @RequestParam - used to request parameter from URL.Below date is RequestParam
     http://localhost:8080/shop/order/{orderId}/receipts?date=12-05-2017
