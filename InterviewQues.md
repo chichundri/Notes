@@ -213,6 +213,8 @@
     | used for hiding unwanted data and giving relevant data | hiding code and data into single unit to protect data from outside world |
     | abstraction lets you focus on what object does instead of how it does | Encapsulation means hiding internal details of how object does something |
     | outer layout | inner layout |
+    
+45. 
         
     
     
