@@ -84,9 +84,95 @@
 27) Restemplate vs WebClient?
 28) @Secured vs @PreAuthorize?
 29. Object class and methods of it? - equals, hascode, toString, wait(), wait(long,int), wait(long), notify, notifyAll, finalize, clone, getClass
+30. What is aggregation and composition?
+    composition- belongs to, strong kind if has-a relationship, the objects lifecycles are tied. 
+    It means that if we destroy the owner object, its members also will be destroyed with it. Example-building and room
+    aggregation - has-a relationship,the lifecycles of the objects aren't tied: every one of them can exist independently of each other.Example-car and wheels
+31. when abstract class and interface are used? 
+    classes that extends abstract class, have many common methods or fields(closely related classes-vehicle,car,volvoCar,OtherCar)
+32. String immutability and reason? state of object remains constant after its creation, why?-caching, security, synchronization, performance,thread-safe
+33. Instance lock(attached to single object) vs Static lock(attached to class)?
+    Instance lock - Acquiring the instance lock only blocks other threads from invoking a synchronized instance method; it does not block other threads from 
+    invoking an un-synchronized method, nor does it block them from invoking a static synchronized method
+    (http://www.javapractices.com/topic/TopicAction.do?Id=35)
+    example - synchronized(this) acquires the instance lock.
+    static lock - Similarly, acquiring the static lock only blocks other threads from invoking a static synchronized method; it does not block other threads 
+    from invoking an un-synchronized method, nor does it block them from invoking a synchronized instance method.
+    Example - 
+    synchronized(Blah.class), using the class literal
+    synchronized(this.getClass()), if an object is available
+34. Arraylist and linkedlist? which one is better?
+    ArrayList accessing an element takes constant time [O(1)] and adding an element takes O(n) time [worst case].
+    LinkedList adding an element takes O(n) time and accessing also takes O(n) time but LinkedList uses more memory than ArrayList.
+    Prefer ArrayList for random access
+    Prefer LinkedList for random middle insertion
+35. singleton pattern?
+    https://dzone.com/articles/all-about-the-singleton
+    ```
+    public final class Singleton {
+    private static volatile Singleton instance = null;
+    private Singleton() {
+    }
 
+    public static Singleton getInstance() {
+        if (instance == null) {
+            synchronized (Singleton.class) {
+                if (instance == null) {
+                    instance = new Singleton();
+                }
+            }
+        }
+        return instance;
+        }
+    }
+    ```
+    *Break singleton using reflection*
+    ```
+    public class ReflectionSingleton {
+    public static void main(String[] args)  {
+        Singleton objOne = Singleton.getInstance();
+        Singleton objTwo = null;
+        try {
+            Constructor constructor = Singleton.class.getDeclaredConstructor();
+            constructor.setAccessible(true);
+            objTwo = (Singleton) constructor.newInstance();
+        } catch (Exception ex) {
+            System.out.println(ex);
+        }
+        System.out.println("Hashcode of Object 1 - "+objOne.hashCode());
+        System.out.println("Hashcode of Object 2 - "+objTwo.hashCode());
 
-
+        }
+    }   
+    ```
+    *Prevent singleton from reflection* - throw a run-time exception in the constructor if the instance already exists.
+    ```
+    private Singleton() {
+        // Check if we already have an instance
+        if (INSTANCE != null) {
+           throw new IllegalStateException("Singleton" +
+             " instance already created.");
+        }
+    }
+    ```
+    *Prevent Singleton Pattern From Deserialization* - override readResolve() method in the Singleton class and return the same Singleton instance.
+    ```
+    protected Object readResolve() { 
+           return instance; 
+     }  
+    ```
+    *Prevent Singleton from clonning* - override clone method 
+    ```
+    @Override
+    protected Object clone() throws CloneNotSupportedException  {
+        throw new CloneNotSupportedException();
+    }
+    ```
+    
+    
+    
+    
+    
 
 
 ======================================================
