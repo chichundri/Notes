@@ -183,8 +183,37 @@
         throw new CloneNotSupportedException();
     }
     ```
-    
-    
+36. how will you store the Hashmap of <Emp,values>
+    Employee class should properly override equals() and hashCode() methods to store employee object as key in hashmap. Improper implementation of these
+    methods results in wrong data 
+37. string reverse without built in method?
+38. can we print hello widout main?
+    Yes,but java 7 onwards it will not work
+    ```
+    class PrintWithoutMain {
+        static
+        {
+            System.out.println("Hello World!!");
+            System.exit(1);
+        }
+    }
+    ```
+39. Why Map is not the part of Collection interface?
+    Each collection(list,set,queue) stores a single value whereas map stores key-value pair which itselfs is incompatible with collection methods like add,
+    addAll, removeAll
+40. when Outofmemory will occur?
+41. What is diff between heap memory and permgen memory?
+    Java heap memory - all objects are created in heap memory and garbage collector removes unused objects
+    PermGen - keep information about loaded classes,string pool. Garbage collector is not much effective in this area.
+43. metaspace vs permgen? After java 8 permGen is renamed as metaspace
+44. What is diff between absraction and encapsulaton?
+    | Abstraction  | Encapsulation |
+    | ------------- | ------------- |
+    | solves problem in design level  | solves problem in implementation level |
+    | used for hiding unwanted data and giving relevant data | hiding code and data into single unit to protect data from outside world |
+    | abstraction lets you focus on what object does instead of how it does | Encapsulation means hiding internal details of how object does something |
+    | outer layout | inner layout |
+        
     
     
     
