@@ -224,8 +224,45 @@
     A marker interface is an interface that has no methods or constants inside it. It provides run-time type information about objects, so the compiler and JVM
     have additional information about the object.
     Example - Serializable, Cloneable
-47. can we override and overload main methods?
+47. can we override and overload main methods? Yes
+48. ClassNotFoundException vs NoClassDefFoundError
+    ClassNotFoundException - occurs when you try to load a class at runtime using Class.forName() or loadClass() methods and requested classes are not found in
+    classpath. Checked exception. derived from java.lang.Exception
+    NoClassDefFoundError - occurs when class was present during compile time and program was compiled and linked successfully but class was not present during
+    runtime. It is error which is derived from LinkageError. occurs at runtime
+
+49. shallow copy vs deep copy?
+    | Shallow copy | Deep copy |
+    | Shallow Copy stores the references of objects to the original memory address | Deep copy stores copies of the object’s value |
+    | Shallow Copy reflects changes made to the new/copied object in the original object | Deep copy doesn’t reflect changes made to the new/copied object in the original object |
+    | Shallow Copy stores the copy of the original object and points the references to the objects | Deep copy stores the copy of the original object and recursively copies the objects as well |
+    | Shallow copy is faster | Deep copy is comparatively slower |
+        
+50. How to create immutable class in java
+    1. Declare the class as final so it can’t be extended.
+    2. Make all fields private so that direct access is not allowed.
+    3. Don’t provide setter methods for variables.
+    4. Make all mutable fields final so that its value can be assigned only once.
+    5. Initialize all the fields via a constructor performing deep copy
+    6. Perform cloning of objects in the getter methods to return a copy rather than returning the actual object reference.
+51. HashMap working?
+52. why wait and notify call in the synchronized block?(https://stackoverflow.com/questions/2779484/why-must-wait-always-be-in-synchronized-block)
+    A wait() only makes sense when there is also a notify(), so it's always about communication between threads, and that needs synchronization to work 
+    correctly. Mostly wait, notify, notifyAll used in inter thread communication 
+    We must use synchronnization to avoid - 
+    - IllegalMonitorStateException
+    - Any potential race condition between wait and notify method in Java
+    Example - producer-consumer
+    https://javarevisited.blogspot.com/2011/05/wait-notify-and-notifyall-in-java.html#axzz75hpg9s9z
     
+53. Producer-Consumer programm?https://www.geeksforgeeks.org/producer-consumer-solution-using-threads-java/
+54. http://java-latte.blogspot.com/2014/04/Semaphore-CountDownLatch-CyclicBarrier-Phaser-Exchanger-in-Java.html
+55. java concurrency - https://www.javacodegeeks.com/2015/09/the-java-util-concurrent-package.html
+56. CountDownLatch- is used to make sure that a task waits for other threads before it starts. To understand its application, let us consider a server where 
+    the main task can only start when all the required services have started.
+    Working of CountDownLatch: When we create an object of CountDownLatch, we specify the number of threads it should wait for, all such thread are required to 
+    do count down by calling CountDownLatch.countDown() once they are completed or ready to the job. As soon as count reaches zero, the waiting task starts 
+    running.
 
         
     
