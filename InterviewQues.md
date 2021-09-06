@@ -214,7 +214,19 @@
     | abstraction lets you focus on what object does instead of how it does | Encapsulation means hiding internal details of how object does something |
     | outer layout | inner layout |
     
-45. 
+45. Comparable vs Comparator
+    | Comparable | Comparator |
+    | Natural/single sorting sequence | Custom/multiple sorting sequence |
+    | compareTo(T o) | compare(T o1, T o2) |
+    | part of java.lang | part of java.util |
+
+46. functionality of marker interfaces?
+    A marker interface is an interface that has no methods or constants inside it. It provides run-time type information about objects, so the compiler and JVM
+    have additional information about the object.
+    Example - Serializable, Cloneable
+47. can we override and overload main methods?
+    
+
         
     
     
