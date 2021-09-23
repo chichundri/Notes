@@ -15,5 +15,5 @@
    4. Built for Offline
    5. Replication filter
 3. How can we connect to remote CouchDB?
-   On the local machine,set up an ssh tunnel to your server and tell it to forward requests to the local port 5984 to the remote server’s port 5984:
+    On the local machine,set up an ssh tunnel to your server and tell it to forward requests to the local port 5984 to the remote server’s port 5984:
 
