@@ -1,4 +1,5 @@
 1. CouchDB vs MongoDB?
+
   |     CouchDB |   MongoDB |
   | records are stored in the documents in the database | records are stored in the collection in the database |
   | Master-Master replication in CouchDB | Master-Slave replication in MongoDB |
