@@ -21,5 +21,14 @@
     CouchDB makes the use of a model which is known as an ‘Optimistic Currency’ model. ‘Optimistic Currency’ model grants approval to send a document version
     with the CouchDB update. CouchDB scans the document version, and if the present document version does not tally with document version which was was sent,
     then CouchDB rejects the change in the release.
-5. 
+5. How couchDB sync client db with server?  
+    https://www.codemag.com/Article/1911041/Syncing-a-Client-Database-with-the-Server
+6. What is PouchDB?  
+    PouchDB is a browser-based database interface that's tailor-made to synchronize with CouchDB. This means that data manipulated in the browser can
+    seamlessly flow up to the server
+7. CouchBase mobile? - NoSQL Database for mobile
+    Two parts -  
+    1. Couchbase Lite - an embedded, schemaless, JSON database
+    2. Sync Gateway - a mechanism to sync data to and from the server
+
     
