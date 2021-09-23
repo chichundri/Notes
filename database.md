@@ -8,4 +8,11 @@
   | In CouchDB, the interface is REST/HTTP | In MongoDB, the interface is TCP/IP Custom Protocol |
   | Slower than MongoDB | Faster than CouchDB |
   
-2. 
+2. main features of CouchDB?
+  1. JSON Documents
+  2. RESTful Interface
+  3. N-Master Replication
+  4. Built for Offline
+  5. Replication filter
+
+
