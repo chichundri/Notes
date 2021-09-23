@@ -16,5 +16,10 @@
    5. Replication filter
 
 3. How can we connect to remote CouchDB?  
-    On the local machine,set up an ssh tunnel to your server and tell it to forward requests to the local port 5984 to the remote server’s port 5984:
-
+    On the local machine,set up an ssh tunnel to your server and tell it to forward requests to the local port 5984 to the remote server’s port 5984
+4. How to use transactions with CouchDB?  
+    CouchDB makes the use of a model which is known as an ‘Optimistic Currency’ model. ‘Optimistic Currency’ model grants approval to send a document version
+    with the CouchDB update. CouchDB scans the document version, and if the present document version does not tally with document version which was was sent,
+    then CouchDB rejects the change in the release.
+5. 
+    
