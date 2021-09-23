@@ -30,5 +30,8 @@
     Two parts -  
     1. Couchbase Lite - an embedded, schemaless, JSON database
     2. Sync Gateway - a mechanism to sync data to and from the server
+8. Cassandra vs MongoDB vs CouchDB vs Redis vs Riak vs HBase vs Couchbase vs OrientDB vs Aerospike vs Neo4j vs Hypertable vs ElasticSearch vs Accumulo vs
+    VoltDB vs Scalaris vs RethinkDB?
+    https://kkovacs.eu/cassandra-vs-mongodb-vs-couchdb-vs-redis
 
     
