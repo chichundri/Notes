@@ -7,6 +7,7 @@
     | CouchDB is written in Erlang | MongoDB is written in C++ |
     | In CouchDB, the interface is REST/HTTP | In MongoDB, the interface is TCP/IP Custom Protocol |
     | Slower than MongoDB | Faster than CouchDB |
+    | JSON format | BSON format, extension of JSON |
   
 2. main features of CouchDB?
    1. JSON Documents
