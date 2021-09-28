@@ -41,7 +41,7 @@ CouchDB is a NoSQL, open source database with JavaScript as its query language. 
     1. Index service
     2. Data service
     3. query service
-    4. cluster management component
+    4. cluster management component  
 10.Functional blocks used in couchbase server?  
     1. Data manager
     2. cluster manager
