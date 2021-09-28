@@ -1,3 +1,6 @@
+What is CouchDB?  
+CouchDB is a NoSQL, open source database with JavaScript as its query language. It stores the data with JSON documents
+
 1. CouchDB vs MongoDB?
 
     |     CouchDB |   MongoDB |
@@ -34,5 +37,24 @@
 8. Cassandra vs MongoDB vs CouchDB vs Redis vs Riak vs HBase vs Couchbase vs OrientDB vs Aerospike vs Neo4j vs Hypertable vs ElasticSearch vs Accumulo vs
     VoltDB vs Scalaris vs RethinkDB?\
     https://kkovacs.eu/cassandra-vs-mongodb-vs-couchdb-vs-redis
+9. State few elements in couchbase node?  
+    1. Index service
+    2. Data service
+    3. query service
+    4. cluster management component
+10.Functional blocks used in couchbase server?  
+    1. Data manager
+    2. cluster manager
+    
+11.What is couchbase?  
+    Couchbase is a Server, also known as Membase, is an open-source, distributed (shared-nothing architecture) multi-model NoSQL document-oriented database
+    software package that is optimized for interactive applications.  
+    
+    
+    
+    
+    
+    
+    
 
     
