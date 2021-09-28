@@ -48,6 +48,7 @@ CouchDB is a NoSQL, open source database with JavaScript as its query language. 
     1. Data manager
     2. cluster manager
     
+    
 11.What is couchbase?  
     Couchbase is a Server, also known as Membase, is an open-source, distributed (shared-nothing architecture) multi-model NoSQL document-oriented database
     software package that is optimized for interactive applications.  
