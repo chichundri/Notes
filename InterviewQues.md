@@ -439,7 +439,7 @@ https://www.interviewbit.com/java-8-interview-questions/
 78.What is method reference?\
     A method reference is a Java 8 construct that can be used for referencing a method without invoking it.\
     - Constructor refernce - String::new;\
-    - Static method reference - String::valueOf\
+    - Static method reference - ContainingClass::staticMethodName\
     - Bound instance method reference - str::toString\
     - Unbound instance method reference - String::toString;\
 
@@ -452,7 +452,22 @@ https://www.interviewbit.com/java-8-interview-questions/
     - BiFunction – it takes two arguments and returns a result
     - BinaryOperator – it is similar to a BiFunction, taking two arguments and returning a result. The two arguments and the result are all of the same types.
     - UnaryOperator – it is similar to a Function, taking a single argument and returning a result of the same type
-    
+
+80. What Is a Functional Interface?\
+    interface with one single abstract method.\
+    Functional Interface can be used with lambda expression
+    e.g Runnable, Comparable
+81. default method?\
+82. lambda expression?\ 
+    lambda expression is a function that we can reference and pass around as an object.(Anonymous function)\
+83. Final variable can be accessed in lambda expression in java 8? - yes\
+84. non-Final variable can be accessed in lambda expression in java 8? yes,but it is effectively final in lambda expression\
+Any attempt to modify x will produce compilation error\
+85. Instance and static variables are accessible and modifiable in lambda expression\
+
+
+
+
 
 
 
