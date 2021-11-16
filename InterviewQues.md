@@ -457,13 +457,13 @@ https://www.interviewbit.com/java-8-interview-questions/
     interface with one single abstract method.\
     Functional Interface can be used with lambda expression
     e.g Runnable, Comparable
-81. default method?\
-82. lambda expression?\ 
+81. default method?
+82. lambda expression?
     lambda expression is a function that we can reference and pass around as an object.(Anonymous function)\
-83. Final variable can be accessed in lambda expression in java 8? - yes\
-84. non-Final variable can be accessed in lambda expression in java 8? yes,but it is effectively final in lambda expression\
-Any attempt to modify x will produce compilation error\
-85. Instance and static variables are accessible and modifiable in lambda expression\
+83. Final variable can be accessed in lambda expression in java 8? - yes
+84. non-Final variable can be accessed in lambda expression in java 8? yes,but it is effectively final in lambda expression
+Any attempt to modify x will produce compilation error
+85. Instance and static variables are accessible and modifiable in lambda expression
 
 
 
