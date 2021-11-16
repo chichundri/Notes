@@ -405,23 +405,23 @@
 67. How to implement Exception Handling in Spring Boot?
 68. InitBinder?
 # Java 8 
-https://www.interviewbit.com/java-8-interview-questions/
-69. What are Java 8 streams?
+https://www.interviewbit.com/java-8-interview-questions/  
+69. What are Java 8 streams?  
     A stream is an abstraction to express data processing queries in a declarative way. 
-    represents a sequence of data objects & series of operations on that data is a data pipeline 
-70. What are the main components of a Stream?
-    a. data source
-    b. Set of Intermediate Operations to process the data source
-    c. Single Terminal Operation that produces the result
-71. What are Intermediate and Terminal operations?
-72. What are the most commonly used Intermediate operations?
-    `Filter(Predicate<T>)` - Allows selective processing of Stream elements. It returns elements that are satisfying the supplied condition by the predicate.
-    `map(Funtion<T, R>)` - Returns a new Stream, transforming each of the elements by applying the supplied mapper function e.g sorted()
-    `distinct()` - Only pass on elements to the next stage, not passed yet.
-    `limit(long maxsize)` - Limit the stream size to maxsize.
-    `skip(long start)` - Skip the initial elements till the start.
-    `peek(Consumer)` - Apply a consumer without modification to the stream
-    `flatMap(mapper)` - Transform each element to a stream of its constituent elements and flatten all the streams into a single stream.
+    represents a sequence of data objects & series of operations on that data is a data pipeline   
+70. What are the main components of a Stream?  
+    a. data source  
+    b. Set of Intermediate Operations to process the data source  
+    c. Single Terminal Operation that produces the result  
+71. What are Intermediate and Terminal operations?  
+72. What are the most commonly used Intermediate operations?  
+    `Filter(Predicate<T>)` - Allows selective processing of Stream elements. It returns elements that are satisfying the supplied condition by the predicate.  
+    `map(Funtion<T, R>)` - Returns a new Stream, transforming each of the elements by applying the supplied mapper function e.g sorted()  
+    `distinct()` - Only pass on elements to the next stage, not passed yet.  
+    `limit(long maxsize)` - Limit the stream size to maxsize.  
+    `skip(long start)` - Skip the initial elements till the start.  
+    `peek(Consumer)` - Apply a consumer without modification to the stream.  
+    `flatMap(mapper)` - Transform each element to a stream of its constituent elements and flatten all the streams into a single stream.  
 
 
 
