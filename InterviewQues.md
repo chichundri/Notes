@@ -438,16 +438,20 @@ https://www.interviewbit.com/java-8-interview-questions/
 
 78.What is method reference?\
     A method reference is a Java 8 construct that can be used for referencing a method without invoking it.\
-    - Constructor refernce\
-        String::new;\
-    - Static method reference\
-        String::valueOf;\
-    - Bound instance method reference\
-        str::toString;\
-    - Unbound instance method reference\
-        String::toString;\
+    - Constructor refernce - String::new;\
+    - Static method reference - String::valueOf\
+    - Bound instance method reference - str::toString\
+    - Unbound instance method reference - String::toString;\
 
 79. Functional Interfaces in the Standard Library?
+
+    - Function – it takes one argument and returns a result
+    - Consumer – it takes one argument and returns no result
+    - Supplier – it takes no arguments and returns a result
+    - Predicate – it takes one argument and returns a boolean
+    - BiFunction – it takes two arguments and returns a result
+    - BinaryOperator – it is similar to a BiFunction, taking two arguments and returning a result. The two arguments and the result are all of the same types.
+    - UnaryOperator – it is similar to a Function, taking a single argument and returning a result of the same type
     
 
 
