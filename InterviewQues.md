@@ -423,7 +423,7 @@ https://www.interviewbit.com/java-8-interview-questions/
     `peek(Consumer)` - Apply a consumer without modification to the stream.  
     `flatMap(mapper)` - Transform each element to a stream of its constituent elements and flatten all the streams into a single stream.  
 73. What is the stateful intermediate operation? Give some examples of stateful intermediate operations.  
-     To complete some of the intermediate operations, some state is to be maintained, and such intermediate operations are called stateful intermediate operations e.g sorted(), distinct()  
+    + To complete some of the intermediate operations, some state is to be maintained, and such intermediate operations are called stateful intermediate operations e.g sorted(), distinct()  
 74.
 
 
