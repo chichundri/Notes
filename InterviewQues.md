@@ -422,9 +422,18 @@ https://www.interviewbit.com/java-8-interview-questions/
     `skip(long start)` - Skip the initial elements till the start.  
     `peek(Consumer)` - Apply a consumer without modification to the stream.  
     `flatMap(mapper)` - Transform each element to a stream of its constituent elements and flatten all the streams into a single stream.  
-73. *What is the stateful intermediate operation? Give some examples of stateful intermediate operations.  
-    + To complete some of the intermediate operations, some state is to be maintained, and such intermediate operations are called stateful intermediate operations e.g sorted(), distinct()  
-74.
+73. What is the stateful intermediate operation? Give some examples of stateful intermediate operations.  
+    To complete some of the intermediate operations, some state is to be maintained, and such intermediate operations are called stateful intermediate operations e.g sorted(), distinct()  
+74. common type of terminal operations?\
+    `collect(), reduce(), count(), min(), max(), anyMatch(), noneMatch(), forEach(), forEachOrdered()`\
+75. collection vs stream?\
+    | Collections|	Streams|
+    |------------| --------|
+    | Data structure holds all the data elements |	No data is stored. Have the capacity to process an infinite number of elements on demand |
+    | External Iteration |	Internal Iteration |
+    | Can be processed any number of times | Traversed only once |
+    | Elements are easy to access| No direct way of accessing specific elements |
+    | Is a data store | Is an API to process the data |
 
 
 
