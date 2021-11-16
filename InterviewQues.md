@@ -435,7 +435,7 @@ https://www.interviewbit.com/java-8-interview-questions/
     | Elements are easy to access | No direct way of accessing specific elements |
     | Is a data store | Is an API to process the data |
 
-
+76. 
 
 
 
