@@ -427,15 +427,14 @@ https://www.interviewbit.com/java-8-interview-questions/
 74. common type of terminal operations?\
     `collect(), reduce(), count(), min(), max(), anyMatch(), noneMatch(), forEach(), forEachOrdered()`\
 75. collection vs stream?\
-    | Collections | Streams |
-    | ------------ | -------- |
-    | Data structure holds all the data elements | No data is stored. Have the capacity to process an infinite number of elements on demand |
-    | External Iteration | Internal Iteration |
-    | Can be processed any number of times | Traversed only once |
-    | Elements are easy to access | No direct way of accessing specific elements |
-    | Is a data store | Is an API to process the data |
+76. What is the feature of the new Date and Time API in Java 8?\
+    > Immutable classes and Thread-safe
+    > Timezone support
+    > Fluent methods for object creation and arithmetic
+    > Addresses I18N issue for earlier APIs
+    > All packages are based on the ISO-8601 calendar system\
 
-76. 
+77. 
 
 
 
