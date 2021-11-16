@@ -1,3 +1,7 @@
+==== Links =====
+**https://github.com/learning-zone/spring-interview-questions/blob/spring/microservices.md**
+**https://github.com/in28minutes/spring-interview-guide**
+
 1. How to protect singleton from reflection api? ->
 2. How to protect singleton from deserialization? - declare method as static as static members are not part of serialization.
 3. How to create Doubleton?
@@ -216,6 +220,7 @@
     
 45. Comparable vs Comparator
     | Comparable | Comparator |
+    | ------ | ------ |
     | Natural/single sorting sequence | Custom/multiple sorting sequence |
     | compareTo(T o) | compare(T o1, T o2) |
     | part of java.lang | part of java.util |
@@ -233,6 +238,7 @@
 
 49. shallow copy vs deep copy?
     | Shallow copy | Deep copy |
+    | ----------- | ------- |
     | Shallow Copy stores the references of objects to the original memory address | Deep copy stores copies of the object’s value |
     | Shallow Copy reflects changes made to the new/copied object in the original object | Deep copy doesn’t reflect changes made to the new/copied object in the original object |
     | Shallow Copy stores the copy of the original object and points the references to the objects | Deep copy stores the copy of the original object and recursively copies the objects as well |
@@ -263,6 +269,148 @@
     Working of CountDownLatch: When we create an object of CountDownLatch, we specify the number of threads it should wait for, all such thread are required to 
     do count down by calling CountDownLatch.countDown() once they are completed or ready to the job. As soon as count reaches zero, the waiting task starts 
     running.
+
+57. File upload and download in sring boot
+    application.properties
+    ```
+        # Enable multipart uploads
+        spring.servlet.multipart.enabled=true
+        # Threshold after which files are written to disk.
+        spring.servlet.multipart.file-size-threshold=2KB
+        # Max file size.
+        spring.servlet.multipart.max-file-size=200MB
+        # Max Request Size
+        spring.servlet.multipart.max-request-size=215MB
+    ```
+58. spring bean scopes?
+    1. singleton (default) - Single bean object instance per spring IoC container
+    2. prototype - Opposite to singleton, it produces a new instance each and every time a bean is requested.
+    3. request - A single instance will be created and available during complete lifecycle of an HTTP request. Only valid in web-aware 
+        Spring ApplicationContext.
+    4. session - A single instance will be created and available during complete lifecycle of an HTTP Session. Only valid in web-aware 
+        Spring ApplicationContext.
+    5. application - A single instance will be created and available during complete lifecycle of ServletContext. Only valid in web-aware 
+        Spring ApplicationContext.
+    6. websocket - A single instance will be created and available during complete lifecycle of WebSocket. Only valid in web-aware Spring 
+        ApplicationContext.
+    **  application scoped bean is singleton per ServletContext, whereas singleton scoped bean is singleton per ApplicationContext. 
+    Please note that there can be multiple application contexts for single application. **
+
+59. What is AOP? what does spring AOP provide?
+    In AOP, aspects enable the modularization of concerns such as transaction management, logging or security that cut across multiple types and objects (often termed crosscutting concerns).
+    
+    AOP provides the way to dynamically add the cross-cutting concern before, after or around the actual logic using simple pluggable configurations
+
+    1. Aspect: An aspect is a class that implements enterprise application concerns that cut across multiple classes, such as transaction    management.
+    2. Join Point: A join point is the specific point in the application such as method execution, exception handling, changing object
+       variable values etc. In Spring AOP a join points is always the execution of a method
+    3. Advice: Advices are actions taken for a particular join point. In terms of programming, they are methods that gets executed when a    certain join point with matching pointcut is reached in the application.
+    4. Pointcut: Pointcut are expressions that is matched with join points to determine whether advice needs to be executed or not.          Pointcut uses different kinds of expressions that are matched with the join points and Spring framework uses the AspectJ pointcut     expression language.
+    5. Weaving: It is the process of linking aspects with other objects to create the advised proxy objects. This can be done at compile     time, load time or at runtime. Spring AOP performs weaving at the runtime.
+
+    Types of advices?
+    1. Before Advice: These advices runs before the execution of join point methods.
+    2. After returning advice: Advice to be executed after a join point completes normally
+    3. After throwing advice: Advice to be executed if a method exits by throwing an exception.
+    4. After advice: Advice to be executed regardless of the means by which a join point exits
+    5. Around advice: Around advice can perform custom behavior before and after the method invocation. 
+
+60. What is difference between DI and IOC in spring?
+61. SOAP vs REST?
+62. What is Spring Cloud?
+    system that provides integration with external systems.
+    > Versioned and distributed configuration.
+    > service discovery
+    > service to service call
+    > Routing
+    > circuit breaker
+    > load balancing
+    > cluster state and leadership election
+    > Global locks and distributed messaging
+
+63. How to achieve server side load balancing using Spring Cloud? -> `Netflix Zuul`
+64. Annotation in spring
+    1. RestController = Controller + ResponseBody
+    2. RequestMapping - tells which HTTP request should map to the corresponding method.
+        `@RequestMapping(value = "/index", method = "GET") `
+    3. RequestParam - binds web request parameter to method parameter
+        ```
+        public String getFoos(@RequestParam String id) {
+            return "ID: " + id;
+        }
+        ```
+    4. ContextConfiguration - specifies how to load the application context while writing a unit test for the Spring environment
+    5. ResponseBody -  tells a controller that the object returned is automatically serialized into JSON and passed back into the            HttpResponse object
+    6. pathVariable - indicates method parameter should be bound to a URI template variable
+        ```
+        @RequestMapping(path="/{name}/{age}")
+        public String getMessage(@PathVariable("name") String name, 
+                @PathVariable("age") String age) {
+            
+            var msg = String.format("%s is %s years old", name, age);
+            return msg;
+        }
+        ```
+    7. ResponseEntity - Represents HTTP response, including headers, body, and status.`ResponseEntity` allows to add header and status       code whereas `@ResponseBody` puts values into response
+    8. Qualifier - use to differentiate beans of same type
+    9. Autowired - used to inject object dependency implicitly for a constructor, field or method
+    10. Configurable - Used on classes to inject properties of domain objects
+    11. Required - Used to mark class members that are mandatory
+    12. ComponentScan - Make Spring scan the package for the @Configuration clases.
+    13. Configuration - It is used on classes that define beans.
+    14. Bean - ndicates that a method produces a bean which will be mananged by the Spring container.
+    15. Lazy - Makes a @Bean or @Component to be initialized only if it is requested
+    16. Value - t is used to inject values into a bean’s attribute from a property file.
+    17. Resource - Annotation used to inject an object that is already in the Appl­ication Context.
+    18. Primary - Annotation used when no name is provided telling Spring to inject an object of the annotated class first.
+    19. Component - Generic stereotype annotation used to tell Spring to create an instance of the object in the Appl­ication Context
+    20. Controller, Repository, Service
+    21. Conditional - load beans into Application Context only if the given condition is met
+
+    22. SpringBootApplication - used to qualify the main class for a Spring Boot project
+    23. EnableAutoConfiguration - Based on class path settings, property settings, new beans are added by Spring Boot by using this           annotation.
+
+65. Actuator endpoints?
+    | Endpoint | Description |
+    | -------- | --------- |
+    | health |	Application health info |
+    | info	| Info about the application |
+    | env |	Properties from environment |
+    | metrics |	Various metrics about the app |
+    | mappings |	@RequestMapping Controller mappings |
+    | shutdown |	Triggers application shutdown |
+    | httptrace |	HTTP request/response log |
+    | loggers |	Display and configure logger info |
+    | logfile |	Contents of the log file |
+    | threaddump |	Perform thread dump |
+    | heapdump |	Obtain JVM heap dump |
+    | caches |	Check available caches |
+    | integrationgraph |	Graph of Spring Integration components |
+
+
+    ```
+        # Disable an endpoint
+        management.endpoint.[endpoint-name].enabled=false
+
+        # Specific example for 'health' endpoint
+        management.endpoint.health.enabled=false
+
+        # Instead of enabled by default, you can change to mode
+        # where endpoints need to be explicitly enabled
+        management.endpoints.enabled-by-default=false
+    ```
+
+66. What is a CommandLineRunner and ApplicationRunner?
+    `ApplicationRunner` and `CommandLineRunner` interfaces use to execute the code after the Spring Boot application is started.
+67. How to implement Exception Handling in Spring Boot?
+68. InitBinder?
+
+
+
+
+
+
+
 
         
     
