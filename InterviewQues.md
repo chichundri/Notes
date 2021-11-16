@@ -428,11 +428,11 @@ https://www.interviewbit.com/java-8-interview-questions/
     `collect(), reduce(), count(), min(), max(), anyMatch(), noneMatch(), forEach(), forEachOrdered()`\
 75. collection vs stream?\
 76. What is the feature of the new Date and Time API in Java 8?\
-    > Immutable classes and Thread-safe
-    > Timezone support
-    > Fluent methods for object creation and arithmetic
-    > Addresses I18N issue for earlier APIs
-    > All packages are based on the ISO-8601 calendar system\
+    - Immutable classes and Thread-safe
+    - Timezone support
+    - Fluent methods for object creation and arithmetic
+    - Addresses I18N issue for earlier APIs
+    - All packages are based on the ISO-8601 calendar system\
 
 77. 
 
