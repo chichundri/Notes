@@ -434,7 +434,21 @@ https://www.interviewbit.com/java-8-interview-questions/
     - Addresses I18N issue for earlier APIs\
     - All packages are based on the ISO-8601 calendar system\
 
-77. 
+77. Define Nashorn in Java 8
+
+78.What is method reference?\
+    A method reference is a Java 8 construct that can be used for referencing a method without invoking it.\
+    - Constructor refernce\
+        String::new;\
+    - Static method reference\
+        String::valueOf;\
+    - Bound instance method reference\
+        str::toString;\
+    - Unbound instance method reference\
+        String::toString;\
+
+79. Functional Interfaces in the Standard Library?
+    
 
 
 
