@@ -523,21 +523,36 @@ Any attempt to modify x will produce compilation error
     automatic conversion of primitive data types into its equivalent Wrapper type is known as boxing and opposite operation is known as unboxing
 100. Difference between creating String as new() and literal?\
 101. String vs StringBuffer vs StringBuilder?\
+
     - String is immutable where as StringBuffer and StringBuilder are mutable
     - StringBuffer is thread safe, StringBuilder is not thread safe
 
 102. What is a Memory Leak? How can a memory leak appear in garbage collected language?\
     objects are no longer being used by the application, but the Garbage Collector is unable to remove them from working memory\
-    tools to identify useless objects-
+    tools to identify useless objects\
+
     - HP Openview
     - HP JMeter
     - JProbe
     - IBM Tivoli
 
 103. Why String is popular HashMap key in Java?\
-104. 
+104. Error vs Exception?
+105.  throw vs throws?\
+    - throw - used in method body to throw an exception
+    - throws - used in method signature to declare an exception that can occur in statement in method body
+106. The difference between Serial and Parallel Garbage Collector?
+Serial Garbage Collector
 
+Serial garbage collector works by holding all the application threads. It is designed for the single-threaded environments. It uses just a single thread for garbage collection. The way it works by freezing all the application threads while doing garbage collection may not be suitable for a server environment. It is best suited for simple command-line programs.
 
+Turn on the -XX:+UseSerialGC JVM argument to use the serial garbage collector.
+
+Parallel Garbage Collector
+
+Parallel garbage collector is also called as throughput collector. It is the default garbage collector of the JVM. Unlike serial garbage collector, this uses multiple threads for garbage collection. Similar to serial garbage collector this also freezes all the application threads while performing garbage collection.
+
+107. 
 
 
 
