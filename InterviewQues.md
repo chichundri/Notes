@@ -437,7 +437,8 @@ https://www.interviewbit.com/java-8-interview-questions/
 77. Define Nashorn in Java 8
 
 78.What is method reference?\
-    A method reference is a Java 8 construct that can be used for referencing a method without invoking it.\
+    A method reference is a Java 8 construct that can be used for referencing a method without invoking it.
+    
     - Constructor refernce - String::new;\
     - Static method reference - ContainingClass::staticMethodName\
     - Bound instance method reference - str::toString\
@@ -464,7 +465,34 @@ https://www.interviewbit.com/java-8-interview-questions/
 84. non-Final variable can be accessed in lambda expression in java 8? yes,but it is effectively final in lambda expression
 Any attempt to modify x will produce compilation error
 85. Instance and static variables are accessible and modifiable in lambda expression
+86. Byte stream vs Character stream? (FileInputStream vs FileReader and 8-bit byte vs 16-bit unicode)
+87. Runtime class vs System class?
+    Runtime class - provide access to java runtime system like memoery usage,available memory,invoking garbage collection
+    System class - provide access to system resources like standard input/output, current time in millis, terminating applications
 
+88. assertions in java? -> testing the correctness of any assumptions.
+89. Can we have multiple public classes in a java source file?
+90. covarient return type? 
+    It is possible to have different return type for a overriding method in child class, but child’s return type should be sub-type of parent’s return type. 
+
+    ```
+    class SuperClass {
+        SuperClass get() {
+            System.out.println("SuperClass");
+            return this;
+        }
+        }
+        public class Tester extends SuperClass {
+        Tester get() {
+            System.out.println("SubClass");
+            return this;
+        }
+        public static void main(String[] args) {
+            SuperClass tester = new Tester();
+            tester.get();
+        }
+    }
+    ```
 
 
 
