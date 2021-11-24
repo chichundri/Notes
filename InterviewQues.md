@@ -100,9 +100,9 @@
 28) @Secured vs @PreAuthorize?
 29. Object class and methods of it? - equals, hascode, toString, wait(), wait(long,int), wait(long), notify, notifyAll, finalize, clone, getClass
 30. What is aggregation and composition?
-    composition- belongs to, strong kind if has-a relationship, the objects lifecycles are tied. 
-    It means that if we destroy the owner object, its members also will be destroyed with it. Example-building and room
-    aggregation - has-a relationship,the lifecycles of the objects aren't tied: every one of them can exist independently of each other.Example-car and wheels
+    composition- belongs to, strong kind of part-of relationship, the objects lifecycles are tied. 
+    It means that if we destroy the owner object, its members also will be destroyed with it. Example-building and room, car and engine
+    aggregation - has-a relationship, weak association, the lifecycles of the objects aren't tied: every one of them can exist independently of each other.Example- Organization and person, car and driver
 31. when abstract class and interface are used? 
     classes that extends abstract class, have many common methods or fields(closely related classes-vehicle,car,volvoCar,OtherCar)
 32. String immutability and reason? state of object remains constant after its creation, why?-caching, security, synchronization, performance,thread-safe
@@ -248,7 +248,7 @@
     1. Declare the class as final so it can’t be extended.
     2. Make all fields private so that direct access is not allowed.
     3. Don’t provide setter methods for variables.
-    4. Make all mutable fields final so that its value can be assigned only once.
+    4. Make all mutable fields final so that its value can be assigned only once through constructor.
     5. Initialize all the fields via a constructor performing deep copy
     6. Perform cloning of objects in the getter methods to return a copy rather than returning the actual object reference.
 51. HashMap working?
@@ -462,17 +462,17 @@ https://www.interviewbit.com/java-8-interview-questions/
 82. lambda expression?
     lambda expression is a function that we can reference and pass around as an object.(Anonymous function)\
 83. Final variable can be accessed in lambda expression in java 8? - yes
-84. non-Final variable can be accessed in lambda expression in java 8? yes,but it is effectively final in lambda expression
+84. non-Final variable can be accessed in lambda expression in java 8?\ yes,but it is effectively final in lambda expression
 Any attempt to modify x will produce compilation error
 85. Instance and static variables are accessible and modifiable in lambda expression
 86. Byte stream vs Character stream? (FileInputStream vs FileReader and 8-bit byte vs 16-bit unicode)
-87. Runtime class vs System class?
-    Runtime class - provide access to java runtime system like memoery usage,available memory,invoking garbage collection
+87. Runtime class vs System class?\
+    Runtime class - provide access to java runtime system like memoery usage,available memory,invoking garbage collection\
     System class - provide access to system resources like standard input/output, current time in millis, terminating applications
 
 88. assertions in java? -> testing the correctness of any assumptions.
 89. Can we have multiple public classes in a java source file?
-90. covarient return type? 
+90. covarient return type?\ 
     It is possible to have different return type for a overriding method in child class, but child’s return type should be sub-type of parent’s return type. 
 
     ```
@@ -494,7 +494,48 @@ Any attempt to modify x will produce compilation error
     }
     ```
 
+91. wrapper class?\
+    convert primitive into object and object into primitive
 
+92. Reflection API?\
+    Java Reflection is the process of analyzing and modifying all the capabilities of a class at runtime. Reflection API in Java is used to manipulate class and its members which include fields, methods, constructor, etc. at runtime
+
+
+93. What is the final variable, final class, and final blank variable?\
+94. How will you invoke any external process in Java? using exec() method of Runtime class\ 
+95. How many ways you can take input from the console?\
+    - Buffered Reader Class
+    - Scanner class
+    - Console class - System.console().readLine();   
+
+96. How can you avoid serialization in child class if the base class is implementing the Serializable interface?\
+    In subclass override writeObject() method and throw NotSerializableException()  
+
+97. Serializable vs Externalizable?\
+98. What are the ways to instantiate the Class class?\
+    - using new keyword
+    - using Class.forName()
+    - Using clone()
+    - using deserialization
+    - using newInstance() 
+
+99. autoboxing and unboxing?\
+    automatic conversion of primitive data types into its equivalent Wrapper type is known as boxing and opposite operation is known as unboxing
+100. Difference between creating String as new() and literal?\
+101. String vs StringBuffer vs StringBuilder?\
+    - String is immutable where as StringBuffer and StringBuilder are mutable
+    - StringBuffer is thread safe, StringBuilder is not thread safe
+
+102. What is a Memory Leak? How can a memory leak appear in garbage collected language?\
+    objects are no longer being used by the application, but the Garbage Collector is unable to remove them from working memory\
+    tools to identify useless objects-
+    - HP Openview
+    - HP JMeter
+    - JProbe
+    - IBM Tivoli
+
+103. Why String is popular HashMap key in Java?\
+104. 
 
 
 
