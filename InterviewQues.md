@@ -86,8 +86,197 @@
   No, it might confuse you a bit that threads are created on different objects. But, not to forgot that multiple objects may exist but there is always one class’s class object lock available.  
   Here, when Thread-1 is in static synchronized method1() it must be holding lock on class class’s object and will release lock on class’s class object only when it exits static synchronized method1(). So, Thread-2 will have to wait for Thread-1 to release lock on class’s class object so that it could enter static synchronized method2().  
   Likewise, Thread-2 even cannot enter static synchronized method1() which is being executed by Thread-1. Thread-2 will have to wait for Thread-1 to release lock on  class’s class object so that it could enter static synchronized method1().  
+    Program - 
+    ```
+    class MyRunnable1 implements Runnable {
 
-  
+        @Override
+        public void run() {
+            if (Thread.currentThread().getName().equals("Thread-1"))
+                method1();
+            else
+                method2();
+        }
+
+        static synchronized void method1() {
+            System.out.println(Thread.currentThread().getName() + " in synchronized void method1() started");
+            try {
+                Thread.sleep(2000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            System.out.println(Thread.currentThread().getName() + " in synchronized void method1() ended");
+        }
+
+        static synchronized void method2() {
+            System.out.println(Thread.currentThread().getName() + " in synchronized void method2() started");
+            try {
+                Thread.sleep(2000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            System.out.println(Thread.currentThread().getName() + " in synchronized void method2() ended");
+        }
+    }
+
+    public class MyClass {
+        public static void main(String args[]) throws InterruptedException {
+
+            MyRunnable1 object1 = new MyRunnable1();
+            MyRunnable1 object2 = new MyRunnable1();
+
+            Thread thread1 = new Thread(object1, "Thread-1");
+            Thread thread2 = new Thread(object2, "Thread-2");
+            thread1.start();
+            Thread.sleep(10);// Just to ensure Thread-1 starts before Thread-2
+            thread2.start();
+
+        }
+    }
+
+    ```
+
+* Suppose you have 2 threads (Thread-1 and Thread-2) on same object. Thread-1 is in synchronized method1(), can Thread-2 enter synchronized method2() at same time in java?  
+    No, here when Thread-1 is in synchronized method1() it must be holding lock on object’s monitor and will release lock on object’s monitor only when it exits synchronized method1(). So, Thread-2 will have to wait for Thread-1 to release lock on object’s monitor so that it could enter synchronized method2().  
+    Likewise, Thread-2 even cannot enter synchronized method1() which is being executed by Thread-1. Thread-2 will have to wait for Thread-1 to release lock on object’s monitor so that it could enter synchronized method1().  
+
+* Suppose you have 2 threads (Thread-1 and Thread-2) on same object. Thread-1 is in static synchronized
+  method1(), can Thread-2 enter static synchronized method2() at same time in java?  
+    No, here when Thread-1 is in static synchronized method1() it must be holding lock on class class’s object and will release lock on class’s class object only when it exits static synchronized method1(). So, Thread-2 will have to wait for Thread-1 to release lock on class’s class object so that it could enter static synchronized method2().  
+    Likewise, Thread-2 even cannot enter static synchronized method1() which is being executed by Thread-1. Thread-2 will have to wait for Thread-1 to release lock on  class’s class object so that it could enter static synchronized method1().  
+
+* Suppose you have 2 threads (Thread-1 on object1 and Thread-2 on object2). Thread-1 is in static 
+    synchronized method1(), can Thread-2 enter static synchronized method2() at same time in java?  
+    No, it might confuse you a bit that threads are created on different objects. But, not to forgot that multiple objects may exist but there is always one class’s class object lock available.  
+    Here, when Thread-1 is in static synchronized method1() it must be holding lock on class class’s object and will release lock on class’s class object only when it exits static synchronized method1(). So, Thread-2 will have to wait for Thread-1 to release lock on class’s class object so that it could enter static synchronized method2().  
+    Likewise, Thread-2 even cannot enter static synchronized method1() which is being executed by Thread-1. Thread-2 will have to wait for Thread-1 to release lock on  class’s class object so that it could enter static synchronized method1().  
+
+* Suppose you have thread and it is in synchronized method and now can thread enter other synchronized
+    method from that method in java? -> Yes  
+
+* Suppose you have thread and it is in static synchronized method and now can thread enter other static 
+    synchronized method from that method in java? -> Yes  
+
+* Suppose you have thread and it is in static synchronized method and now can thread enter other non 
+    static synchronized method from that method in java? -> Yes  
+
+* Suppose you have thread and it is in synchronized method and now can thread enter other static
+    synchronized method from that method in java? -> Yes  
+
+* Does Thread implements their own Stack, if yes how? -> Yes
+* When we implement Runnable interface, same object is shared amongst multiple threads, but when we 
+    extend Thread class each and every thread gets associated with new object.   
+
+* How can you ensure all threads that started from main must end in order in which they started and also 
+    main should end in last? -> by calling join method on threads, in short it waits for thread to die on which thread has been called.  
+
+* wait vs sleep?
+    | wait      | sleep     |
+    | -------   | -------   |
+    | always called from synchronized block | need not to be called from synchronized block |
+    | belongs to Object class | belongs to Thread class | 
+    | called on object | called on thread  |
+    | releases object lock | holds object lock |
+
+* solve Producer-consumer problem using wait and notify?
+    ```
+        import java.util.LinkedList;
+        import java.util.List;
+
+        class Producer implements Runnable {
+
+            private List<Integer> sharedQueue;
+            private int maxSize = 2; // maximum number of products which sharedQueue can hold at a time.
+
+            public Producer(List<Integer> sharedQueue) {
+                this.sharedQueue = sharedQueue;
+            }
+
+            @Override
+            public void run() {
+                for (int i = 1; i <= 10; i++) { // produce 10 products.
+                    try {
+                        produce(i);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+
+            private void produce(int i) throws InterruptedException {
+
+                synchronized (sharedQueue) {
+                    // if sharedQuey is full wait until consumer consumes.
+                    while (sharedQueue.size() == maxSize) {
+                        System.out.println("Queue is full, producerThread is waiting for "
+                                + "consumerThread to consume, sharedQueue's size= " + maxSize);
+                        sharedQueue.wait();
+                    }
+                }
+
+                synchronized (sharedQueue) {
+                    System.out.println("Produced : " + i);
+                    sharedQueue.add(i);
+                    Thread.sleep((long) (Math.random() * 1000));
+                    sharedQueue.notify();
+                }
+            }
+        }
+
+        class Consumer implements Runnable {
+            private List<Integer> sharedQueue;
+
+            public Consumer(List<Integer> sharedQueue) {
+                this.sharedQueue = sharedQueue;
+            }
+
+            @Override
+            public void run() {
+                while (true) {
+                    try {
+                        consume();
+                        Thread.sleep(100);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+
+            private void consume() throws InterruptedException {
+
+                synchronized (sharedQueue) {
+                    // if sharedQuey is empty wait until producer produces.
+                    while (sharedQueue.size() == 0) {
+                        System.out.println("Queue is empty, consumerThread is waiting for "
+                                + "producerThread to produce, sharedQueue's size= 0");
+                        sharedQueue.wait();
+                    }
+                }
+                synchronized (sharedQueue) {
+                    Thread.sleep((long) (Math.random() * 2000));
+                    System.out.println("CONSUMED : " + sharedQueue.remove(0));
+                    sharedQueue.notify();
+                }
+            }
+
+        }
+
+        public class ProducerConsumerWaitNotify {
+
+            public static void main(String args[]) {
+                List<Integer> sharedQueue = new LinkedList<Integer>(); // Creating shared object
+
+                Producer producer = new Producer(sharedQueue);
+                Consumer consumer = new Consumer(sharedQueue);
+
+                Thread producerThread = new Thread(producer, "ProducerThread");
+                Thread consumerThread = new Thread(consumer, "ConsumerThread");
+                producerThread.start();
+                consumerThread.start();
+            }
+        }
+    ```
+
 
 
 8. how to swap two strings without using third variable/temp variable
