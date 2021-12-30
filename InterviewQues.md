@@ -45,6 +45,16 @@
     ```
 
 4. collection vs stream
+    | Collection | Stream  |
+    | ---------- | ------- |
+    | Collection is used to store and group the data in particular data structure like List,Map,Set etc | Stream is used to perform complex operations in collection |
+    | Source data can be modified | source data can not be modified |
+    | collection need to iterate externally | stream iterated internally | 
+    | collection can be traversed multiple times | streams once consumed can not traversed again |
+    | collection is eagerly constructed | laily constructed |  
+     
+    
+
 5. How to reverse string -> a)using reverse on SB b)iterative method c)recursion
 6. Remove duplicate element from arraylist
 7. notify() vs notifyAll()
