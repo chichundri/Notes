@@ -1,10 +1,49 @@
-==== Links =====
+==== Links =====  
 **https://github.com/learning-zone/spring-interview-questions/blob/spring/microservices.md**
 **https://github.com/in28minutes/spring-interview-guide**
 
 1. How to protect singleton from reflection api? ->
-2. How to protect singleton from deserialization? - declare method as static as static members are not part of serialization.
-3. How to create Doubleton?
+2. How to protect singleton from deserialization?  
+    - use enum for singleton  
+    - override readResolve() and return same instance or throw exception
+    - declare method as static as static members are not part of serialization.  
+* How to protect singleton from cloning?  
+    overide clone() method and throw exception or return same instance
+3. How to create Doubleton?  
+    Doubleton class has two instances of it.  
+    ```
+    public class Doubleton {
+        private static volatile Doubleton INSTANCE1;
+        private static volatile Doubleton INSTANCE2;
+        private static int call = 0;
+
+        private Doubleton() {
+        }
+
+        public static Doubleton getInstance() {
+            if (call++ % 2 == 0) {
+                if (INSTANCE1 == null) {
+                    synchronized (Doubleton.class) {
+                        if (INSTANCE1 == null) {
+                            INSTANCE1 = new Doubleton();
+                        }
+                    }
+                }
+                return INSTANCE1;
+            } else {
+                if (INSTANCE2 == null) {
+                    synchronized (Doubleton.class) {
+                        if (INSTANCE2 == null) {
+                            INSTANCE2 = new Doubleton();
+                        }
+                    }
+                }
+                return INSTANCE2;
+            }
+        }
+    }
+    ```
+
 4. collection vs stream
 5. How to reverse string -> a)using reverse on SB b)iterative method c)recursion
 6. Remove duplicate element from arraylist
