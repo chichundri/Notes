@@ -566,16 +566,15 @@ Parallel garbage collector is also called as throughput collector. It is the def
     a constant whose value known at compile time and compile replaces constant name with value everywhere in code.  
     `private final int x = 10;`
 
-109.  How bootstrap class loader works in java?
-    - Bootstrap class loader
-    - Extension class loader
-    - System class loader
+109.  How bootstrap class loader works in java?  
+    - Bootstrap class loader  
+    - Extension class loader  
+    - System class loader  
 
 110. While overriding a method can you throw another exception or broader exception?
     If a method declares to throw a given exception, the overriding method in a subclass can only declare to throw that exception or its subclass. This is because of polymorphism.
 
 111. checked, unchecked exception and errors?  
-
     - Checked Exception: These are the classes that extend Throwable except RuntimeException and Error, Example: IOException, SQLException
     - Unchecked Exception: The classes that extend RuntimeException are known as unchecked exceptions.
     Example: ArithmeticException, NullPointerException, ArrayIndexOutOfBoundsException
@@ -584,10 +583,47 @@ Parallel garbage collector is also called as throughput collector. It is the def
 
 112. ClassNotFoundException vs NoClassDefFoundError?
     Both occurs at runtime
+    
     `ClassNotFoundException` - occurs when you try to load a class at run time using Class.forName() or loadClass() methods and mentioned classes are not found in the classpath  
+    
     `NoClassDefFoundError` - occurs when a particular class is present at compile time, but was missing at run time.
 
-113. 
+113. CountDownLatch?  
+    This class enables a java thread to wait until other set of threads completes their tasks.  
+    Initialized with given count and can not reset.
+
+114. CyclicBarrier?  
+    2 or more threads wait for each other to reach a common barrier point. When all threads have reached common barrier point.  
+    * All waiting threads are released  
+    * Event can be triggered as well.  
+    Count can be reset hence called cyclic barrier  
+
+115. How to use Exchanger for sharing Object between Threads in Java?  
+116. What is semaphore?  
+    semaphore controls access to a shared resource by using permits in java.
+    1. If permits are greater than zero, then semaphore allow access to shared resource.  
+    2. If permits are zero or less than zero, then semaphore does not allow access to shared resource.  
+
+117. How do WeakHashMap works?  
+    entry in WeakHashMap automatically removed when key is in no longer use.  
+
+118. PriorityQueue?  
+     elements are ordered as per their natural ordering or based on a custom Comparator supplied at the time of creation. grows dynamically, not thread-safe use PriorityBlockingQueue for concurrent env  
+
+119. solve producer-consumer problem using BlockingQueue and semaphore?  
+
+120. peek() vs poll vs remove() in queue?  
+    peek() - returns the object at the top of the current queue, without removing it. If the queue is empty this method returns null.  
+    poll() - returns the object at the top of the current queue and removes it. If the queue is empty this method returns null  
+    remove() - same as poll difference is when queue is empty. If queue is empty poll() return null whereas remove()  throws NoSuchElementException  
+
+121. ThreadLocal?  
+    The Java ThreadLocal class enables you to create variables that can only be read and written by the same thread.  
+
+122. 
+
+
+
 
 
 
