@@ -51,13 +51,45 @@
     | Source data can be modified | source data can not be modified |
     | collection need to iterate externally | stream iterated internally | 
     | collection can be traversed multiple times | streams once consumed can not traversed again |
-    | collection is eagerly constructed | laily constructed |  
-     
-    
+    | collection is eagerly constructed | lazily constructed |  
 
-5. How to reverse string -> a)using reverse on SB b)iterative method c)recursion
-6. Remove duplicate element from arraylist
-7. notify() vs notifyAll()
+    
+5. How to reverse string  
+    * using reverse on SB 
+    * iterative method(for loop, iterate from length-1)
+    * recursion  
+6. Remove duplicate element from arraylist?  
+    * Pass list to set constructor but insertion order is not maintained
+    * using LinkedHashSet, maintains insertion order also   
+7. notify() vs notifyAll()  
+    notify - wakes up single thread whereas notifyAll wakes up all waiting thread  
+* thread can acquire lock by entering into  
+    - synchronized method  
+    - synchronized block  
+* wait(), notify()  and notifyAll() methods are always called from Synchronized block or synchronized methods only and as soon as thread enters synchronized block it acquires object lock (by holding object monitor).   
+
+* Though we call notify/notifyAll, object do not relase lock immediately, lock will only get released once synchronized block/method completed.  
+
+* Multiple threads may exist on same object but only one thread of that object can enter synchronized method at a time. Threads on different object can enter same method at same time.  
+
+* Object lock vs class lock  
+
+    | Object lock | class lock |
+    | ---------- | ------------ |
+    | Thread can acquire object lock by 1) entering synchronized block 2) entering synchronized method | Thread can acquire lock on class's class object by 1) entering synchronized block 2) entering static synchronized method |
+    | Multiple threads may exist on same object but only one thread of that object can enter synchronized method at a time. Threads on different object can enter same method at same time. | Multiple threads may exist on same or different objects of class but only one thread can enter static synchronized method at a time. |
+    | Multiple objects of class may exist and every object has it’s own lock. | Multiple objects of class may exist but there is always one class’s class object lock available. |
+    | ex - synchronized(myClass) | ex - synchronized(MyClass.class) |  
+
+* Suppose you have 2 threads (Thread-1 on object1 and Thread-2 on object2). Thread-1 is in static
+  synchronized method1(), can Thread-2 enter static synchronized method2() of same class at same time in java?  
+  No, it might confuse you a bit that threads are created on different objects. But, not to forgot that multiple objects may exist but there is always one class’s class object lock available.  
+  Here, when Thread-1 is in static synchronized method1() it must be holding lock on class class’s object and will release lock on class’s class object only when it exits static synchronized method1(). So, Thread-2 will have to wait for Thread-1 to release lock on class’s class object so that it could enter static synchronized method2().  
+  Likewise, Thread-2 even cannot enter static synchronized method1() which is being executed by Thread-1. Thread-2 will have to wait for Thread-1 to release lock on  class’s class object so that it could enter static synchronized method1().  
+
+  
+
+
 8. how to swap two strings without using third variable/temp variable
 9. Wildcard arguements? ->a) with unknown type b) with upper bound c) with lower bound.
 10. can we use abstract and static together? -> No
