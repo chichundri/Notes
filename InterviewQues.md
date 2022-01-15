@@ -277,6 +277,150 @@
         }
     ```
 
+* solve Producer-consumer problem using blocking queue?
+    ```
+    import java.util.concurrent.BlockingQueue;
+    import java.util.concurrent.LinkedBlockingQueue;
+
+    class Producer implements Runnable {
+        private final BlockingQueue<Integer> sharedQueue;
+    
+        public Producer(BlockingQueue<Integer> sharedQueue) {
+            this.sharedQueue = sharedQueue;
+        }
+    
+        @Override
+        public void run() {
+            for(int i=1; i<=10; i++){
+            try {
+                System.out.println("Produced : " + i);
+                //put/produce into sharedQueue.
+                sharedQueue.put(i);          
+            } catch (InterruptedException ex) {
+                
+            }
+            }
+        }
+    }
+
+    class Consumer implements Runnable{
+    
+        private BlockingQueue<Integer> sharedQueue;
+    
+        public Consumer (BlockingQueue<Integer> sharedQueue) {
+            this.sharedQueue = sharedQueue;
+        }
+    
+        @Override
+        public void run() {
+            while(true){
+            try {
+            //take/consume from sharedQueue.
+                System.out.println("CONSUMED : "+ sharedQueue.take());  
+            } catch (InterruptedException ex) {
+                
+            }
+            }
+        }
+    }
+    public class ProducerConsumerBlockingQueue {
+    
+        public static void main(String args[]){
+        
+        //Creating shared object  
+        BlockingQueue<Integer> sharedQueue = new LinkedBlockingQueue<Integer>();
+        
+        Producer producer=new Producer(sharedQueue);
+        Consumer consumer=new Consumer(sharedQueue);
+        
+        Thread producerThread = new Thread(producer, "ProducerThread");
+        Thread consumerThread = new Thread(consumer, "ConsumerThread");
+        producerThread.start();
+        consumerThread.start();
+    
+        }
+    }
+
+    ```
+
+* How to create deadock?
+    ```
+    class A implements Runnable{
+        public void run() {
+            synchronized (String.class) {
+                    
+                    /*
+                    * Adding this optional delay so that Thread-2 could enough time
+                    * to lock Object class and form deadlock.
+                    * If you remove this sleep, because of threads unpredictable
+                    * behavior it might that Thread-1
+                    * gets completed even before Thread-2 is started and we will
+                    * never form deadLock.
+                    */
+                    try {
+                            Thread.sleep(100);
+                    } catch (InterruptedException e) {e.printStackTrace();}
+                    
+                    System.out.println(Thread.currentThread().getName() + "has acquired lock "
+                                + "on String class and waiting to acquire lock on Object class...");
+                    synchronized (Object.class) {
+                            System.out.println(Thread.currentThread().getName() +
+                                        " has acquired lock on Object class");
+                    }
+            }          
+            System.out.println(Thread.currentThread().getName()+" has ENDED");
+        }
+    }
+ 
+    class B extends Thread{
+        public void run() {
+            
+            synchronized (Object.class) {  
+                    System.out.println(Thread.currentThread().getName() + " has acquired "
+                        + "lock on Object class and waiting to acquire lock on String class...");
+                    
+                    /*
+                    * Adding this optional delay so that Thread-1 could enough
+                    * time to lock String class and form deadlock.
+                    * If you remove this sleep, because of threads unpredictable
+                    * behavior it might that Thread-2
+                    * gets completed even before Thread-1 is started and we
+                    * will never form deadLock.
+                    */
+                    try {
+                            Thread.sleep(100);
+                    } catch (InterruptedException e) {e.printStackTrace();}
+                    
+                    
+                    synchronized (String.class) {
+                            System.out.println(Thread.currentThread().getName() +
+                                        " has acquired lock on String class");
+                    }
+            }
+            System.out.println(Thread.currentThread().getName()+ " has ENDED");
+        }
+    }
+    public class DeadlockCreation {
+        public static void main(String[] args) {
+            Thread thread1 = new Thread(new A(), "Thread-1");
+            Thread thread2 = new Thread(new B(), "Thread-2");
+            thread1.start();
+            thread2.start();
+        }
+    }
+
+    ```
+
+* How to solve/avoid deadlock?  
+    - try to avoid nested synchronized blocks/methods
+    - lock specific member variables of class rather than locking whole class  
+        ```synchronized(customObj.str)```  
+    - use join() method(disadvantage is threads start and end in sequentially)  
+
+* Race condition?  
+    More than one thread tring to access shared resource without synchronization causes race condition  
+
+* Executors - creates pool of threads and manages life cycle of all threads in it.  
 
 
 8. how to swap two strings without using third variable/temp variable
@@ -860,17 +1004,56 @@ Parallel garbage collector is also called as throughput collector. It is the def
 
 113. CountDownLatch?  
     This class enables a java thread to wait until other set of threads completes their tasks.  
-    Initialized with given count and can not reset.
+    Initialized with given count and can not reset.count specifies the number of events that must occur before latch is released.  
+    example - In amusement park, wait for 3 person to start ride
 
 114. CyclicBarrier?  
     2 or more threads wait for each other to reach a common barrier point. When all threads have reached common barrier point.  
     * All waiting threads are released  
     * Event can be triggered as well.  
     Count can be reset hence called cyclic barrier  
+    Example -  Let’s say 10 friends (friends are threads) have planned for picnic on place A (Here place A is common barrier point). And they all decided to play certain game (game is event) only on everyones arrival at place A. So, all 10 friends must wait for each other to reach place A before launching event.   
+
+* Phaser? - similar in functionality of CyclicBarrier and CountDownLatch but it provides more
+ flexibility than both of them. It provides flexibility of registering and deRegistering parties at any time  
+ In CyclicBarrier parties can be registered in constructor, in Phaser parties can be registered at any time.  
+
+* Exchanger - Exchanger enables two threads to exchange their data between each other. solves produce-consumer problem.  
+
+* If superclass method throws/declare **unchecked/RuntimeException** in java -  
+    - overridden method of subclass can declare/throw any unchecked/RuntimeException (superclass or subclass)  
+    - overridden method of subclass cannot declare/throw any checked exception in java  
+    - overridden method of subclass can declare/throw same exception in java  
+    - overridden method of subclass may not declare/throw any exception in java  
+
+* If superclass method throws/declare **checked/compileTime** exception in java -   
+    - overridden method of subclass can declare/throw narrower (subclass of) checked exception  
+    - overridden method of subclass can declare/throw any unchecked /RuntimeException  
+    - overridden method of subclass can declare/throw same exception  
+    - overridden method of subclass may not declare/throw any exception in java  
+
+* If superclass method **does not throw/declare** any exception in java -  
+    - overridden method of subclass can declare/throw any unchecked /RuntimeException  
+    - overridden method of subclass cannot declare/throw any checked exception  
+    - overridden method of subclass may not declare/throw any exception in java  
+
+* What will happen when catch and finally block both return value, also when try and finally both return value in java?  
+    method will ultimately return value returned by finally.
+
+* ClassNotFoundException vs NoClassDefFoundError?
+
+    | ClassNotFoundException | NoClassDefFoundError |
+    | ---------------------- | -------------------- |
+    | ClassNotFoundException is Checked (compile time) Exception in java. | NoClassDefFoundError is a Error in java. Error and its subclasses are regarded as unchecked exceptions in java. |
+    | ClassNotFoundException is thrown when JVM tries to class from classpath but it does not find that class. | NoClassDefFoundError is thrown when JVM tries to load class which   1. was NOT available at runtime but  2. was available at compile time. |
+    
+
+
+
 
 115. How to use Exchanger for sharing Object between Threads in Java?  
 116. What is semaphore?  
-    semaphore controls access to a shared resource by using permits in java.
+    semaphore controls access to a shared resource by using permits in java.  
     1. If permits are greater than zero, then semaphore allow access to shared resource.  
     2. If permits are zero or less than zero, then semaphore does not allow access to shared resource.  
 
@@ -890,7 +1073,221 @@ Parallel garbage collector is also called as throughput collector. It is the def
 121. ThreadLocal?  
     The Java ThreadLocal class enables you to create variables that can only be read and written by the same thread.  
 
-122. 
+122. openSession() vs getCurrentSession()?  
+    getCurrentSession - bound to hibernate context, we don't need to close it, once sessionFactory is closed session object also closed, used in single threaded env    
+    openSession - always open new session, need to close after each DB operation, used in multi-threaded environment.  
+
+123. How to implement queue functionality into stack?  
+124. How to implement stack functionality into queue?  
+125. What classes should i prefer to use a key in HashMap in java?
+    All wrapper classes because they are immutable and they implements equals() and hashCode() methods.
+
+126. What do you mean by fail-fast and fast-safe?
+    Iterator returned by few Collection framework Classes are fail-fast, means any structural modification made to these classes during iteration will throw ConcurrentModificationException  
+    fail-fast: ArrayList, LinkedList, Vector, HashSet  
+    fail-safe: CopyOnWriteArrayList, CopyOnWriteArraySet, ConcurrentSkipListSet
+
+127. What are different ways of iterating over elements in List?  
+    ```
+    1. iterator:
+        
+        Iterator<String> iterator = arrayList.iterator();
+        while (iterator.hasNext()) {
+            System.out.println(iterator.next());
+        }
+    2. listIterator:    
+        ListIterator<String> listIterator=arrayList.listIterator();
+
+    3. enumeration:
+        
+        Enumeration<String> listEnum=Collections.enumeration(arrayList); 
+        while(listEnum.hasMoreElements()){
+        System.out.println(listEnum.nextElement()); 
+        }
+        
+    4. enhanced for loop:
+        
+        for (String string : arrayList) {
+            System.out.println(string);
+        }
+        
+    ```    
+
+128. What are different ways of iterating over keys, values and entry in Map?  
+    > Using keys:  
+        `Iterator<Integer> keyIterator=hashMap.keySet().iterator();`
+    > Using values:  
+        `Iterator<String> valueIterator=hashMap.values().iterator();`
+    > Using entry:  
+        `Iterator<Entry<Integer, String>> entryIterator=hashMap.entrySet().iterator();`
+
+
+***Hibernate***
+
+1. sessionFactory? -> immutable, thread-safe, single instance per application  
+
+2. get()? vs load()?  
+
+    |   get   |   load   |
+    | ------- | --------- |
+    | always hit DB and return real object | returns proxy object  |
+    | return null if data not found | return exception if data not found |
+    | used when we are not sure exists or not | used when we are sure data exists |  
+
+3. save() vs persist()?
+    
+    | save      |  persist  |
+    | --------- | --------- |
+    | return serialized object | return void  |
+    | can be invoked outside transaction | invke inside transation |
+
+
+
+
+***Spring Security***
+
+* How to get user details in spring security?
+    ```
+    UserDetails userDetails = (UserDetails)SecurityContextHolder.getContext().getAuthentication().getPrincipal(); 
+    ```  
+
+* How to secure a method in spring security using annotation?
+    ```
+    @Secured("ROLE_ADMIN")
+    public void deleteUser(String name); 
+    ```
+
+* How to pre-authorize and post-authorize a method in spring security?  
+    ```
+    @PreAuthorize ("hasRole('ROLE_WRITE')")
+    public void addBook(Book book);
+    @PostAuthorize ("returnObject.owner == authentication.name")
+    public Book getBook(); 
+
+    ```
+    returnObject is built-in keyword provided by spring security.  
+
+* @Secured vs @RolesAllowed vs @PreAuthorize?  
+    @Secured and @RolesAllowed are the same the only difference is @RolesAllowed is a standard annotation (i.e. not only spring security) whereas @Secured is spring security only.  
+    @secured - `@EnableGlobalMethodSecurity(securedEnabled=true)`
+    @RolesAllowed - `@EnableGlobalMethodSecurity(jsr250Enabled=true)`
+
+    @PreAuthorize is different in a way that it is more powerful then the other 2. It allows for SpEL expression for a more fine-grained control.  
+    @preAuthorize - `@EnableGlobalMethodSecurity(prePostEnabled=true)`
+
+* What is the role of @PreFilter and @PostFilter in spring security?  
+* How to enable method level security in spring?  
+    `@EnableGlobalMethodSecurity(securedEnabled=true, prePostEnabled=true)`
+
+* What are the new annotations introduced in spring 4 security for JUnit test?  
+    `@WithMockUser and @WithUserDetails`
+    ```
+    @Test 
+    @WithMockUser(username = "ram", roles={"ADMIN"})
+    public class SpringSecurityTest {} 
+    ```    
+
+* Which filter class is needed for spring security?  
+    ```
+    import org.springframework.security.web.context.AbstractSecurityWebApplicationInitializer;
+    public class SecurityInitializer extends AbstractSecurityWebApplicationInitializer {
+    } 
+    ```    
+
+* What is minimum web.xml configuration to run Spring MVC?  
+    - define DispatcherServlet
+    - define contextCOnfigLocation
+    - define ContextLoaderListener
+
+    ```
+    <servlet>
+        <servlet-name>dispatcher</servlet-name>
+        <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+        <load-on-startup>1</load-on-startup>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>dispatcher</servlet-name>
+        <url-pattern>/</url-pattern>
+    </servlet-mapping>
+    <context-param>
+        <param-name>contextConfigLocation</param-name>
+        <param-value>/WEB-INF/dispatcher-servlet.xml</param-value>
+    </context-param>
+    <listener>
+        <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+    </listener> 
+
+    ```
+
+* How to handle views in Spring MVC using XML?  
+    configure InternalResourceViewResolver  
+    ```
+    <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+    <property name="prefix" value="/pages/"/>
+    <property name="suffix" value=".jsp"/> 
+    </bean> 
+    ```    
+
+* How to configure DispatcherServlet without web.xml in Spring MVC?  
+    - Implement WebApplicationInitializer interface
+    - override onStartup()  
+    ```
+    public class WebAppInitializer implements WebApplicationInitializer {
+    public void onStartup(ServletContext servletContext) throws ServletException {
+            AnnotationConfigWebApplicationContext ctx = new AnnotationConfigWebApplicationContext();  
+            ctx.register(AppConfig.class);  
+            ctx.setServletContext(servletContext);    
+            Dynamic dynamic = servletContext.addServlet("dispatcher", new DispatcherServlet(ctx));  
+            dynamic.addMapping("/");  
+            dynamic.setLoadOnStartup(1);  
+        }  
+    } 
+    ```
+
+* How to define Spring MVC view in @Configuration class without spring XML?  
+    ```
+    @Bean  
+    public UrlBasedViewResolver setupViewResolver() {  
+        UrlBasedViewResolver resolver = new UrlBasedViewResolver();  
+        resolver.setPrefix("/views/");  
+        resolver.setSuffix(".jsp");  
+        resolver.setViewClass(JstlView.class);
+        return resolver;  
+    } 
+    ```
+
+* @RestController = @Controller + @ResponseBody
+
+* Hystrix?  
+    Hystrix is a latency and fault tolerance library designed to isolate points of access to remote systems, services and 3rd party libraries, stop cascading failure and enable resilience in complex distributed systems where failure is inevitable.  
+
+* What is Hystrix Circuit Breaker? Need for it?  
+    In case of any exception in exposed service fallback method is defined to return default value.  
+
+* 
+
+
+
+
+***Design patterns***
+* Solid Design principles
+    1. Single responsibility principle - one class has one responsibility.
+    2. Open-Closed principle - specification, open for extension closed for modification.i.e add new feature only by adding new code.
+    3. Liskov Substitution principle - Subtypes must be substitutable for their base types.
+    4. Interface-segregation principle - recommends split interface into smaller interfaces.
+    5. Depedency Inversion Principle - 
+
+* Top 10 Object oriented design principles
+    1. DRY(Don't repeat yourself) - avoid uplication in code.
+    2. Encapsulate what changes - hides implementation details, helps in maintainance.
+    3. Open-Closed principle - open for extension closed for modification
+    4. SRP(Single Responsibility Principle) - one class should do one thing and do it well.
+    5. DIP(Dependency Inversion Principle) - don't ask, let framework give to you.
+    6. Favor composition over inheritance - code reuse without cost od inflexibility.
+    7. LSP(Liskov substitution Principle) - Subtype must be substitutable for super type.
+    8. ISP(Interface Segregation Principle) - Avoid monolithic interface, reduce pain on client side
+    9. Programming for interface - helps in maintainance,improves flexibility
+    10. Delegation principle - Don't do all things by yourself,delegate it.
 
 
 
