@@ -1115,11 +1115,12 @@ Parallel garbage collector is also called as throughput collector. It is the def
 
 128. What are different ways of iterating over keys, values and entry in Map?  
     > Using keys:  
-        `Iterator<Integer> keyIterator=hashMap.keySet().iterator();`
+        `Iterator<Integer> keyIterator=hashMap.keySet().iterator();`  
     > Using values:  
-        `Iterator<String> valueIterator=hashMap.values().iterator();`
+        `Iterator<String> valueIterator=hashMap.values().iterator();`  
     > Using entry:  
-        `Iterator<Entry<Integer, String>> entryIterator=hashMap.entrySet().iterator();`
+        `Iterator<Entry<Integer, String>> entryIterator=hashMap.entrySet().iterator();`  
+        
 
 
 ***Hibernate***
