@@ -2,7 +2,10 @@
 **https://github.com/learning-zone/spring-interview-questions/blob/spring/microservices.md**
 **https://github.com/in28minutes/spring-interview-guide**
 
-1. How to protect singleton from reflection api? ->
+**https://www.techiedelight.com/data-structures-and-algorithms-problems/**
+
+1. How to protect singleton from reflection api?  
+    throw run-time exception in the constructor if the instance already exists
 2. How to protect singleton from deserialization?  
     - use enum for singleton  
     - override readResolve() and return same instance or throw exception
@@ -421,6 +424,11 @@
     More than one thread tring to access shared resource without synchronization causes race condition  
 
 * Executors - creates pool of threads and manages life cycle of all threads in it.  
+* wait until all threads finish their work in java using Executor framework?  
+    1. Using join() on threads
+    2. CountDownLatch, consider CyclicBarrier if want to reset the counter.
+    3. iterate through all `Future` objects after submitting to ExecutorService
+
 
 
 8. how to swap two strings without using third variable/temp variable
@@ -501,10 +509,10 @@
     ```
     - Reentrant lock - preventing queued threads from suffering some types of resource starvation
     - Read/Write lock
-23) RequestParam vs Pathvariable?
-    @RequestParam - used to request parameter from URL.Below date is RequestParam
-    http://localhost:8080/shop/order/{orderId}/receipts?date=12-05-2017
-    @PathVariable - used to extract value from URI.Above exmaple orderId is pathvariable
+23) RequestParam vs Pathvariable?  
+    `@RequestParam` - used to request parameter from URL, below date is RequestParam  
+    http://localhost:8080/shop/order/{orderId}/receipts?date=12-05-2017  
+    `@PathVariable` - used to extract value from URI.Above exmaple orderId is pathvariable
     Jersey annotations - PathParam & QueryParam
 24) Encapsulation - restricting direct access to variables
 25) Abstraction - hiding internal implementation.
@@ -678,11 +686,8 @@
 53. Producer-Consumer programm?https://www.geeksforgeeks.org/producer-consumer-solution-using-threads-java/
 54. http://java-latte.blogspot.com/2014/04/Semaphore-CountDownLatch-CyclicBarrier-Phaser-Exchanger-in-Java.html
 55. java concurrency - https://www.javacodegeeks.com/2015/09/the-java-util-concurrent-package.html
-56. CountDownLatch- is used to make sure that a task waits for other threads before it starts. To understand its application, let us consider a server where 
-    the main task can only start when all the required services have started.
-    Working of CountDownLatch: When we create an object of CountDownLatch, we specify the number of threads it should wait for, all such thread are required to 
-    do count down by calling CountDownLatch.countDown() once they are completed or ready to the job. As soon as count reaches zero, the waiting task starts 
-    running.
+56. CountDownLatch- is used to make sure that a task waits for other threads before it starts. To understand its application, let us consider a server where the main task can only start when all the required services have started.  
+Working of CountDownLatch: When we create an object of CountDownLatch, we specify the number of threads it should wait for, all such thread are required to do count down by calling `CountDownLatch.countDown()` once they are completed or ready to the job. As soon as count reaches zero, the waiting task starts running.
 
 57. File upload and download in sring boot
     application.properties
@@ -876,7 +881,8 @@ https://www.interviewbit.com/java-8-interview-questions/
 82. lambda expression?
     lambda expression is a function that we can reference and pass around as an object.(Anonymous function)\
 83. Final variable can be accessed in lambda expression in java 8? - yes
-84. non-Final variable can be accessed in lambda expression in java 8?\ yes,but it is effectively final in lambda expression
+84. non-Final variable can be accessed in lambda expression in java 8?  
+yes,but it is effectively final in lambda expression
 Any attempt to modify x will produce compilation error
 85. Instance and static variables are accessible and modifiable in lambda expression
 86. Byte stream vs Character stream? (FileInputStream vs FileReader and 8-bit byte vs 16-bit unicode)
@@ -1004,7 +1010,7 @@ Parallel garbage collector is also called as throughput collector. It is the def
 
 113. CountDownLatch?  
     This class enables a java thread to wait until other set of threads completes their tasks.  
-    Initialized with given count and can not reset.count specifies the number of events that must occur before latch is released.  
+    Initialized with given count and can not reset. Count specifies the number of events that must occur before latch is released.  
     example - In amusement park, wait for 3 person to start ride
 
 114. CyclicBarrier?  
@@ -1089,12 +1095,14 @@ Parallel garbage collector is also called as throughput collector. It is the def
 
 127. What are different ways of iterating over elements in List?  
     ```
+    
     1. iterator:
         
         Iterator<String> iterator = arrayList.iterator();
         while (iterator.hasNext()) {
             System.out.println(iterator.next());
         }
+
     2. listIterator:    
         ListIterator<String> listIterator=arrayList.listIterator();
 
@@ -1120,8 +1128,371 @@ Parallel garbage collector is also called as throughput collector. It is the def
         `Iterator<String> valueIterator=hashMap.values().iterator();`  
     > Using entry:  
         `Iterator<Entry<Integer, String>> entryIterator=hashMap.entrySet().iterator();`  
+
+129. comparable vs comparator?
+130. Can we use null key in TreeMap? Give reason?
+131. What is difference between using instanceOf operator and getClass() in equals method?  
+    instanceOf it will return true for comparing current class with its subclass as well, but getClass() will return true only if exactly same class is compared.  
+
+132. Inner Class/member inner class?  
+    ```
+    class OuterClass {
+
+        int i = 1; // instanceVariable
+
+        void m() {
+        } // instanceMethod
+
+        static int staticI = 1; // staticVariable
+
+        static void staticM() {
+        } // staticMethod
+
+        // Inner class
+        class InnerClass {
+            public void method() {
+                System.out.println("In InnerClass's method");
+
+                i = 1; // OuterClass instanceVariable
+                m(); // OuterClass instanceMethod
+
+                staticI = 1; // OuterClass staticVariable
+                staticM(); // OuterClass staticMethod
+
+                //Inner classes cannot not declare static initialization blocks
+                static{} //compilation error
+
+                 //Inner classes cannot not declare member interfaces.
+                interface I{} //compilation error
+
+                // Inner classes cannot not declare static members
+                static int i = 2; // compilation error
+
+                System.out.println("OuterClass reference=" + OuterClass.this);
+                System.out.println("InnerClass reference=" + this);
+
+                OuterClass.this.i = 2;// Accessing OuterClass instanceVariable using OuerClass reference
+                OuterClass.this.m();// Accessing OuterClass instanceMethod using OuterClass reference
+
+            }
+        } // End InnerClass
+    }
+
+    public class InnerClassTest {
+        public static void main(String[] args) {
+            // Creating instance of InnerClass
+            new OuterClass().new InnerClass().method();
+
+        }
+    }
+    ```
+
+
+132. static nested class  
+    ```
+    class OuterClass {
+    // StaticNestedClass
+    static class StaticNestedClass {
+ 
+           // StaticNestedClass can declare static initialization blocks
+           static {
+           }
+ 
+           // StaticNestedClass can declare member interfaces.
+           interface I {
+           }
+ 
+           // StaticNestedClass can declare static members
+           static int i = 2;
+ 
+           // StaticNestedClass can declare constant variables
+           static final int j = 3;
+  
+           //StaticNestedClass classes can declare instance initialization blocks
+           {}
+           
+           //StaticNestedClass constructor
+           StaticNestedClass() {}
+
+      }
+    }
+
+    ```
+
+133. Local inner class?  
+    ```
+    class OuterClass {
+        // LocalInnerClass inside instance block
+        {
+            class A {
+            }
+        }
+
+        // LocalInnerClass inside static block
+        static {
+            class A {
+            }
+        }
+
+        void myMethod() {
+            // LocalInnerClass inside if statement
+            if (true) {
+                class A {
+                }
+            }
+
+            // LocalInnerClass inside for loop statement
+            for (int i = 0; i < 1; i++) {
+                class A {
+                }
+            }
+        }
+    }
+
+    ```
+
+134.Anonymous Inner class?  
+    - AnonymousInnerClass implement interface
+    ```
+    interface MyInterface {
+        void m();
+    }
+
+    public class InnerClassTest {
+        public static void main(String[] args) {
+
+            // Anonymous inner class
+            new MyInterface() { // implementing interface
+                public void m() { 
+                    // Provide implementation of MyInterface's m() method
+                    System.out.println("implementation of MyInterface's m() method");
+                }
+            }.m();
+        }
+    }
+    ```
+
+135. What are Method references?  
+    There are 4 types of Method reference in Java 8  
+* reference to static method  - 
+ContainingClass::staticMethodName  
+* Reference to an instance method of a particular object - 
+containingObject::instanceMethodName  
+* Reference to an instance method of an arbitrary object of a particular type - 
+ContainingType::methodName  
+* Reference to a constructor - 
+ClassName::new
+
+136. Multiple DB conections in Spring boot?
+    ```
+    #first db
+    spring.datasource.url = [url]
+    spring.datasource.username = [username]
+    spring.datasource.password = [password]
+    spring.datasource.driverClassName = oracle.jdbc.OracleDriver
+
+    #second db ...
+    spring.secondDatasource.url = [url]
+    spring.secondDatasource.username = [username]
+    spring.secondDatasource.password = [password]
+    spring.secondDatasource.driverClassName = oracle.jdbc.OracleDriver
+
+    @Bean
+    @Primary
+    @ConfigurationProperties(prefix="spring.datasource")
+    public DataSource primaryDataSource() {
+        return DataSourceBuilder.create().build();
+    }
+
+    @Bean
+    @ConfigurationProperties(prefix="spring.secondDatasource")
+    public DataSource secondaryDataSource() {
+        return DataSourceBuilder.create().build();
+    }
+    ```
+
+137. Parallel stream vs Sequential ?  
+138. Qualifier vs Primary?  
+    `@Primary` indicates that a bean should be given preference when multiple candidates are qualified to autowire a single-valued dependency.  
+    `@Qualifier` indicates specific bean should be autowired when there are multiple candidates.
+139. Distributed Transaction in microservices?
+140. FeignClient?
+141. `@AutoConfiguration` ? -> automatically configures the Spring application based on the jar dependencies that we have added. To enable it use `@EnableAutoConfiguration` (it is warpped in `@SpringBootApplication` so not needed)
+142. `@SpringBootApplication = @Configuration + @EnableAutoConfiguration + @ComponentScan`
+143. How to Inject Prototype Scoped Bean into a Singleton Bean in Spring? -> Beans are instantiated only once at the time of container initialization  
+    1. Implementing the ApplicationContextAware interface  
+    2. Lookup method injection in Spring  
+    3. aop:scoped-proxy  
+    4. Using ObjectFactory interface  
+
+144. Can Enum extend any class in Java?  
+    No, enum by default extends abstract base class java.lang.Enum, multiple inheriance problem with classes.  
+145. Spring beans are thread-safe?  
+    No, container doesn't handle synchronization/thread-safety, it handles life cycle of object.  
+146. Interface With Default Methods vs Abstract Class 
+147. map vs flatMap?  
+    Both `map` and `flatMap` can be applied to a `Stream<T>` and they both return a `Stream<R>`. The difference is that the map operation produces *one output* value for each input value, whereas the flatMap operation produces an *arbitrary number* (zero or more) values for each input value.  
+    One line answer: flatMap helps to flatten a `Collection<Collection<T>>` into a `Collection<T>`. In the same way, it will also flatten an Optional<Optional<T>> into Optional<T>  
+    Example -  
+    ```
+    public class Parcel {
+        String name;
+        List<String> items;
+
+        public Parcel(String name, String... items) {
+            this.name = name;
+            this.items = Arrays.asList(items);
+        }
+
+        public List<String> getItems() {
+            return items;
+        }
+
+        public static void main(String[] args) {
+            Parcel amazon = new Parcel("amazon", "Laptop", "Phone");
+            Parcel ebay = new Parcel("ebay", "Mouse", "Keyboard");
+            List<Parcel> parcels = Arrays.asList(amazon, ebay);
+
+            System.out.println("-------- Without flatMap() ---------------------------");
+            List<List<String>> mapReturn = parcels.stream().map(Parcel::getItems).collect(Collectors.toList());
+            System.out.println("\t collect() returns: " + mapReturn);
+
+            System.out.println("\n-------- With flatMap() ------------------------------");
+            List<String> flatMapReturn = parcels.stream().map(Parcel::getItems).flatMap(Collection::stream)
+                    .collect(Collectors.toList());
+            System.out.println("\t collect() returns: " + flatMapReturn);
+        }
+    }
+    ```
+
+148. Methods of Stream class?
+    1. Intermediate operation - map, filter, sorted
+    2. Terminal operation - collect, forEach, reduce
+
+149. return type of lambda expression? -> return type of method defined in FunctionalInterface??  convert lambda expression back to anonymous class.
+150. JpaRepository vs CrudRepository?  
+    PagingAndSorting is added advantage in  JpaRepository  
+    JpaRepository -> PagingAndSortingRepository -> CrudRepository -> Repository  
+
+151. Callable vs Runnable?  
+    1. Callable - needs to implement call() method, Runnable needs to implement run() method  
+    2. Callable return value of Future, but runnable returns void.  
+    3. Callable throw checked exception but runnable not  
+    4. Thread constructor do not receive callable object so to execute callable task use `ExecutorService`  
+    5. To execute callable task use submit() method.
+    
+*can we convert runnbale task into callable? -> Yes*  
+`Callable callable = Executors.callable(Runnable task);`
         
 
+**`StringBuffer` class doesn’t overrides `equals` method of `Object` class and it compares reference and not data**
+
+152. what hashcode returned by Object class?  
+    `hashCode` implemented as native method in object class, it marked as `@HotSpotIntrinsicCandidate`
+
+Kiali - Kiali is a management console for Istio service mesh
+Jaeger - is open source software for tracing transactions between distributed services.
+Grafana - metrics visualization
+
+153. create thread using java8?  
+    ```
+    Runnable task = () -> {
+        String threadName = Thread.currentThread().getName();
+        System.out.println("Hello " + threadName);
+    };
+
+    task.run();
+    ```
+
+154. ways to create thread and start?  
+* Thread Subclass -
+    ```
+     public class MyThread extends Thread {
+        public void run(){
+        System.out.println("MyThread running");
+        }
+    }
+    MyThread myThread = new MyThread();
+    myTread.start();
+    ```
+
+* Runnable Interface - 
+    ```
+    Runnable runnable = new MyRunnable();
+
+    Thread thread = new Thread(runnable);
+    thread.start();
+    ```
+
+* Anonymous subclass of thread -
+    ```
+     Thread thread = new Thread(){
+        public void run(){
+        System.out.println("Thread Running");
+        }
+    }
+    thread.start();
+    ```
+     ```
+    new Thread() {
+        public void run() {
+            System.out.println("blah");
+        }
+    }.start();    
+    ```
+* Anonymous implementation of Runnable - 
+    ```
+    new Thread(new Runnable() {
+        public void run() {
+            System.out.println("blah");
+        }
+    }).start();
+    ```
+    ```
+    Runnable myRunnable = new Runnable(){
+        public void run(){
+            System.out.println("Runnable running");
+        }
+    };
+    Thread t = new Thread(myRunnable);
+    t.start();
+    ```
+* Lambda implementation of Runnable
+    ```
+    Runnable runnable = () -> {  System.out.println("Lambda Runnable running");};
+    ```
+
+155. @ControllerAdvice vs @RestControllerAdvice?  
+`@RestControllerAdvice` = `@ControllerAdvice` + `@ResponseBody` - we can use in REST web services.  
+`@ControllerAdvice` - We can use in both MVC and Rest web services, need to provide the ResponseBody if we use this in Rest web services.
+
+156. sort list in reverse order in java8?   
+    ```
+    list.stream()
+        .sorted(Collections.reverseOrder())
+        .collect(Collectors.toList());
+    ```
+Custom comparator -  
+
+    ```
+    List<User> sortedList = userList.stream()
+        .sorted(customComparator)
+        .collect(Collectors.toList());
+    ------------
+    Comparator<User> customComparator = new Comparator<User>() {
+        @Override
+        public int compare(User o1, User o2) {
+            if(o1.getAge() == o2.getAge())
+                return o1.getName().compareTo(o2.getName());
+            else if(o1.getAge() > o2.getAge())
+                return 1;
+            else return -1;
+        }
+    };
+    ```
+
+
+    
 
 ***Hibernate***
 
@@ -1141,6 +1512,10 @@ Parallel garbage collector is also called as throughput collector. It is the def
     | --------- | --------- |
     | return serialized object | return void  |
     | can be invoked outside transaction | invke inside transation |
+
+4. *`EntityManagerFactory` instances and, consequently, Hibernate's `SessionFactory` instances, are thread-safe whereas `EntityManager` instances are not thread-safe and are meant to be used in thread-confined environments*
+
+
 
 
 
