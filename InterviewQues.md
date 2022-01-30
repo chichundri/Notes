@@ -1319,20 +1319,17 @@ Parallel garbage collector is also called as throughput collector. It is the def
             class A {
             }
         }
-
         // LocalInnerClass inside static block
         static {
             class A {
             }
         }
-
         void myMethod() {
             // LocalInnerClass inside if statement
             if (true) {
                 class A {
                 }
             }
-
             // LocalInnerClass inside for loop statement
             for (int i = 0; i < 1; i++) {
                 class A {
@@ -1432,6 +1429,7 @@ ClassName::new
     Both `map` and `flatMap` can be applied to a `Stream<T>` and they both return a `Stream<R>`. The difference is that the map operation produces *one output* value for each input value, whereas the flatMap operation produces an *arbitrary number* (zero or more) values for each input value.  
     One line answer: flatMap helps to flatten a `Collection<Collection<T>>` into a `Collection<T>`. In the same way, it will also flatten an Optional<Optional<T>> into Optional<T>  
     Example -  
+
     ```
     public class Parcel {
         String name;
@@ -1450,7 +1448,6 @@ ClassName::new
             Parcel amazon = new Parcel("amazon", "Laptop", "Phone");
             Parcel ebay = new Parcel("ebay", "Mouse", "Keyboard");
             List<Parcel> parcels = Arrays.asList(amazon, ebay);
-
             System.out.println("-------- Without flatMap() ---------------------------");
             List<List<String>> mapReturn = parcels.stream().map(Parcel::getItems).collect(Collectors.toList());
             System.out.println("\t collect() returns: " + mapReturn);
