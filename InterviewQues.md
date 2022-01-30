@@ -1282,6 +1282,7 @@ Parallel garbage collector is also called as throughput collector. It is the def
 
 132. static nested class  
     ```
+    
     class OuterClass {
     // StaticNestedClass
     static class StaticNestedClass {
@@ -1308,12 +1309,11 @@ Parallel garbage collector is also called as throughput collector. It is the def
 
       }
     }
-
     ```
 
 133. Local inner class?  
     ```
-    
+
     class OuterClass {
         // LocalInnerClass inside instance block
         {
