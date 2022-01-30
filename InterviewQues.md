@@ -1313,23 +1313,27 @@ Parallel garbage collector is also called as throughput collector. It is the def
 
 133. Local inner class?  
     ```
+    
     class OuterClass {
         // LocalInnerClass inside instance block
         {
             class A {
             }
         }
+
         // LocalInnerClass inside static block
         static {
             class A {
             }
         }
+
         void myMethod() {
             // LocalInnerClass inside if statement
             if (true) {
                 class A {
                 }
             }
+
             // LocalInnerClass inside for loop statement
             for (int i = 0; i < 1; i++) {
                 class A {
@@ -1337,7 +1341,6 @@ Parallel garbage collector is also called as throughput collector. It is the def
             }
         }
     }
-
     ```
 
 134.Anonymous Inner class?  
