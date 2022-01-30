@@ -4,6 +4,10 @@
 
 **https://www.techiedelight.com/data-structures-and-algorithms-problems/**
 
+**https://winterbe.com/posts/2014/07/31/java8-stream-tutorial-examples/**
+
+**https://github.com/BruceEckel/OnJava8-Examples**
+
 1. How to protect singleton from reflection api?  
     throw run-time exception in the constructor if the instance already exists
 2. How to protect singleton from deserialization?  
@@ -521,10 +525,30 @@
 27) Restemplate vs WebClient?
 28) @Secured vs @PreAuthorize?
 29. Object class and methods of it? - equals, hascode, toString, wait(), wait(long,int), wait(long), notify, notifyAll, finalize, clone, getClass
-30. What is aggregation and composition?
-    composition- belongs to, strong kind of part-of relationship, the objects lifecycles are tied. 
-    It means that if we destroy the owner object, its members also will be destroyed with it. Example-building and room, car and engine
-    aggregation - has-a relationship, weak association, the lifecycles of the objects aren't tied: every one of them can exist independently of each other.Example- Organization and person, car and driver
+30. What is aggregation and composition?  
+    *composition*- belongs to, strong kind of *part-of* relationship, the objects lifecycles are tied.
+    It means that if we destroy the owner object, its members also will be destroyed with it.  
+    Example-building and room, car and engine 
+    ```
+	class Car {
+		private Engine engine;
+
+		Car(Engine en) {
+			engine = en;
+		}
+	}
+    ``` 
+    *aggregation* - has-a relationship, weak association, the lifecycles of the objects aren't tied, every one of them can exist independently of each other.  
+    Example- Organization and person, car and driver
+    ```
+    class Organization {
+        private List<Person> person;
+    }
+
+    class Person {
+        String id,name; 
+    }
+    ```
 31. when abstract class and interface are used? 
     classes that extends abstract class, have many common methods or fields(closely related classes-vehicle,car,volvoCar,OtherCar)
 32. String immutability and reason? state of object remains constant after its creation, why?-caching, security, synchronization, performance,thread-safe
@@ -652,11 +676,9 @@
     have additional information about the object.
     Example - Serializable, Cloneable
 47. can we override and overload main methods? Yes
-48. ClassNotFoundException vs NoClassDefFoundError
-    ClassNotFoundException - occurs when you try to load a class at runtime using Class.forName() or loadClass() methods and requested classes are not found in
-    classpath. Checked exception. derived from java.lang.Exception
-    NoClassDefFoundError - occurs when class was present during compile time and program was compiled and linked successfully but class was not present during
-    runtime. It is error which is derived from LinkageError. occurs at runtime
+48. ClassNotFoundException vs NoClassDefFoundError  
+    *ClassNotFoundException* - occurs when you try to load a class at runtime using Class.forName() or loadClass() methods and requested classes are not found in classpath. Checked exception derived from java.lang.Exception  
+    *NoClassDefFoundError* - occurs when class was present during compile time and program was compiled and linked successfully but class was not present during runtime. It is error which is derived from LinkageError. occurs at runtime  
 
 49. shallow copy vs deep copy?
     | Shallow copy | Deep copy |
@@ -1122,12 +1144,82 @@ Parallel garbage collector is also called as throughput collector. It is the def
     ```    
 
 128. What are different ways of iterating over keys, values and entry in Map?  
-    > Using keys:  
-        `Iterator<Integer> keyIterator=hashMap.keySet().iterator();`  
-    > Using values:  
-        `Iterator<String> valueIterator=hashMap.values().iterator();`  
-    > Using entry:  
-        `Iterator<Entry<Integer, String>> entryIterator=hashMap.entrySet().iterator();`  
+* *Using keys*:  
+    1. iterator over keys
+    ```
+    Iterator<Integer> keyIterator=hashMap.keySet().iterator();
+    while (keyIterator.hasNext()) {
+        String key = keyIterator.next();
+        System.out.println(key + ":" + hashMap.get(key));
+    }
+    ```
+    2. using enhanced for loop - 
+    ```
+    public void iterateUsingKeySetAndForeach(Map<String, Integer> map){
+        for (String key : map.keySet()) {
+            System.out.println(key + ":" + map.get(key));
+        }
+    }
+    ```
+* *Using values*:  
+    1. iterator over values
+    ```
+    Iterator<String> valueIterator=hashMap.values().iterator();
+    while (valueIterator.hasNext()) {
+        Integer value = valueIterator.next();
+        System.out.println("value :" + value);
+    }
+    ```  
+    2. using enhanced for loop - 
+    ```
+    public void iterateValues(Map<String, Integer> map) {
+        for (Integer value : map.values()) {
+            System.out.println(value);
+        }
+    }
+    ```
+* *Using entry*: 
+    1. iterator over entry  
+    ```
+    Iterator<Entry<Integer, String>> entryIterator=hashMap.entrySet().iterator();
+    while (entryIterator.hasNext()) {
+        Map.Entry<String, Integer> entry = entryIterator.next();
+        System.out.println(entry.getKey() + ":" + entry.getValue());
+    }
+    ```
+    2. Using enhanced for loop -
+    ```
+    public void iterateUsingEntrySet(Map<String, Integer> map) {
+        for (Map.Entry<String, Integer> entry : map.entrySet()) {
+            System.out.println(entry.getKey() + ":" + entry.getValue();
+        }
+    }
+    ```
+* Using lambda and forEach()
+    ```
+    public void iterateUsingLambda(Map<String, Integer> map) {
+        map.forEach((k, v) -> System.out.println((k + ":" + v)));
+    }
+    ```
+    ```
+    public void iterateByKeysUsingLambda(Map<String, Integer> map) {
+	    map.keySet().forEach(k -> System.out.println((k + ":" + map.get(k))));
+	}
+    ```
+    ```
+    public void iterateValuesUsingLambda(Map<String, Integer> map) {
+        map.values().forEach(v -> System.out.println(("value: " + v)));
+    }
+    ```
+* Using Stream API  
+    ```
+    public void iterateUsingStreamAPI(Map<String, Integer> map) {
+        map.entrySet().stream()
+        // ... some other Stream processings
+        .forEach(e -> System.out.println(e.getKey() + ":" + e.getValue()));
+    }
+    ```
+
 
 129. comparable vs comparator?
 130. Can we use null key in TreeMap? Give reason?
@@ -1315,7 +1407,13 @@ ClassName::new
 138. Qualifier vs Primary?  
     `@Primary` indicates that a bean should be given preference when multiple candidates are qualified to autowire a single-valued dependency.  
     `@Qualifier` indicates specific bean should be autowired when there are multiple candidates.
-139. Distributed Transaction in microservices?
+139. Distributed Transaction in microservices?  
+     - 2 phase commit  
+     - 3 phase commit  
+     - saga pattern - 2 types  
+        1. choreography/event - event based, produces and consumes events(MQ)
+        2. orchestration/command - coordinator service is responsible for centralizing the saga’s decision making and sequencing business logic   
+
 140. FeignClient?
 141. `@AutoConfiguration` ? -> automatically configures the Spring application based on the jar dependencies that we have added. To enable it use `@EnableAutoConfiguration` (it is warpped in `@SpringBootApplication` so not needed)
 142. `@SpringBootApplication = @Configuration + @EnableAutoConfiguration + @ComponentScan`
@@ -1491,8 +1589,40 @@ Custom comparator -
     };
     ```
 
+157. SOLID principle and how you used in your project?
+
+*map() - transform one object into other by applying a function*  
+*filter() - filters elements based upon a condition*  
+
+158. Does Immutability Really Mean Thread Safety?
+159. Upper bounded wildcards vs lower bounded wildcards?
+    Upper bounded wildcards -  
+    `List<? extends Number> list`  
+    Lower bounded wildcards -  
+    `List<? super Integer> list`  
+160. Fail-safe collections and fail-fast collections?  
+    fail-safe: ConcurrentHashMap, CopyOnArrayList, CopyOnArraySet  
+    fail-fast: ArrayList, LinkedList, etc
+
+161. third highrst salary?  
+    `SELECT * FROM employee ORDER BY salary DESC LIMIT 1 OFFSET 2;`
+
+162. 
+
+
+
+
+
+
+
+
+
+
+
+
 
     
+
 
 ***Hibernate***
 
@@ -1650,8 +1780,11 @@ Custom comparator -
     1. Single responsibility principle - one class has one responsibility.
     2. Open-Closed principle - specification, open for extension closed for modification.i.e add new feature only by adding new code.
     3. Liskov Substitution principle - Subtypes must be substitutable for their base types.
-    4. Interface-segregation principle - recommends split interface into smaller interfaces.
+    4. Interface-segregation principle - Clients should not be forced to depend on methods that they do not use, recommends split interface into smaller interfaces.
     5. Depedency Inversion Principle - 
+
+* Builder design pattern -  
+     construct a complex object through a step-by-step process.
 
 * Top 10 Object oriented design principles
     1. DRY(Don't repeat yourself) - avoid uplication in code.
