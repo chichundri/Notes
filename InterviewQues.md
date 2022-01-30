@@ -1227,7 +1227,9 @@ Parallel garbage collector is also called as throughput collector. It is the def
     instanceOf it will return true for comparing current class with its subclass as well, but getClass() will return true only if exactly same class is compared.  
 
 132. Inner Class/member inner class?  
+    
     ```
+
     class OuterClass {
 
         int i = 1; // instanceVariable
@@ -1282,7 +1284,7 @@ Parallel garbage collector is also called as throughput collector. It is the def
 
 132. static nested class  
     ```
-    
+
     class OuterClass {
     // StaticNestedClass
     static class StaticNestedClass {
