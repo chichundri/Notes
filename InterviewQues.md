@@ -7,6 +7,7 @@
 **https://winterbe.com/posts/2014/07/31/java8-stream-tutorial-examples/**
 
 **https://github.com/BruceEckel/OnJava8-Examples**
+**https://habr.com/ru/company/luxoft/blog/270383/**
 
 1. How to protect singleton from reflection api?  
     throw run-time exception in the constructor if the instance already exists
@@ -552,22 +553,21 @@
 31. when abstract class and interface are used? 
     classes that extends abstract class, have many common methods or fields(closely related classes-vehicle,car,volvoCar,OtherCar)
 32. String immutability and reason? state of object remains constant after its creation, why?-caching, security, synchronization, performance,thread-safe
-33. Instance lock(attached to single object) vs Static lock(attached to class)?
-    Instance lock - Acquiring the instance lock only blocks other threads from invoking a synchronized instance method; it does not block other threads from 
-    invoking an un-synchronized method, nor does it block them from invoking a static synchronized method
-    (http://www.javapractices.com/topic/TopicAction.do?Id=35)
-    example - synchronized(this) acquires the instance lock.
-    static lock - Similarly, acquiring the static lock only blocks other threads from invoking a static synchronized method; it does not block other threads 
-    from invoking an un-synchronized method, nor does it block them from invoking a synchronized instance method.
+33. Instance lock(attached to single object) vs Static lock(attached to class)?  
+    - Instance lock - Acquiring the instance lock only blocks other threads from invoking a synchronized instance method; it does not block other threads from invoking an un-synchronized method, nor does it block them from invoking a static synchronized method
+    (http://www.javapractices.com/topic/TopicAction.do?Id=35)  
+    example - synchronized(this) acquires the instance lock.  
+    - static lock - Similarly, acquiring the static lock only blocks other threads from invoking a static synchronized method; it does not block other threads 
+    from invoking an un-synchronized method, nor does it block them from invoking a synchronized instance method.  
     Example - 
     synchronized(Blah.class), using the class literal
     synchronized(this.getClass()), if an object is available
-34. Arraylist and linkedlist? which one is better?
-    ArrayList accessing an element takes constant time [O(1)] and adding an element takes O(n) time [worst case].
-    LinkedList adding an element takes O(n) time and accessing also takes O(n) time but LinkedList uses more memory than ArrayList.
-    Prefer ArrayList for random access
+34. Arraylist and linkedlist? which one is better?  
+    ArrayList accessing an element takes constant time [O(1)] and adding an element takes O(n) time [worst case].  
+    LinkedList adding an element takes O(n) time and accessing also takes O(n) time but LinkedList uses more memory than ArrayList.  
+    Prefer ArrayList for random access  
     Prefer LinkedList for random middle insertion
-35. singleton pattern?
+35. singleton pattern?  
     https://dzone.com/articles/all-about-the-singleton
     1. Eager Initialization
     2. Static Block Initialization
@@ -652,8 +652,8 @@
     Each collection(list,set,queue) stores a single value whereas map stores key-value pair which itselfs is incompatible with collection methods like add,
     addAll, removeAll
 40. when Outofmemory will occur?
-41. What is diff between heap memory and permgen memory?
-    Java heap memory - all objects are created in heap memory and garbage collector removes unused objects
+41. What is diff between heap memory and permgen memory?  
+    Java heap memory - all objects are created in heap memory and garbage collector removes unused objects  
     PermGen - keep information about loaded classes,string pool. Garbage collector is not much effective in this area.
 43. metaspace vs permgen? After java 8 permGen is renamed as metaspace
 44. What is diff between absraction and encapsulaton?
@@ -671,7 +671,7 @@
     | compareTo(T o) | compare(T o1, T o2) |
     | part of java.lang | part of java.util |
 
-46. functionality of marker interfaces?
+46. functionality of marker interfaces?  
     A marker interface is an interface that has no methods or constants inside it. It provides run-time type information about objects, so the compiler and JVM
     have additional information about the object.
     Example - Serializable, Cloneable
@@ -772,7 +772,7 @@ Working of CountDownLatch: When we create an object of CountDownLatch, we specif
 63. How to achieve server side load balancing using Spring Cloud? -> `Netflix Zuul`
 64. Annotation in spring
     1. RestController = Controller + ResponseBody
-    2. RequestMapping - tells which HTTP request should map to the corresponding method.
+    2. RequestMapping - tells which HTTP request should map to the corresponding method.  
         `@RequestMapping(value = "/index", method = "GET") `
     3. RequestParam - binds web request parameter to method parameter
         ```
@@ -1495,6 +1495,7 @@ Jaeger - is open source software for tracing transactions between distributed se
 Grafana - metrics visualization
 
 153. create thread using java8?  
+
     ```
     Runnable task = () -> {
         String threadName = Thread.currentThread().getName();
@@ -1597,7 +1598,7 @@ Custom comparator -
 *filter() - filters elements based upon a condition*  
 
 158. Does Immutability Really Mean Thread Safety?
-159. Upper bounded wildcards vs lower bounded wildcards?
+159. Upper bounded wildcards vs lower bounded wildcards?  
     Upper bounded wildcards -  
     `List<? extends Number> list`  
     Lower bounded wildcards -  
@@ -1609,11 +1610,187 @@ Custom comparator -
 161. third highrst salary?  
     `SELECT * FROM employee ORDER BY salary DESC LIMIT 1 OFFSET 2;`
 
-162. 
+162. How to reuse stream?  
+    create a stream supplier to construct a new stream with all intermediate operations  
+    ```
+    Supplier<Stream<String>> streamSupplier =
+    () -> Stream.of("d2", "a2", "b1", "b3", "c")
+            .filter(s -> s.startsWith("a"));
 
+    streamSupplier.get().anyMatch(s -> true);   // ok
+    streamSupplier.get().noneMatch(s -> true);  // ok
+    ```
 
+163. why you can’t make your spring bean classes final?  
+    when you auto-wire a bean of type Sample, Spring in fact doesn’t provide you exactly with an instance of Sample. Instead, it injects a generated proxy class that extends Sample and final class can't be extended, to avoid this bean class cannot be declared as final  
 
+164. Idempotent?
+    When making multiple identical request has same result that is called as idempotent  
+    Example - PUT and DELETE  
 
+165. What is OAuth?
+    Oauth is an open-standard authorization protocol or framework that provides applications the ability for “secure designated access.”  
+
+166. nth highest salary?
+
+    ```
+    SELECT * FROM employee 
+    WHERE salary= (SELECT DISTINCT(salary) 
+    FROM employee ORDER BY salary DESC LIMIT n-1,1);
+    ```
+
+167. create a table using existing table?  
+    `SELECT * FROM ExistingTable INTO NewTable WHERE 1=2`    
+    OR  
+    ```
+    CREATE TABLE new_table 
+    AS (SELECT * 
+        FROM old_table WHERE 1=2); 
+    ```
+
+168. find how many male and female empolyees from list of 1000 in java8?
+    ```
+    Map<String, Map<String, Long>> multipleFieldsMap = employeesList.stream().collect(Collectors.groupingBy(Employee::getGender, Collectors.counting())));
+    ```
+
+169. groupBy java8 example?
+
+    ``` 
+    import java.util.ArrayList;
+    import java.util.Comparator;
+    import java.util.IntSummaryStatistics;
+    import java.util.List;
+    import java.util.Map;
+    import java.util.Optional;
+    import java.util.Set;
+    import java.util.TreeMap;
+    import java.util.stream.Collectors;
+    
+    public class GroupByJava8
+    {
+        public static void main( String[] args )
+        {
+            List <Person> personList = new ArrayList<Person>();
+            personList.add(new Person("Sharon", 21, "Female"));
+            personList.add(new Person("Maria", 18,  "Female"));
+            personList.add(new Person("Jack", 21 ,"Male"));
+            personList.add(new Person("James", 35,  "Male"));       
+            
+            Map<String, List<Person>> groupByGenderList = 
+                    personList.stream().collect(Collectors.groupingBy(Person::getGender));
+            
+            //Group by gender List : Female-> Persons and Male -> Persons
+            System.out.println("1. Group persons by gender - get result in List: ");
+            System.out.println(groupByGenderList.toString());
+    
+            Map<String, Set<Person>> groupByGenderSet = 
+                    personList.stream().collect(Collectors.groupingBy(Person::getGender,Collectors.toSet()));
+            
+            //Group by gender Set: Female-> Persons and Male -> Persons
+            System.out.println("2. Group persons by gender - get result in Set: ");
+            System.out.println(groupByGenderSet.toString());
+            
+            Map<String, Set<String>> groupByGenderAndFirstNameSet
+            = personList.stream().collect(Collectors.groupingBy(Person::getGender, TreeMap::new,
+                    Collectors.mapping(Person::getName, Collectors.toSet())));    
+            System.out.println("3. Group person by gender and get name of person - get result in Set: ");
+            System.out.println(groupByGenderAndFirstNameSet.toString());
+            
+            Map<String, Long> countPersonByGender = personList.stream().
+                    collect(Collectors.groupingBy(Person::getGender,Collectors.counting()));
+            
+            System.out.println("4. Count person objects by gender: ");
+            System.out.println(countPersonByGender.toString());     
+    
+            Map<String, Optional<Person>> personByMaxAge = personList.stream().
+                    collect(Collectors.groupingBy(Person::getGender
+                            ,Collectors.maxBy(Comparator.comparing(Person::getAge))));      
+            System.out.println("5. Group person objects by gender and get person with max age: ");
+            System.out.println(personByMaxAge.toString());
+    
+            Map<String, IntSummaryStatistics> groupPersonsByAge = personList.stream().
+                    collect(Collectors.groupingBy(Person::getGender
+                            ,Collectors.summarizingInt(Person::getAge)));       
+            System.out.println("6. Group person objects by gender and get age statistics: ");
+            System.out.println(groupPersonsByAge.toString());
+            IntSummaryStatistics malesAge = groupPersonsByAge.get("Male");
+            System.out.println("Avgerage male age:"+ malesAge.getAverage());
+            System.out.println("Max male age:"+ malesAge.getMax());
+            System.out.println("Min male age:"+ malesAge.getMin());
+        }    
+    }
+    ```
+
+170. summary of collection?  
+    use class `IntSummaryStatistics`
+
+171. thread staration?
+    If a thread is not granted CPU time because other threads grab it all, and thread remains in waiting for long it is starvation.
+
+172. service registry?
+173. Java is pass-by-value or pass-by-reference?
+174. How to bring back thread from dead/terminated state?
+175. remove duplicates from array without collection classes?
+    ```
+    for (int i = 0; i < noOfUniqueElements; i++) {
+        for (int j = i + 1; j < noOfUniqueElements; j++) {
+            if (arrayWithDuplicates[i] == arrayWithDuplicates[j]) {
+                arrayWithDuplicates[j] = arrayWithDuplicates[noOfUniqueElements - 1];
+                noOfUniqueElements--;
+                j--;
+            }
+        }
+    }
+    ```
+
+176. How to remove embedded tomcat from spring?
+177. How to call stored procedure from spring?  
+- Map a Stored Procedure Name Directly  
+    ```
+    @Procedure
+    int GET_TOTAL_CARS_BY_MODEL(String model);
+    ```  
+    ```
+    @Procedure("GET_TOTAL_CARS_BY_MODEL")
+    int getTotalCarsByModel(String model);
+    ```  
+    ```
+    @Procedure(procedureName = "GET_TOTAL_CARS_BY_MODEL")
+    int getTotalCarsByModelProcedureName(String model);
+    ```  
+    ```
+    @Procedure(value = "GET_TOTAL_CARS_BY_MODEL")
+    int getTotalCarsByModelValue(String model);
+    ```  
+- Reference a Stored Procedure Defined in Entity  
+    ```
+    @Entity
+    @NamedStoredProcedureQuery(name = "Car.getTotalCarsbyModelEntity", 
+    procedureName = "GET_TOTAL_CARS_BY_MODEL", parameters = {
+        @StoredProcedureParameter(mode = ParameterMode.IN, name = "model_in", type = String.class),
+        @StoredProcedureParameter(mode = ParameterMode.OUT, name = "count_out", type = Integer.class)})
+    public class Car {
+        // class definition
+    }
+    ```
+    ```
+    @Procedure(name = "Car.getTotalCardsbyModelEntity")
+    int getTotalCarsByModelEntiy(@Param("model_in") String model);
+    ```
+- Reference a Stored Procedure with @Query Annotation
+    ```
+    @Query(value = "CALL FIND_CARS_AFTER_YEAR(:year_in);", nativeQuery = true)
+    List<Car> findCarsAfterYear(@Param("year_in") Integer year_in);
+    ```  
+
+178. Difference between Abstract class and interface after java 8?
+
+| Parameter | Interface | Abstract class |
+| --------- | --------- | -------------- |
+| Fields | by default public, static, final. do not support non-static, non-final | supports private, protected, public fields, also non-static and non-final |
+| methods | supports default, static, abstract methods. don't support final methods | supports final, non-final, static, non-static,  abstract. default methods not allowed |
+| Constructors | not allowed | any no. of constructors allowed |
+| Multiple inheritence | class can implement multiple interface | class can not implement multiple abstract classes |
 
 
 
@@ -1646,6 +1823,67 @@ Custom comparator -
     | can be invoked outside transaction | invke inside transation |
 
 4. *`EntityManagerFactory` instances and, consequently, Hibernate's `SessionFactory` instances, are thread-safe whereas `EntityManager` instances are not thread-safe and are meant to be used in thread-confined environments*
+5. what is LazyInitializationException and how to solve?  
+    Hibernate throws the `LazyInitializationException` when it needs to initialize a lazily fetched association to another entity without an active session context  
+
+    ```
+    EntityManager em = emf.createEntityManager();
+    em.getTransaction().begin();
+    
+    TypedQuery<Author> q = em.createQuery(
+            "SELECT a FROM Author a",
+            Author.class);
+    List<Author> authors = q.getResultList();
+    em.getTransaction().commit();
+    em.close();
+    
+    for (Author author : authors) {
+        List<Book> books = author.getBooks();
+        log.info("... the next line will throw LazyInitializationException ...");
+        books.size();
+    }
+    ```
+    How to fix the LazyInitializationException?  
+    https://thorben-janssen.com/lazyinitializationexception/  
+    load the entity with all required associations in one query.
+    1. Initializing associations with a LEFT JOIN FETCH clause
+    ```
+    EntityManager em = emf.createEntityManager();
+    em.getTransaction().begin();
+    
+    TypedQuery<Author> q = em.createQuery("SELECT a FROM Author a LEFT JOIN FETCH a.books", Author.class);
+    List<Author> authors = q.getResultList();
+    
+    em.getTransaction().commit();
+    em.close();
+    
+    for (Author a : authors) {
+        log.info(a.getName() + " wrote the books "
+            + a.getBooks().stream().map(b -> b.getTitle()).collect(Collectors.joining(", "))
+        );
+    }
+    ```
+    2. Use a @NamedEntityGraph to initialize an association  
+    3. Using a DTO projection  
+
+
+
+
+
+    
+
+6. pitfalls of @Transactional?  
+
+    ```
+    @Transactional
+    public void changeName(long id, String name) {
+        User user = userRepository.getById(id);
+        user.setName(name);
+        userRepository.save(user);
+    }
+    ```
+    entities retrieved within transaction are in the managed state, which means that all changes made to them will be populated to the database automatically at the end of the transaction.  
+    save() call is redundant in above case.  
 
 
 
