@@ -1731,6 +1731,7 @@ Custom comparator -
 173. Java is pass-by-value or pass-by-reference?
 174. How to bring back thread from dead/terminated state?
 175. remove duplicates from array without collection classes?
+
     ```
     for (int i = 0; i < noOfUniqueElements; i++) {
         for (int j = i + 1; j < noOfUniqueElements; j++) {
