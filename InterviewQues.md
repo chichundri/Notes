@@ -1801,32 +1801,35 @@ Custom comparator -
 
 180. Transactions in NoSQL?  
     Operation on single document is atomic, but for distributed transactions like multiple operation, collections, databases, documents, shards etc use callback API.   
-    1. start transaction -  
+- start transaction -  
     `final ClientSession clientSession = client.startSession();`  
-    2. Optional. Define options to use for the transaction.  
-    3. Define the sequence of operations to perform inside the transactions.   
+- Optional. Define options to use for the transaction.  
+- Define the sequence of operations to perform inside the transactions.   
+
     ```
-        TransactionBody txnBody = new TransactionBody<String>() {
-            public String execute() {
-                MongoCollection<Document> coll1 = client.getDatabase("mydb1").getCollection("foo");
-                MongoCollection<Document> coll2 = client.getDatabase("mydb2").getCollection("bar");
-                /*
-                Important:: You must pass the session to the operations.
-                */
-                coll1.insertOne(clientSession, new Document("abc", 1));
-                coll2.insertOne(clientSession, new Document("xyz", 999));
-                return "Inserted into collections in different databases";
-            }
-        };
+    TransactionBody txnBody = new TransactionBody<String>() {
+        public String execute() {
+            MongoCollection<Document> coll1 = client.getDatabase("mydb1").getCollection("foo");
+            MongoCollection<Document> coll2 = client.getDatabase("mydb2").getCollection("bar");
+            /*
+            Important:: You must pass the session to the operations.
+            */
+            coll1.insertOne(clientSession, new Document("abc", 1));
+            coll2.insertOne(clientSession, new Document("xyz", 999));
+            return "Inserted into collections in different databases";
+        }
+    };
     ```
 
-    4. Use .withTransaction() to start a transaction,execute the callback, and commit (or abort on error)  
+- Use .withTransaction() to start a transaction,execute the callback, and commit (or abort on error)
+
     ```
     clientSession.withTransaction(txnBody, txnOptions);
-     ```
+    ```
 
 
-181. Sample text
+181. Eventual consistency in DB?  
+
 
 
 
