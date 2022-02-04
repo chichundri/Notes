@@ -883,7 +883,7 @@ https://www.interviewbit.com/java-8-interview-questions/
     c. Single Terminal Operation that produces the result  
 71. What are Intermediate and Terminal operations?  
 72. What are the most commonly used Intermediate operations?  
-    `Filter(Predicate<T>)` - Allows selective processing of Stream elements. It returns elements that are satisfying the supplied condition by the predicate.  
+    `Filter(Predicate<? super T> pred)` - Allows selective processing of Stream elements. It returns elements that are satisfying the supplied condition by the predicate.  
     `map(Funtion<T, R>)` - Returns a new Stream, transforming each of the elements by applying the supplied mapper function e.g sorted()  
     `distinct()` - Only pass on elements to the next stage, not passed yet.  
     `limit(long maxsize)` - Limit the stream size to maxsize.  
@@ -892,25 +892,25 @@ https://www.interviewbit.com/java-8-interview-questions/
     `flatMap(mapper)` - Transform each element to a stream of its constituent elements and flatten all the streams into a single stream.  
 73. What is the stateful intermediate operation? Give some examples of stateful intermediate operations.  
     To complete some of the intermediate operations, some state is to be maintained, and such intermediate operations are called stateful intermediate operations e.g sorted(), distinct()  
-74. common type of terminal operations?\
-    `collect(), reduce(), count(), min(), max(), anyMatch(), noneMatch(), forEach(), forEachOrdered()`\
-75. collection vs stream?\
-76. What is the feature of the new Date and Time API in Java 8?\
-    - Immutable classes and Thread-safe\
-    - Timezone support\
-    - Fluent methods for object creation and arithmetic\
-    - Addresses I18N issue for earlier APIs\
-    - All packages are based on the ISO-8601 calendar system\
+74. common type of terminal operations?  
+    `collect(), reduce(), count(), min(), max(), anyMatch(), noneMatch(), forEach(), forEachOrdered()`
+75. collection vs stream?  
+76. What is the feature of the new Date and Time API in Java 8?  
+    - Immutable classes and Thread-safe
+    - Timezone support
+    - Fluent methods for object creation and arithmetic
+    - Addresses I18N issue for earlier APIs
+    - All packages are based on the ISO-8601 calendar system
 
 77. Define Nashorn in Java 8
 
-78.What is method reference?\
+78.What is method reference?  
     A method reference is a Java 8 construct that can be used for referencing a method without invoking it.
     
-    - Constructor refernce - String::new;\
-    - Static method reference - ContainingClass::staticMethodName\
-    - Bound instance method reference - str::toString\
-    - Unbound instance method reference - String::toString;\
+    - Constructor refernce - String::new;
+    - Static method reference - ContainingClass::staticMethodName
+    - Bound instance method reference - str::toString
+    - Unbound instance method reference - String::toString;
 
 79. Functional Interfaces in the Standard Library?
 
@@ -923,12 +923,12 @@ https://www.interviewbit.com/java-8-interview-questions/
     - UnaryOperator – it is similar to a Function, taking a single argument and returning a result of the same type
 
 80. What Is a Functional Interface?\
-    interface with one single abstract method.\
-    Functional Interface can be used with lambda expression
+    interface with one single abstract method.  
+    Functional Interface can be used with lambda expression.  
     e.g Runnable, Comparable
 81. default method?
 82. lambda expression?
-    lambda expression is a function that we can reference and pass around as an object.(Anonymous function)\
+    lambda expression is a function that we can reference and pass around as an object.(Anonymous function)  
 83. Final variable can be accessed in lambda expression in java 8? - yes
 84. non-Final variable can be accessed in lambda expression in java 8?  
 yes,but it is effectively final in lambda expression
@@ -941,8 +941,10 @@ Any attempt to modify x will produce compilation error
 
 88. assertions in java? -> testing the correctness of any assumptions.
 89. Can we have multiple public classes in a java source file?
-90. covarient return type?\ 
-    It is possible to have different return type for a overriding method in child class, but child’s return type should be sub-type of parent’s return type. 
+90. covarient return type?  
+    It is possible to have different return type for a overriding method in child class, but child’s return type should be sub-type of parent’s return type.  
+    OR  
+    Covariant return, means that when one overrides a method, the return type of the overriding method is allowed to be a subtype of the overridden method's return type.
 
     ```
     class SuperClass {
@@ -950,12 +952,14 @@ Any attempt to modify x will produce compilation error
             System.out.println("SuperClass");
             return this;
         }
-        }
-        public class Tester extends SuperClass {
+    }
+
+    public class Tester extends SuperClass {
         Tester get() {
             System.out.println("SubClass");
             return this;
         }
+
         public static void main(String[] args) {
             SuperClass tester = new Tester();
             tester.get();
@@ -963,24 +967,27 @@ Any attempt to modify x will produce compilation error
     }
     ```
 
-91. wrapper class?\
+91. wrapper class?  
     convert primitive into object and object into primitive
 
-92. Reflection API?\
+92. Reflection API?  
     Java Reflection is the process of analyzing and modifying all the capabilities of a class at runtime. Reflection API in Java is used to manipulate class and its members which include fields, methods, constructor, etc. at runtime
 
 
-93. What is the final variable, final class, and final blank variable?\
-94. How will you invoke any external process in Java? using exec() method of Runtime class\ 
-95. How many ways you can take input from the console?\
+93. What is the final variable, final class, and final blank variable?  
+
+94. How will you invoke any external process in Java?  
+using exec() method of Runtime class  
+
+95. How many ways you can take input from the console?
     - Buffered Reader Class
     - Scanner class
     - Console class - System.console().readLine();   
 
-96. How can you avoid serialization in child class if the base class is implementing the Serializable interface?\
-    In subclass override writeObject() method and throw NotSerializableException()  
+96. How can you avoid serialization in child class if the base class is implementing the Serializable interface?  
+In subclass override writeObject() method and throw NotSerializableException()  
 
-97. Serializable vs Externalizable?\
+97. Serializable vs Externalizable?  
 98. What are the ways to instantiate the Class class?\
     - using new keyword
     - using Class.forName()
@@ -988,13 +995,15 @@ Any attempt to modify x will produce compilation error
     - using deserialization
     - using newInstance() 
 
-99. autoboxing and unboxing?\
-    automatic conversion of primitive data types into its equivalent Wrapper type is known as boxing and opposite operation is known as unboxing
-100. Difference between creating String as new() and literal?\
-101. String vs StringBuffer vs StringBuilder?\
 
-    - String is immutable where as StringBuffer and StringBuilder are mutable
-    - StringBuffer is thread safe, StringBuilder is not thread safe
+99. autoboxing and unboxing?  
+automatic conversion of primitive data types into its equivalent Wrapper type is known as boxing and opposite operation is known as unboxing  
+
+100. Difference between creating String as new() and literal?  
+101. String vs StringBuffer vs StringBuilder?  
+- String is immutable where as StringBuffer and StringBuilder are mutable  
+- StringBuffer is thread safe, StringBuilder is not thread safe  
+- String implements `equals()` whereas StringBuffer and StringBuilder do not implement. 
 
 102. What is a Memory Leak? How can a memory leak appear in garbage collected language?\
     objects are no longer being used by the application, but the Garbage Collector is unable to remove them from working memory\
