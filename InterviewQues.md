@@ -1006,7 +1006,7 @@ automatic conversion of primitive data types into its equivalent Wrapper type is
 - String implements `equals()` whereas StringBuffer and StringBuilder do not implement. 
 
 102. What is a Memory Leak? How can a memory leak appear in garbage collected language?\
-    objects are no longer being used by the application, but the Garbage Collector is unable to remove them from working memory\
+    objects are no longer being used by the application, but the Garbage Collector is unable to remove them from working memory.\
     tools to identify useless objects\
 
     - HP Openview
@@ -1016,10 +1016,9 @@ automatic conversion of primitive data types into its equivalent Wrapper type is
 
 103. Why String is popular HashMap key in Java?\
 104. Error vs Exception?
-105.  throw vs throws?\
-    
-    - throw - used in method body to throw an exception
-    - throws - used in method signature to declare an exception that can occur in statement in method body
+105.  throw vs throws?  \
+- throw - used in method body to throw an exception
+- throws - used in method signature to declare an exception that can occur in statement in method body
 106. The difference between Serial and Parallel Garbage Collector?\
 
 Serial Garbage Collector
@@ -1033,31 +1032,31 @@ Parallel Garbage Collector
 Parallel garbage collector is also called as throughput collector. It is the default garbage collector of the JVM. Unlike serial garbage collector, this uses multiple threads for garbage collection. Similar to serial garbage collector this also freezes all the application threads while performing garbage collection.
 
 107. What is difference between WeakReference and SoftReference in Java?  
-
-    - Strong reference: This is the default type/class of Reference Object.
+- Strong reference: This is the default type/class of Reference Object.
     `MyClass obj = new MyClass();`
-    - Weak reference: Weak Reference Objects are not the default type/class of Reference Object and they should be explicitly specified while using them.
-    - Soft References: In Soft reference, even if the object is free for garbage collection then also its not garbage collected, until JVM is in need of memory badly.
-    - Phantom References: The objects which are being referenced by phantom references are eligible for garbage collection. But, before removing them from the memory, JVM puts them in a queue called ‘reference queue’.
+ - Weak reference: Weak Reference Objects are not the default type/class of Reference Object and they should be explicitly specified while using them.
+ - Soft References: In Soft reference, even if the object is free for garbage collection then also its not garbage collected, until JVM is in need of memory badly.
+ - Phantom References: The objects which are being referenced by phantom references are eligible for garbage collection. But, before removing them from the memory, JVM puts them in a queue called ‘reference queue’.
 
-108. What is a compile time constant in Java? What is the risk of using it?
-    a constant whose value known at compile time and compile replaces constant name with value everywhere in code.  
-    `private final int x = 10;`
+108. What is a compile time constant in Java? What is the risk of using it?  
+a constant whose value known at compile time and compile replaces constant name with value everywhere in code.  
+`private final int x = 10;`
 
 109.  How bootstrap class loader works in java?  
     - Bootstrap class loader  
     - Extension class loader  
     - System class loader  
 
-110. While overriding a method can you throw another exception or broader exception?
-    If a method declares to throw a given exception, the overriding method in a subclass can only declare to throw that exception or its subclass. This is because of polymorphism.
+110. While overriding a method can you throw another exception or broader exception?  
+If a method declares to throw a given exception, the overriding method in a subclass can only declare to throw that exception or its subclass. This is because of polymorphism.
 
 111. checked, unchecked exception and errors?  
-    - Checked Exception: These are the classes that extend Throwable except RuntimeException and Error, Example: IOException, SQLException
-    - Unchecked Exception: The classes that extend RuntimeException are known as unchecked exceptions.
-    Example: ArithmeticException, NullPointerException, ArrayIndexOutOfBoundsException
-    - Error: irrecoverable situation that is not being handled by try/catch
-    Example: OutOfMemoryError, VirtualMachineError, AssertionError
+- Checked Exception: These are the classes that extend Throwable except RuntimeException and Error.  
+Example: IOException, SQLException
+- Unchecked Exception: The classes that extend RuntimeException are known as unchecked exceptions.  
+Example: ArithmeticException, NullPointerException, ArrayIndexOutOfBoundsException
+- Error: irrecoverable situation that is not being handled by try/catch  
+Example: OutOfMemoryError, VirtualMachineError, AssertionError
 
 112. ClassNotFoundException vs NoClassDefFoundError?
     Both occurs at runtime
