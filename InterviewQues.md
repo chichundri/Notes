@@ -7,7 +7,10 @@
 **https://winterbe.com/posts/2014/07/31/java8-stream-tutorial-examples/**
 
 **https://github.com/BruceEckel/OnJava8-Examples**
-**https://habr.com/ru/company/luxoft/blog/270383/**
+**https://habr.com/ru/company/luxoft/blog/270383/**  
+**https://makeinjava.com/data-structure-interview-questions-problem-solving/**
+
+
 
 1. How to protect singleton from reflection api?  
     throw run-time exception in the constructor if the instance already exists
@@ -165,18 +168,14 @@
 * Suppose you have thread and it is in static synchronized method and now can thread enter other static 
     synchronized method from that method in java? -> Yes  
 
-* Suppose you have thread and it is in static synchronized method and now can thread enter other non 
-    static synchronized method from that method in java? -> Yes  
+* Suppose you have thread and it is in static synchronized method and now can thread enter other non static synchronized method from that method in java? -> Yes  
 
-* Suppose you have thread and it is in synchronized method and now can thread enter other static
-    synchronized method from that method in java? -> Yes  
+* Suppose you have thread and it is in synchronized method and now can thread enter other static synchronized method from that method in java? -> Yes  
 
 * Does Thread implements their own Stack, if yes how? -> Yes
-* When we implement Runnable interface, same object is shared amongst multiple threads, but when we 
-    extend Thread class each and every thread gets associated with new object.   
+* When we implement Runnable interface, same object is shared amongst multiple threads, but when we extend Thread class each and every thread gets associated with new object.   
 
-* How can you ensure all threads that started from main must end in order in which they started and also 
-    main should end in last? -> by calling join method on threads, in short it waits for thread to die on which thread has been called.  
+* How can you ensure all threads that started from main must end in order in which they started and also main should end in last? -> by calling join method on threads, in short it waits for thread to die on which thread has been called.  
 
 * wait vs sleep?
     | wait      | sleep     |
@@ -426,7 +425,7 @@
     - use join() method(disadvantage is threads start and end in sequentially)  
 
 * Race condition?  
-    More than one thread tring to access shared resource without synchronization causes race condition  
+    More than one thread trying to access shared resource without synchronization causes race condition  
 
 * Executors - creates pool of threads and manages life cycle of all threads in it.  
 * wait until all threads finish their work in java using Executor framework?  
@@ -439,12 +438,16 @@
 8. how to swap two strings without using third variable/temp variable
 9. Wildcard arguements? ->a) with unknown type b) with upper bound c) with lower bound.
 10. can we use abstract and static together? -> No
-11. Auto boxing and unboxing
-12. spring cloud bus
+11. Auto boxing and unboxing?  
+Autoboxing refers to the automatic conversion of a primitive type variable to its corresponding wrapper class object, and reverse is unboxing.  
+12. spring cloud bus - Whenever we do changes in config-server, we have to restart all applications to load changes in configurations.  
+spring cloud bus is used to refresh configuration using POST in config service.
 13. What is Spring Cloud Data Flow?
-14. Features of microservices?-> decoupling,componentization, autonomy,agility,decentralized governance
-15. API gateway?
-16. How to configure spring security?
+14. Features of microservices?-> decoupling, componentization,  autonomy, agility, decentralized governance
+15. API gateway? logging, routing request, 
+16. How to configure spring security? 
+    - create class extending `WebSecurityConfigurerAdapter` and annotate with `@EnableWebSecurity`
+    - override configure(HttpSecurity http) method
 17. How to secure a method in spring security using annotation?
     ```
     @Secured("ROLE_ADMIN")
@@ -478,29 +481,19 @@
         }
      ```
 22. How to achieve thread safety in java?
-    - Stateless Implementation - Method should neither relies on external state nor maintain state at all.Declare all variiables in method only.
-    example - factorial program
+    - Stateless Implementation - Method should neither relies on external state nor maintain state at all. Declare all variables in method only.
     - Immutable class
     - Thread local fields - we can create thread-safe classes that don’t share state between threads by making their fields thread-local.
-        ```
-        public class ThreadA extends Thread {
-            private final List<Integer> numbers = Arrays.asList(1, 2, 3, 4, 5, 6);
-            @Override
-            public void run() {
-                numbers.forEach(System.out::println);
-            }
-        }
-        ```
-    - Synchronized collections - Collections.synchronizedCollection(new ArrayList<>());
-    - Concurrent Collections - Map<String,String> concurrentMap = new ConcurrentHashMap<>();
+    - Synchronized collections - `Collections.synchronizedCollection(new ArrayList<>());`
+    - Concurrent Collections - `Map<String,String> concurrentMap = new ConcurrentHashMap<>();`
     - Atomic objects - AtomicInteger, AtomicLong, AtomicBoolean, and AtomicReference
-    - Synchronized methods
-    - Synchronized blocks
-    - volatile fileld 
+    - **Synchronized methods**
+    - **Synchronized blocks**
+    - **volatile fileld**
     - Extrinsic locking - it uses an external entity to enforce exclusive access to the resource. synchronized methods and blocks
-    rely on the this reference.
-        Example -
-    ```
+    rely on the this reference.  
+    Example -
+        ```
         public class ExtrinsicLockCounter {
             private int counter = 0;
             private final Object lock = new Object();
@@ -511,18 +504,17 @@
             }
             // standard getter
         }
-    ```
+        ```
     - Reentrant lock - preventing queued threads from suffering some types of resource starvation
     - Read/Write lock
 23) RequestParam vs Pathvariable?  
     `@RequestParam` - used to request parameter from URL, below date is RequestParam  
-    http://localhost:8080/shop/order/{orderId}/receipts?date=12-05-2017  
-    `@PathVariable` - used to extract value from URI.Above exmaple orderId is pathvariable
+    http://localhost:8080/shop/orders/{orderId}/receipts?date=12-05-2017  
+    `@PathVariable` - used to extract value from URI. Above exmaple orderId is pathvariable  
     Jersey annotations - PathParam & QueryParam
 24) Encapsulation - restricting direct access to variables
 25) Abstraction - hiding internal implementation.
-26) How to divide two numbers without using division (/) operator in java / How to find remainder of
-    division of two numbers using minus (-) operator / Java program to find remainder of division using –
+26) How to divide two numbers without using division (/) operator in java/ How to find remainder of division of two numbers using minus (-) operator / Java program to find remainder of division using –
 27) Restemplate vs WebClient?
 28) @Secured vs @PreAuthorize?
 29. Object class and methods of it? - equals, hascode, toString, wait(), wait(long,int), wait(long), notify, notifyAll, finalize, clone, getClass
@@ -634,8 +626,7 @@
     }
     ```
 36. how will you store the Hashmap of <Emp,values>
-    Employee class should properly override equals() and hashCode() methods to store employee object as key in hashmap. Improper implementation of these
-    methods results in wrong data 
+    Employee class should properly override equals() and hashCode() methods to store employee object as key in hashmap. Improper implementation of these methods results in wrong data 
 37. string reverse without built in method?
 38. can we print hello widout main?
     Yes,but java 7 onwards it will not work
@@ -648,9 +639,13 @@
         }
     }
     ```
+39. convert List into map in java 8?
+    ```
+    Map cards2Length = cards.stream()
+        .collect(Collectors.toMap(Function.identity(), String::length, (e1, e2) -> e1));
+    ```
 39. Why Map is not the part of Collection interface?
-    Each collection(list,set,queue) stores a single value whereas map stores key-value pair which itselfs is incompatible with collection methods like add,
-    addAll, removeAll
+    Each collection(list,set,queue) stores a single value whereas map stores key-value pair which itselfs is incompatible with collection methods like add, addAll, removeAll
 40. when Outofmemory will occur?
 41. What is diff between heap memory and permgen memory?  
     Java heap memory - all objects are created in heap memory and garbage collector removes unused objects  
@@ -701,9 +696,33 @@
     correctly. Mostly wait, notify, notifyAll used in inter thread communication 
     We must use synchronnization to avoid - 
     - IllegalMonitorStateException
-    - Any potential race condition between wait and notify method in Java
+    - Any potential race condition between wait and notify method in Java  
     Example - producer-consumer
     https://javarevisited.blogspot.com/2011/05/wait-notify-and-notifyall-in-java.html#axzz75hpg9s9z
+
+53. Reentrant lock?  
+    Thread can re-acquire lock.Every lock it acquires increment the holdCount, and decrease holdCount when unlock the resource.  
+    The ReentrantLock is a replacement for the easier-to-use synchronized statement when you need one of the following advanced techniques:  
+    - lockInterrupibly - 
+        ```
+        private final ReentrantLock lock = new ReentrantLock();
+        public void m1() throws InterruptedException {
+            lock.lockInterruptibly();
+            try {
+                // method body
+            } finally {
+                lock.unlock();
+            }
+        }
+        ```
+        throws an InterruptedException when thread.interrupt() method called by another thread.
+    - tryLock- Similar to lockInterrubtably, this throws a thread `InterruptedException` when the thread is interrupted by another thread. Additionally, it allows you to give a time span for how long to try to acquire the lock.  
+    `lock.tryLock(2, TimeUnit.MILLISECONDS)`  
+    - lock coupling - The reentrant lock allows you to unlock a lock immediately after you have successfully acquired another lock, leading to a technique called lock coupling.  
+    - multiple conditions  
+    - fair locks - Threads get the lock in the order they requested it.  
+    `private final ReentrantLock lock = new ReentrantLock(true);`
+
     
 53. Producer-Consumer programm?https://www.geeksforgeeks.org/producer-consumer-solution-using-threads-java/
 54. http://java-latte.blogspot.com/2014/04/Semaphore-CountDownLatch-CyclicBarrier-Phaser-Exchanger-in-Java.html
@@ -726,18 +745,14 @@ Working of CountDownLatch: When we create an object of CountDownLatch, we specif
 58. spring bean scopes?
     1. singleton (default) - Single bean object instance per spring IoC container
     2. prototype - Opposite to singleton, it produces a new instance each and every time a bean is requested.
-    3. request - A single instance will be created and available during complete lifecycle of an HTTP request. Only valid in web-aware 
-        Spring ApplicationContext.
-    4. session - A single instance will be created and available during complete lifecycle of an HTTP Session. Only valid in web-aware 
-        Spring ApplicationContext.
-    5. application - A single instance will be created and available during complete lifecycle of ServletContext. Only valid in web-aware 
-        Spring ApplicationContext.
-    6. websocket - A single instance will be created and available during complete lifecycle of WebSocket. Only valid in web-aware Spring 
-        ApplicationContext.
-    **  application scoped bean is singleton per ServletContext, whereas singleton scoped bean is singleton per ApplicationContext. 
-    Please note that there can be multiple application contexts for single application. **
+    3. request - A single instance will be created and available during complete lifecycle of an HTTP request. Only valid in web-aware Spring ApplicationContext.
+    4. session - A single instance will be created and available during complete lifecycle of an HTTP Session. Only valid in web-aware Spring ApplicationContext.
+    5. application - A single instance will be created and available during complete lifecycle of ServletContext. Only valid in web-aware Spring ApplicationContext.
+    6. websocket - A single instance will be created and available during complete lifecycle of WebSocket. Only valid in web-aware Spring ApplicationContext.  
+    **application scoped bean is singleton per ServletContext, whereas singleton scoped bean is singleton per ApplicationContext. 
+    Please note that there can be multiple application contexts for single application.**
 
-59. What is AOP? what does spring AOP provide?
+59. What is AOP? what does spring AOP provide?  
     In AOP, aspects enable the modularization of concerns such as transaction management, logging or security that cut across multiple types and objects (often termed crosscutting concerns).
     
     AOP provides the way to dynamically add the cross-cutting concern before, after or around the actual logic using simple pluggable configurations
@@ -756,18 +771,20 @@ Working of CountDownLatch: When we create an object of CountDownLatch, we specif
     4. After advice: Advice to be executed regardless of the means by which a join point exits
     5. Around advice: Around advice can perform custom behavior before and after the method invocation. 
 
-60. What is difference between DI and IOC in spring?
+60. What is difference between DI and IOC in spring?  
+    `IOC` - is a programming technique in which object coupling bound at runtime by an assembler object and typically not known at compile time   
+    `DI` - is design pattern,The basic principle behind Dependency Injection (DI) is that objects define their dependencies only through constructor arguments, arguments to a factory method, or properties which are set on the object instance after it has been constructed or returned from a factory method.  
 61. SOAP vs REST?
 62. What is Spring Cloud?
-    system that provides integration with external systems.
-    > Versioned and distributed configuration.
-    > service discovery
-    > service to service call
-    > Routing
-    > circuit breaker
-    > load balancing
-    > cluster state and leadership election
-    > Global locks and distributed messaging
+    system that provides integration with external systems.  
+    - Versioned and distributed configuration.  
+    - service discovery  
+    - service to service call  
+    - Routing  
+    - circuit breaker  
+    - load balancing  
+    - cluster state and leadership election  
+    - Global locks and distributed messaging  
 
 63. How to achieve server side load balancing using Spring Cloud? -> `Netflix Zuul`
 64. Annotation in spring
@@ -781,8 +798,8 @@ Working of CountDownLatch: When we create an object of CountDownLatch, we specif
         }
         ```
     4. ContextConfiguration - specifies how to load the application context while writing a unit test for the Spring environment
-    5. ResponseBody -  tells a controller that the object returned is automatically serialized into JSON and passed back into the            HttpResponse object
-    6. pathVariable - indicates method parameter should be bound to a URI template variable
+    5. ResponseBody -  tells a controller that the object returned is automatically serialized into JSON and passed back into the HttpResponse object
+    6. PathVariable - indicates method parameter should be bound to a URI template variable
         ```
         @RequestMapping(path="/{name}/{age}")
         public String getMessage(@PathVariable("name") String name, 
@@ -792,16 +809,16 @@ Working of CountDownLatch: When we create an object of CountDownLatch, we specif
             return msg;
         }
         ```
-    7. ResponseEntity - Represents HTTP response, including headers, body, and status.`ResponseEntity` allows to add header and status       code whereas `@ResponseBody` puts values into response
+    7. ResponseEntity - Represents HTTP response, including headers, body, and status.`ResponseEntity` allows to add header and status code whereas `@ResponseBody` puts values into response
     8. Qualifier - use to differentiate beans of same type
     9. Autowired - used to inject object dependency implicitly for a constructor, field or method
     10. Configurable - Used on classes to inject properties of domain objects
-    11. Required - Used to mark class members that are mandatory
+    11. Required - Used to mark class members that are mandatory. `BeanInitializationException`
     12. ComponentScan - Make Spring scan the package for the @Configuration clases.
     13. Configuration - It is used on classes that define beans.
-    14. Bean - ndicates that a method produces a bean which will be mananged by the Spring container.
+    14. Bean - indicates that a method produces a bean which will be mananged by the Spring container.
     15. Lazy - Makes a @Bean or @Component to be initialized only if it is requested
-    16. Value - t is used to inject values into a bean’s attribute from a property file.
+    16. Value - it is used to inject values into a bean’s attribute from a property file.
     17. Resource - Annotation used to inject an object that is already in the Appl­ication Context.
     18. Primary - Annotation used when no name is provided telling Spring to inject an object of the annotated class first.
     19. Component - Generic stereotype annotation used to tell Spring to create an instance of the object in the Appl­ication Context
@@ -810,6 +827,10 @@ Working of CountDownLatch: When we create an object of CountDownLatch, we specif
 
     22. SpringBootApplication - used to qualify the main class for a Spring Boot project
     23. EnableAutoConfiguration - Based on class path settings, property settings, new beans are added by Spring Boot by using this           annotation.
+
+65. @Primary vs @Qualifier  
+    `Primary` - indicates that a bean should be given preference when multiple candidates are qualified to autowire a single-valued dependency.  
+    `Qualifier` - indicates specific bean should be autowired when there are multiple candidates.
 
 65. Actuator endpoints?
     | Endpoint | Description |
@@ -841,15 +862,21 @@ Working of CountDownLatch: When we create an object of CountDownLatch, we specif
         management.endpoints.enabled-by-default=false
     ```
 
-66. What is a CommandLineRunner and ApplicationRunner?
-    `ApplicationRunner` and `CommandLineRunner` interfaces use to execute the code after the Spring Boot application is started.
-67. How to implement Exception Handling in Spring Boot?
+66. What is a CommandLineRunner and ApplicationRunner?  
+    `ApplicationRunner` and `CommandLineRunner` interfaces use to execute the code after the Spring Boot application is started.  
+67. ApplicationRunner vs CommandLineRunner?  
+    `ApplicationRunner`'s run() method accepts single args whereas `CommandLineRunner`'s run() methods accepts var-args  
+67. How to implement Exception Handling in Spring Boot?  
+    create class by extending `ResponseEntityExceptionHandler`,annotate with `@RestControllerAdvice`, override default `@ExceptionHandler`
 68. InitBinder?
+
 # Java 8 
+
 https://www.interviewbit.com/java-8-interview-questions/  
+
 69. What are Java 8 streams?  
-    A stream is an abstraction to express data processing queries in a declarative way. 
-    represents a sequence of data objects & series of operations on that data is a data pipeline   
+    A stream is an abstraction to express data processing queries in a declarative way.  
+    It represents a sequence of data objects & series of operations on that data is a data pipeline   
 70. What are the main components of a Stream?  
     a. data source  
     b. Set of Intermediate Operations to process the data source  
@@ -1827,9 +1854,29 @@ Custom comparator -
     clientSession.withTransaction(txnBody, txnOptions);
     ```
 
-
 181. Eventual consistency in DB?  
+182. LinkedBlockingQueue vs ArrayBlockingQueue?  
 
+| LinkedBlockingQueue  | ArrayBlockingQueue |
+| --------------------- | ----------------- | 
+| Internally Uses Linked nodes to store | internally uses array |
+| Optionally bounded queue | bounded queue |
+
+* prometheus - Data source
+* grafana - query, visualize, and alert metrics
+
+
+183. Five classes help common special-purpose synchronization idioms.  
+- `Semaphore` is a classic concurrency tool.  
+Semaphores are often used to restrict the number of threads than can access some (physical or logical) resource.
+- `CountDownLatch` is a very simple yet very common utility for blocking until a given number of signals, events, or conditions hold.  
+A synchronization aid that allows one or more threads to wait until a set of operations being performed in other threads completes
+- `CyclicBarrier` is a resettable multiway synchronization point useful in some styles of parallel programming.  
+A synchronization aid that allows a set of threads to all wait for each other to reach a common barrier point. CyclicBarriers are useful in programs involving a fixed sized party of threads that must occasionally wait for each other. The barrier is called cyclic because it can be re-used after the waiting threads are released.
+- `Phaser` provides a more flexible form of barrier that may be used to control phased computation among multiple threads.  
+A reusable synchronization barrier, similar in functionality to CyclicBarrier and CountDownLatch but supporting more flexible usage.
+- `Exchanger` allows two threads to exchange objects at a rendezvous point, and is useful in several pipeline designs.  
+A synchronization point at which threads can pair and swap elements within pairs. Each thread presents some object on entry to the exchange method, matches with a partner thread, and receives its partner's object on return. An Exchanger may be viewed as a bidirectional form of a SynchronousQueue. Exchangers may be useful in applications such as genetic algorithms and pipeline designs.
 
 
 
