@@ -1412,7 +1412,7 @@ ClassName::new
 
 136. Multiple DB conections in Spring boot?  
 
-    ```
+    
     #first db
     spring.datasource.url = [url]
     spring.datasource.username = [username]
@@ -1437,7 +1437,7 @@ ClassName::new
     public DataSource secondaryDataSource() {
         return DataSourceBuilder.create().build();
     }
-    ```
+    
 
 137. Parallel stream vs Sequential ?  
 138. Qualifier vs Primary?  
