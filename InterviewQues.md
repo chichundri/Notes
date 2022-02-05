@@ -1061,9 +1061,9 @@ Example: OutOfMemoryError, VirtualMachineError, AssertionError
 112. ClassNotFoundException vs NoClassDefFoundError?
     Both occurs at runtime
     
-    `ClassNotFoundException` - occurs when you try to load a class at run time using Class.forName() or loadClass() methods and mentioned classes are not found in the classpath  
+`ClassNotFoundException` - occurs when you try to load a class at run time using Class.forName() or loadClass() methods and mentioned classes are not found in the classpath  
     
-    `NoClassDefFoundError` - occurs when a particular class is present at compile time, but was missing at run time.
+`NoClassDefFoundError` - occurs when a particular class is present at compile time, but was missing at run time.
 
 113. CountDownLatch?  
     This class enables a java thread to wait until other set of threads completes their tasks.  
@@ -1072,14 +1072,12 @@ Example: OutOfMemoryError, VirtualMachineError, AssertionError
 
 114. CyclicBarrier?  
     2 or more threads wait for each other to reach a common barrier point. When all threads have reached common barrier point.  
-    * All waiting threads are released  
-    * Event can be triggered as well.  
-    Count can be reset hence called cyclic barrier  
-    Example -  Let’s say 10 friends (friends are threads) have planned for picnic on place A (Here place A is common barrier point). And they all decided to play certain game (game is event) only on everyones arrival at place A. So, all 10 friends must wait for each other to reach place A before launching event.   
+* All waiting threads are released  
+* Event can be triggered as well.  
+Count can be reset hence called cyclic barrier  
+Example -  Let’s say 10 friends (friends are threads) have planned for picnic on place A (Here place A is common barrier point). And they all decided to play certain game (game is event) only on everyones arrival at place A. So, all 10 friends must wait for each other to reach place A before launching event.   
 
-* Phaser? - similar in functionality of CyclicBarrier and CountDownLatch but it provides more
- flexibility than both of them. It provides flexibility of registering and deRegistering parties at any time  
- In CyclicBarrier parties can be registered in constructor, in Phaser parties can be registered at any time.  
+* Phaser? - similar in functionality of CyclicBarrier and CountDownLatch but it provides more flexibility than both of them. It provides flexibility of registering and deRegistering parties at any time. In CyclicBarrier parties can be registered in constructor, in Phaser parties can be registered at any time.  
 
 * Exchanger - Exchanger enables two threads to exchange their data between each other. solves produce-consumer problem.  
 
@@ -1412,7 +1410,8 @@ ContainingType::methodName
 * Reference to a constructor - 
 ClassName::new
 
-136. Multiple DB conections in Spring boot?
+136. Multiple DB conections in Spring boot?  
+
     ```
     #first db
     spring.datasource.url = [url]
