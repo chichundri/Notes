@@ -1524,7 +1524,7 @@ ClassName::new
 152. what hashcode returned by Object class?  
     `hashCode` implemented as native method in object class, it marked as `@HotSpotIntrinsicCandidate`
 
-Kiali - Kiali is a management console for Istio service mesh
+Kiali - Kiali is a management console for Istio service mesh  
 Jaeger - is open source software for tracing transactions between distributed services.
 Grafana - metrics visualization
 
@@ -1604,15 +1604,16 @@ Grafana - metrics visualization
 156. sort list in reverse order in java8?   
     ```
     list.stream()
-        .sorted(Collections.reverseOrder())
-        .collect(Collectors.toList());
+    .sorted(Collections.reverseOrder())
+    .collect(Collectors.toList());
     ```
+
 Custom comparator -  
 
     ```
     List<User> sortedList = userList.stream()
         .sorted(customComparator)
-        .collect(Collectors.toList());
+        .collect(Collectors.toList());  
     ------------
     Comparator<User> customComparator = new Comparator<User>() {
         @Override
@@ -1646,6 +1647,7 @@ Custom comparator -
 
 162. How to reuse stream?  
     create a stream supplier to construct a new stream with all intermediate operations  
+    
     ```
     Supplier<Stream<String>> streamSupplier =
     () -> Stream.of("d2", "a2", "b1", "b3", "c")
