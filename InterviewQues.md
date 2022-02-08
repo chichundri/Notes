@@ -1647,24 +1647,23 @@ Custom comparator -
 
 162. How to reuse stream?  
     create a stream supplier to construct a new stream with all intermediate operations  
-    
-    ```
+
     Supplier<Stream<String>> streamSupplier =
     () -> Stream.of("d2", "a2", "b1", "b3", "c")
             .filter(s -> s.startsWith("a"));
 
     streamSupplier.get().anyMatch(s -> true);   // ok
     streamSupplier.get().noneMatch(s -> true);  // ok
-    ```
+    
 
 163. why you can’t make your spring bean classes final?  
     when you auto-wire a bean of type Sample, Spring in fact doesn’t provide you exactly with an instance of Sample. Instead, it injects a generated proxy class that extends Sample and final class can't be extended, to avoid this bean class cannot be declared as final  
 
-164. Idempotent?
+164. Idempotent?  
     When making multiple identical request has same result that is called as idempotent  
     Example - PUT and DELETE  
 
-165. What is OAuth?
+165. What is OAuth?  
     Oauth is an open-standard authorization protocol or framework that provides applications the ability for “secure designated access.”  
 
 166. nth highest salary?
@@ -1887,14 +1886,98 @@ A reusable synchronization barrier, similar in functionality to CyclicBarrier an
 - `Exchanger` allows two threads to exchange objects at a rendezvous point, and is useful in several pipeline designs.  
 A synchronization point at which threads can pair and swap elements within pairs. Each thread presents some object on entry to the exchange method, matches with a partner thread, and receives its partner's object on return. An Exchanger may be viewed as a bidirectional form of a SynchronousQueue. Exchangers may be useful in applications such as genetic algorithms and pipeline designs.
 
+**https://dzone.com/articles/all-about-the-singleton**
+
+184. Bill Pugh Singleton ?  
+
+```
+public class BillPughSingleton {
+    private BillPughSingleton() {
+    }
+
+    private static class SingletonHelper {
+        private static final BillPughSingleton INSTANCE = new BillPughSingleton();
+    }
+
+    public static BillPughSingleton getInstance() {
+        return SingletonHelper.INSTANCE;
+    }
+}
+```
+
+185. Enum Singleton?
+
+```
+public enum SingletonEnum {
+	INSTANCE;
+}
+```
+
+186. Pessimistic Locking vs. Optimistic Locking?  
+    *Optimistic Locking* - optimistic locking is based on detecting changes on entities by checking their version attribute. If any concurrent update takes place, OptmisticLockException occurs.  
+    *Pessimistic locking* - pessimistic locking mechanism involves locking entities on the database level. Each transaction can acquire a lock on data. As long as it holds the lock, no transaction can read, delete or make any updates on the locked data  
+* PESSIMISTIC_READ  
+* PESSIMISTIC_WRITE  
+* PESSIMISTIC_FORCE_INCREMENT
 
 
 
+
+187. second level cache in hibernate?
+188. Why HTTPS and why it makes communication secure?
+    Https uses TLS(SSL) to encrypt normal request and response.
+    SSL eventually evolved as TLS. server initiates and handshake with client by sending public key, and private key is stored at server, the data sent by client is encrypted using public key and server decrypt using private key.
+
+189. OPTIONS http method?  
+    exposes what other methods are supported by the web server, preflight request. It is required when you submit requests across different origins.
+
+
+190. CORS? -> @CrossOrigin on method, on controller to enable all origin  
+CORS(Cross Origin Resource Sharing) was implemented due to the limitations of the single-origin policy.The same-origin policy restricts resources to interact only with resources located in the same domain.  
+The host that serves the JS (e.g. example.com) is different from the host that serves the data (e.g. api.example.com). In such a case, CORS enables cross-domain communication.  
+
+191. How to check if there is loop in linked list?
+
+192. How to maintain user session in microservices?  
+    Redis  
+
+193. String.valueOf(Object) vs Object::toString()?  
+String.valueOf(Object) - returns "*null*", defined as *static* method in String class, more safe.  
+Object::toString() - throws *NullPointerException*, defined in String class as *non-static*, less safe as it causes NPE  
+
+194. What are the possible states for a docker container?  
+    created, restarted, running, paused, exited, dead  
+
+195. checked Exception and unchecked exception?
+* checked Exception - Exception and it's subclasses excluding RuntimeException are all chekced exception  
+Java verifies checked exceptions at compile-time  
+Example - IOException, SQLException, ClassNotFoundException
+
+* unchecked Exception - RuntimeException and its subclasses are unchecked/runtime exception.  
+Java does not verify unchecked exceptions at compile-time  
+Example -  ArithmaticException, ClassCastException, ArrayStoreException
+
+196. Future vs CompletableFuture?  
+197. what is ACID?
+198. can we overload/override static method?  
+we can not override the static method in Java, but we can certainly overload a static method in Java.
+
+199. Detect and Remove Loop in a Linked List?
+200. How to read 100GB JSON file?  
+    https://all-aboutl.blogspot.com/2012/06/how-to-split-large-files-into-smaller.html  
+    https://www.admios.com/blog/how-to-split-a-file-using-java
+
+201. Maximum profit by buying and selling a share at most twice  
+https://www.geeksforgeeks.org/maximum-profit-by-buying-and-selling-a-share-at-most-twice/?ref=lbp
+
+202. 
 
     
 
 
-***Hibernate***
+
+
+# Hibernate
 
 1. sessionFactory? -> immutable, thread-safe, single instance per application  
 
