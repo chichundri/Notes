@@ -867,7 +867,8 @@ Working of CountDownLatch: When we create an object of CountDownLatch, we specif
 67. ApplicationRunner vs CommandLineRunner?  
     `ApplicationRunner`'s run() method accepts single args whereas `CommandLineRunner`'s run() methods accepts var-args  
 67. How to implement Exception Handling in Spring Boot?  
-    create class by extending `ResponseEntityExceptionHandler`,annotate with `@RestControllerAdvice`, override default `@ExceptionHandler`
+    create class by extending `ResponseEntityExceptionHandler`,annotate with `@RestControllerAdvice`, override default `@ExceptionHandler`  
+    https://reflectoring.io/spring-boot-exception-handling/
 68. InitBinder?
 
 # Java 8 
@@ -1014,9 +1015,9 @@ automatic conversion of primitive data types into its equivalent Wrapper type is
     - JProbe
     - IBM Tivoli
 
-103. Why String is popular HashMap key in Java?\
+103. Why String is popular HashMap key in Java?  
 104. Error vs Exception?
-105.  throw vs throws?  \
+105.  throw vs throws?  
 - throw - used in method body to throw an exception
 - throws - used in method signature to declare an exception that can occur in statement in method body
 106. The difference between Serial and Parallel Garbage Collector?\
@@ -1143,7 +1144,7 @@ Example -  Let’s say 10 friends (friends are threads) have planned for picnic 
 125. What classes should i prefer to use a key in HashMap in java?
     All wrapper classes because they are immutable and they implements equals() and hashCode() methods.
 
-126. What do you mean by fail-fast and fast-safe?
+126. What do you mean by fail-fast and fast-safe?  
     Iterator returned by few Collection framework Classes are fail-fast, means any structural modification made to these classes during iteration will throw ConcurrentModificationException  
     fail-fast: ArrayList, LinkedList, Vector, HashSet  
     fail-safe: CopyOnWriteArrayList, CopyOnWriteArraySet, ConcurrentSkipListSet
@@ -1379,7 +1380,8 @@ Example -  Let’s say 10 friends (friends are threads) have planned for picnic 
     ```
 
 134.Anonymous Inner class?  
-    - AnonymousInnerClass implement interface
+    - AnonymousInnerClass implement interface  
+    
     ```
     interface MyInterface {
         void m();
@@ -1469,7 +1471,7 @@ ClassName::new
     One line answer: flatMap helps to flatten a `Collection<Collection<T>>` into a `Collection<T>`. In the same way, it will also flatten an Optional<Optional<T>> into Optional<T>  
     Example -  
 
-    ```
+
     public class Parcel {
         String name;
         List<String> items;
@@ -1497,10 +1499,10 @@ ClassName::new
             System.out.println("\t collect() returns: " + flatMapReturn);
         }
     }
-    ```
 
-148. Methods of Stream class?
-    1. Intermediate operation - map, filter, sorted
+
+148. Methods of Stream class?  
+    1. Intermediate operation - map, filter, sorted, anyMatch, noneMatch  
     2. Terminal operation - collect, forEach, reduce
 
 149. return type of lambda expression? -> return type of method defined in FunctionalInterface??  convert lambda expression back to anonymous class.
@@ -1525,19 +1527,18 @@ ClassName::new
     `hashCode` implemented as native method in object class, it marked as `@HotSpotIntrinsicCandidate`
 
 Kiali - Kiali is a management console for Istio service mesh  
-Jaeger - is open source software for tracing transactions between distributed services.
+Jaeger - is open source software for tracing transactions between distributed services. Internally uses zipkin. Jaeger used in distributed environment to independantly scaled.  
 Grafana - metrics visualization
 
 153. create thread using java8?  
 
-    ```
     Runnable task = () -> {
         String threadName = Thread.currentThread().getName();
         System.out.println("Hello " + threadName);
     };
 
     task.run();
-    ```
+
 
 154. ways to create thread and start?  
 * Thread Subclass -
@@ -1603,9 +1604,7 @@ Grafana - metrics visualization
 
 156. sort list in reverse order in java8?   
     ```
-    list.stream()
-    .sorted(Collections.reverseOrder())
-    .collect(Collectors.toList());
+    list.stream().sorted(Collections.reverseOrder()).collect(Collectors.toList());
     ```
 
 Custom comparator -  
@@ -1666,13 +1665,25 @@ Custom comparator -
 165. What is OAuth?  
     Oauth is an open-standard authorization protocol or framework that provides applications the ability for “secure designated access.”  
 
+* OpenID vs OAuth2?  
+OpenID Connect (OIDC) is an identity layer built on top of the OAuth 2.0 framework.   
+While OAuth 2.0 is about resource access and sharing, OIDC is about user authentication.  
+https://auth0.com/docs/authenticate/protocols/openid-connect-protocol
+
 166. nth highest salary?
 
     ```
     SELECT * FROM employee 
     WHERE salary= (SELECT DISTINCT(salary) 
     FROM employee ORDER BY salary DESC LIMIT n-1,1);
-    ```
+    ```  
+
+* second highest salary?  
+```
+select * from employee 
+group by salary 
+order by salary desc limit 1,1;
+```
 
 167. create a table using existing table?  
     `SELECT * FROM ExistingTable INTO NewTable WHERE 1=2`    
@@ -1683,7 +1694,7 @@ Custom comparator -
         FROM old_table WHERE 1=2); 
     ```
 
-168. find how many male and female empolyees from list of 1000 in java8?
+168. find how many male and female empolyees from list of 1000 in java8?  
     ```
     Map<String, Map<String, Long>> multipleFieldsMap = employeesList.stream().collect(Collectors.groupingBy(Employee::getGender, Collectors.counting())));
     ```
@@ -1759,10 +1770,10 @@ Custom comparator -
 170. summary of collection?  
     use class `IntSummaryStatistics`
 
-171. thread staration?
+171. thread staration?  
     If a thread is not granted CPU time because other threads grab it all, and thread remains in waiting for long it is starvation.
 
-172. service registry?
+172. service registry/discovery?
 173. Java is pass-by-value or pass-by-reference?
 174. How to bring back thread from dead/terminated state?
 175. remove duplicates from array without collection classes?
@@ -1830,7 +1841,7 @@ Custom comparator -
 
 179. @Entity vs @Table  
     `
-    @Entity(name = "someThing") => this name will be used to name the Entity also table in DB`  
+    @Entity(name = "someThing") => this name will be used to name the Entity also table in DB if @Table missing`  
     `@Table(name = "someThing")  => this name will be used to name a table in DB
     `
 
@@ -1863,6 +1874,14 @@ Custom comparator -
     ```
 
 181. Eventual consistency in DB?  
+"eventual consistency" refers to the fact that in a replicated environment, when a write is finished on the primary, it will only be written to the secondaries *eventually*.   
+OR  
+Eventual consistency is a consistency model used in distributed computing to achieve high availability that informally guarantees that, if no new updates are made to a given data item, eventually all accesses to that item will return the last updated value.  
+https://findanyanswer.com/how-does-mongodb-ensure-eventual-consistency  
+
+*Collections in MongoDB is equivalent to the tables in RDBMS. Documents in MongoDB is equivalent to the rows in RDBMS. Fields in MongoDB is equivalent to the columns in RDBMS.*
+
+
 182. LinkedBlockingQueue vs ArrayBlockingQueue?  
 
 | LinkedBlockingQueue  | ArrayBlockingQueue |
@@ -1923,8 +1942,17 @@ public enum SingletonEnum {
 
 
 
-187. second level cache in hibernate?
-188. Why HTTPS and why it makes communication secure?
+187. second level cache in hibernate?  
+First level cache works with `session`-scoped object  
+second level cache works with `SessionFactory`-scoped  
+Enabling Second-Level Caching -  
+```
+hibernate.cache.use_second_level_cache=true
+hibernate.cache.region.factory_class=org.hibernate.cache.ehcache.EhCacheRegionFactory
+```
+Annotate entity with `@Cacheable`, collections(association objets) are not `cacheable` by default.
+
+188. Why HTTPS and why it makes communication secure?  
     Https uses TLS(SSL) to encrypt normal request and response.
     SSL eventually evolved as TLS. server initiates and handshake with client by sending public key, and private key is stored at server, the data sent by client is encrypted using public key and server decrypt using private key.
 
@@ -1932,7 +1960,7 @@ public enum SingletonEnum {
     exposes what other methods are supported by the web server, preflight request. It is required when you submit requests across different origins.
 
 
-190. CORS? -> @CrossOrigin on method, on controller to enable all origin  
+190. CORS? -> @CrossOrigin on method,.. on controller to enable all origin  
 CORS(Cross Origin Resource Sharing) was implemented due to the limitations of the single-origin policy.The same-origin policy restricts resources to interact only with resources located in the same domain.  
 The host that serves the JS (e.g. example.com) is different from the host that serves the data (e.g. api.example.com). In such a case, CORS enables cross-domain communication.  
 
@@ -1942,7 +1970,7 @@ The host that serves the JS (e.g. example.com) is different from the host that s
     Redis  
 
 193. String.valueOf(Object) vs Object::toString()?  
-String.valueOf(Object) - returns "*null*", defined as *static* method in String class, more safe.  
+String.valueOf(Object) - returns "*null*"(string type null), defined as *static* method in String class, more safe.  
 Object::toString() - throws *NullPointerException*, defined in String class as *non-static*, less safe as it causes NPE  
 
 194. What are the possible states for a docker container?  
@@ -1958,6 +1986,10 @@ Java does not verify unchecked exceptions at compile-time
 Example -  ArithmaticException, ClassCastException, ArrayStoreException
 
 196. Future vs CompletableFuture?  
+    Furure's get() is blocking operation and there is no means to complete this blocking operation whereas in CompletableFuture we can complete() task/operation manually.  
+    Multiple Future can be combined using CompletableFuture.
+
+
 197. what is ACID?
 198. can we overload/override static method?  
 we can not override the static method in Java, but we can certainly overload a static method in Java.
@@ -1970,7 +2002,35 @@ we can not override the static method in Java, but we can certainly overload a s
 201. Maximum profit by buying and selling a share at most twice  
 https://www.geeksforgeeks.org/maximum-profit-by-buying-and-selling-a-share-at-most-twice/?ref=lbp
 
-202. 
+202. Transaction Isolation Levels in DBMS?  
+A transaction isolation level is defined by the following phenomena  
+* dirty read
+* non repeatable read  
+* Phantom read  
+
+The SQL standard defines four isolation levels  
+    1. read uncommitted  
+    2. read committed  
+    3. Repeatable read  
+    4. Serializable
+
+203. exceute() vs executeQuery vs executeUpdate?  
+> *boolean execute():* Executes the SQL statement in this Prepared Statement object, which may be any kind of SQL statement.
+
+> *ResultSet executeQuery():* Executes the SQL query in this Prepared Statement object and returns the ResultSet object generated by the query.
+
+> *int executeUpdate()*: Executes the SQL statement in this Prepared Statement object, which must be an SQL INSERT, UPDATE or DELETE statement; or an SQL statement that returns nothing, such as a DDL statement.  
+
+204. Prototype design pattern? 
+    If object creation is costly process then we make use of clone method to clone existing object.  
+
+205. JVM Architecture?
+https://dzone.com/articles/jvm-architecture-explained
+
+
+
+    
+
 
     
 
@@ -1978,6 +2038,8 @@ https://www.geeksforgeeks.org/maximum-profit-by-buying-and-selling-a-share-at-mo
 
 
 # Hibernate
+
+https://javatechonline.com/entity-relationship-in-jpa-hibernate-orm/
 
 1. sessionFactory? -> immutable, thread-safe, single instance per application  
 
@@ -1987,7 +2049,7 @@ https://www.geeksforgeeks.org/maximum-profit-by-buying-and-selling-a-share-at-mo
     | ------- | --------- |
     | always hit DB and return real object | returns proxy object  |
     | return null if data not found | return exception if data not found |
-    | used when we are not sure exists or not | used when we are sure data exists |  
+    | used when we are not sure data exists or not | used when we are sure data exists |  
 
 3. save() vs persist()?
     
@@ -2042,10 +2104,6 @@ https://www.geeksforgeeks.org/maximum-profit-by-buying-and-selling-a-share-at-mo
 
 
 
-
-
-    
-
 6. pitfalls of @Transactional?  
 
     ```
@@ -2059,6 +2117,56 @@ https://www.geeksforgeeks.org/maximum-profit-by-buying-and-selling-a-share-at-mo
     entities retrieved within transaction are in the managed state, which means that all changes made to them will be populated to the database automatically at the end of the transaction.  
     save() call is redundant in above case.  
 
+7. Hibernate Inheritance strategies?  
+    1. Table per hierarchy(Single Table Strategy)
+    2. Table per concrete class
+    3. Table per subclass(Joined Table Strategy)
+
+8. How to make an class immutable in Hibernate? -> mutable=false
+
+9. What is autamatic dirty checking in Hibernate?  
+if object is modified in the transaction, then its state will be updated automatically when you committ the transaction.
+
+10. What is Query cache in Hibernate?  
+    need to enable queryCache for specific query, helps in performance improvement, caches query result.
+    `hibernate.cache.use_query_cache=true`
+11. What is cascading in Hiberante and can you list types of cascading?  
+    ALL, DEATCH, MERGE, PERSIST, REMOVE, REFRESH
+12. What is the N+1 SELECT problem in Hibernate?
+    The N+1 SELECT problem is a result of lazy loading and load on demand fetching strategy. In this case, Hibernate ends up executing N+1 SQL queries to populate a collection of N elements.
+13. What are some strategies to solve the N+1 SELECT problem in Hibernate?  
+    1. pre-fetching in batches, will reduce the N+1 problem to N/K + 1 problem where  K is the size of the batch
+    2. subselect fetching strategy
+    3. disabling lazy loading
+
+14. 
+
+
+# Design pattern
+https://javatechonline.com/design-patterns-in-java-3/
+
+
+
+
+
+
+# CouchDB
+https://www.javatpoint.com/couchdb-interview-questions
+
+What are the main features of CouchDB?  
+
+1. **JSON Documents:** CouchDB stores data in JSON document.  
+2. **RESTful Interface:** CouchDB does all tasks like replication, data insertion, etc. via HTTP.  
+3. **N-Master Replication:** CouchDB facilitates you to make use of an unlimited amount of 'masters,' making for some very interesting replication topologies.  
+4. **Built for Offline:** CouchDB can replicate to devices (like Android phones) that can go offline and handle data sync for you when the device is back online.  
+5. **Replication Filters:** CouchDB facilitates you to filter precisely the data you wish to replicate to different nodes.  
+6. **ACID semantics:** The CouchDB file layout follows all the features of ACID properties. Once the data is entered into the disc, it will not be overwritten. Document updates (add, edit, delete) follow Atomicity, i.e., they will be saved completely or not saved at all. The database will not have any partially saved or edited documents. Almost all of these update are serialized, and any number of clients can read a document without waiting and without being interrupted.  
+7. **Document storage:** CouchDB is a NoSQL database which follows document storage. Documents are the primary unit of data where each field is uniquely named and contains values of various data types such as text, number, Boolean, lists, etc. Documents don't have a set limit to text size or element count.
+8. **Eventually consistency:** CouchDB guarantees to provide availability and partition tolerance.
+9. **Authentication and Session Support:** CouchDB facilitates you to keep authentication open via a session cookie like a web application.
+10. **Security:** CouchDB also provides database-level security. The permissions per database are separated into readers and admin. Readers can both read and write to the database.
+11. **Validation:** You can validate the inserted data into the database by combining with authentication to ensure the creator of the document is the one who is logged in.
+12. **Map/Reduce List and Show:** The main reason behind the popularity of MongoDB and CouchDB is map/reduce system.
 
 
 
@@ -2116,7 +2224,7 @@ https://www.geeksforgeeks.org/maximum-profit-by-buying-and-selling-a-share-at-mo
 
 * What is minimum web.xml configuration to run Spring MVC?  
     - define DispatcherServlet
-    - define contextCOnfigLocation
+    - define contextConfigLocation
     - define ContextLoaderListener
 
     ```
@@ -2184,7 +2292,15 @@ https://www.geeksforgeeks.org/maximum-profit-by-buying-and-selling-a-share-at-mo
 * What is Hystrix Circuit Breaker? Need for it?  
     In case of any exception in exposed service fallback method is defined to return default value.  
 
-* 
+* Spring configuration?
+    1. XML based
+    2. Annotation based
+    3. Java based  
+
+*Spring boot eliminates all above config* 
+
+
+
 
 
 

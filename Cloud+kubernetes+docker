@@ -95,7 +95,7 @@ Kubernetes - deployment(initialization,recovery),scaling(nodes,ram,services,load
 
 ----------------------------------------------------------------
 #OAuth
-It is an open standard for token-based authentication and authorization on the Internet.It allows an end user's account information to be used by third-party services, such as Facebook, without exposing the user's password.When using OAuth2, grant type is the way an application gets the access token.
+It is an open standard for token-based authentication and authorization on the Internet. It allows an end user's account information to be used by third-party services, such as Facebook, without exposing the user's password.When using OAuth2, grant type is the way an application gets the access token.
 Following are the grant types according to OAuth2 specification-
 1.  Authorization code grant
 2.  Implicit grant
@@ -112,6 +112,14 @@ Oauth consists of following actors -
 4.  Resource Server - The resource server is the OAuth 2.0 term for your API server. The resource server handles authenticated requests   
     after the application has obtained an access token.
     
+
+* Orchestration engine -   
+1. kubernetes
+2. docker swarm
+3. apache mesos
+4. aws ECS
+
+
     
     
     
