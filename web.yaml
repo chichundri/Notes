@@ -1,0 +1,30 @@
+apiVersion: v1
+kind: Service
+metadata:
+  creationTimestamp: "2022-03-03T09:56:48Z"
+  labels:
+    app: web
+  name: web
+  namespace: default
+  resourceVersion: "73715"
+  uid: efa7f44e-b41d-43f0-ac32-433760fb59c0
+spec:
+  clusterIP: 10.107.224.204
+  clusterIPs:
+  - 10.107.224.204
+  externalTrafficPolicy: Cluster
+  internalTrafficPolicy: Cluster
+  ipFamilies:
+  - IPv4
+  ipFamilyPolicy: SingleStack
+  ports:
+  - nodePort: 31930
+    port: 8080
+    protocol: TCP
+    targetPort: 8080
+  selector:
+    app: web
+  sessionAffinity: None
+status:
+  loadBalancer: {}
+

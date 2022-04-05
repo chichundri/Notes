@@ -1,14 +1,14 @@
 ==== Links =====  
-**https://github.com/learning-zone/spring-interview-questions/blob/spring/microservices.md**
+**https://github.com/learning-zone/spring-interview-questions/blob/spring/microservices.md**  
 **https://github.com/in28minutes/spring-interview-guide**
 
 **https://www.techiedelight.com/data-structures-and-algorithms-problems/**
 
 **https://winterbe.com/posts/2014/07/31/java8-stream-tutorial-examples/**
 
-**https://github.com/BruceEckel/OnJava8-Examples**
-**https://habr.com/ru/company/luxoft/blog/270383/**  
-**https://makeinjava.com/data-structure-interview-questions-problem-solving/**
+**https://github.com/BruceEckel/OnJava8-Examples**  
+**https://habr.com/ru/company/luxoft/blog/270383/**    
+**https://makeinjava.com/data-structure-interview-questions-problem-solving/**  
 
 
 
@@ -433,6 +433,38 @@
     2. CountDownLatch, consider CyclicBarrier if want to reset the counter.
     3. iterate through all `Future` objects after submitting to ExecutorService
 
+* How can you catch an exception thrown by another thread in Java?  
+This can be done using Thread.UncaughtExceptionHandler.
+```
+    // create our uncaught exception handler
+    Thread.UncaughtExceptionHandler handler = new Thread.UncaughtExceptionHandler() {
+        public void uncaughtException(Thread th, Throwable ex) {
+            System.out.println("Uncaught exception: " + ex);
+        }
+    };
+
+    // create another thread
+    Thread otherThread = new Thread() {
+        public void run() {
+            System.out.println("Sleeping ...");
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException e) {
+                System.out.println("Interrupted.");
+            }
+            System.out.println("Throwing exception ...");
+            throw new RuntimeException();
+        }
+    };
+
+    // set our uncaught exception handler as the one to be used when the new thread
+    // throws an uncaught exception
+    otherThread.setUncaughtExceptionHandler(handler);
+
+    // start the other thread - our uncaught exception handler will be invoked when
+    // the other thread throws an uncaught exception
+    otherThread.start();
+```
 
 
 8. how to swap two strings without using third variable/temp variable
@@ -1767,6 +1799,35 @@ order by salary desc limit 1,1;
     }
     ```
 
+170. Sort map based on values?  
+    sample output - 
+    
+    Map<String,Integer> map = new HashMap<>();
+    map.put("A" , 50);
+    map.put("B" , 40);
+    map.put("C" , 60);
+
+    Expected OutPut: 
+    List<String> = ["B", "A", "C"]
+    
+    Solution --------
+
+    Map<String, Integer> map = Map.of("C", 3, "A", 1, "B", 12, "D", 5);
+    List<String> list = new ArrayList<>();
+    
+    map.entrySet().stream().sorted(Map.Entry.comparingByValue())
+        .forEachOrdered(e -> {
+            System.out.println("Key: "+e.getKey() + " Value: "+e.getValue());
+            list.add(e.getKey());
+        });
+    
+    System.out.println(list);
+
+    for reverse order  
+    1. sorted(Map.Entry.comparingByValue(`Collections`.reverseOrder()))  
+    2. sorted(Map.Entry.comparingByValue(`Comparator`.reverseOrder())) 
+
+
 170. summary of collection?  
     use class `IntSummaryStatistics`
 
@@ -1964,6 +2025,8 @@ Annotate entity with `@Cacheable`, collections(association objets) are not `cach
 CORS(Cross Origin Resource Sharing) was implemented due to the limitations of the single-origin policy.The same-origin policy restricts resources to interact only with resources located in the same domain.  
 The host that serves the JS (e.g. example.com) is different from the host that serves the data (e.g. api.example.com). In such a case, CORS enables cross-domain communication.  
 
+* disable CSRF when we have non-browser clients  
+
 191. How to check if there is loop in linked list?
 
 192. How to maintain user session in microservices?  
@@ -2024,12 +2087,63 @@ The SQL standard defines four isolation levels
 204. Prototype design pattern? 
     If object creation is costly process then we make use of clone method to clone existing object.  
 
-205. JVM Architecture?
+205. JVM Architecture?  
 https://dzone.com/articles/jvm-architecture-explained
 
+* *Avoid calling abstract methods in your abstract classes’ constructors, as it restricts how those abstract methods can be implemented.*
+**https://www.toptal.com/java/interview-questions**
+
+206. How LinkedHashMap maintains insertion order?
+207. Can FunctionalInterface extends another interface?  
+    yes, without any method in parent interface.
+
+208. Why is catching a RuntimeException not considered a good programming practice?  
+Catching any of these general exceptions (including Throwable) is a bad idea because it means you're claiming that you understand every situation which can go wrong, and you can continue on despite that.  
+209. How to Get All Endpoints List After Startup, Spring Boot?  
+```
+@Component
+public class EndpointsListener implements ApplicationListener<ContextRefreshedEvent> {
+
+    @Override
+    public void onApplicationEvent(ContextRefreshedEvent event) {
+        ApplicationContext applicationContext = event.getApplicationContext();
+        applicationContext.getBean(RequestMappingHandlerMapping.class).getHandlerMethods()
+             .forEach(/*Write your code here */);
+    }
+}
+```
+
+alternatively we can use actuators /endpoint
+
+210. Transaction propogation types?  
+* REQUIRED
+    - if calling service has transaction then method makes use of existing transaction.
+    - If calling service does not have transaction then method will create new transaction.
+* SUPPORTS
+    - If calling service has transaction then method makes use of existing transaction.
+    - If calling service does not have transaction then method will not create new transaction.(run without transaction)
+* NOT_SUPPORTED
+    - If calling service service method has transaction then method *doesnot make use of existing transaction neither does it creates its own transaction.It run without transaction*
+    - If caling service method does not have transaction then method *will not create new transaction and run without transaction.*
+* REQUIRES_NEW
+    - If calling service method has transaction then method *doesnot make use of existing transaction but creates new transaction.*
+    - If calling service method does not have transaction then method will create new transaction
+* NEVER
+    - If calling service method has transaction then method throws exception
+    - If calling service method does not have transaction the method will not create a new one and run without transaction. 
+* MANDATORY
+    - If calling service method has transaction then method makes use of existing transaction.
+    - If calling service method does not have transaction, method will throw exception
+
+211. stub vs mock?  
+Object's behaviour not tested in stub whereas behaviour tested in mock.  
+For example, for an empty stack, you can create a stub that just returns true for empty() method. So, this does not care whether there is an element in the stack or not.  
+Whereas in Mock object is initialized with data and behaviour is tested.
+212. serverless vs containers?
 
 
-    
+
+
 
 
     
@@ -2292,14 +2406,54 @@ What are the main features of CouchDB?
 * What is Hystrix Circuit Breaker? Need for it?  
     In case of any exception in exposed service fallback method is defined to return default value.  
 
-* Spring configuration?
-    1. XML based
-    2. Annotation based
-    3. Java based  
+* What are different ways to configure a class as Spring Bean?
+    1. XML based  
+        ```
+        <bean name="myBean" class="com.journaldev.spring.beans.MyBean"></bean>
+        ```
+    2. Annotation based 
+    3. Java based   
+    ```
+    @Configuration
+    @ComponentScan(value="com.journaldev.spring.main")
+    public class MyConfiguration {
+        @Bean
+        public MyService getService(){
+            return new MyService();
+        }
+    }
+    ```
 
 *Spring boot eliminates all above config* 
 
+* Spring autowiring?  
+1. *no:* It’s the default autowiring mode. It means no autowiring.
+2. *byName:* The byName mode injects the object dependency according to name of the bean. In such a case, the property and bean name should be the same. 
+3. *byType:* The byType mode injects the object dependency according to type. So it can have a different property and bean name. 
+4. *constructor:* The constructor mode injects the dependency by calling the constructor of the class.
+5. *autodetect:* In this mode, Spring first tries to autowire by the constructor. If this fails, it tries to autowire by using byType.
 
+*Hateoas*: Hypermedia as engine of application state, used to build links to other methods/api.  
+```
+Resource<User> resource = new Resource<User>(user);
+ControllerLinkBuilder linkTo = 
+		linkTo(methodOn(this.getClass()).retrieveAllUsers())
+```
+@RequestHeader - to read particular header  
+LocaleContextHolder.getLocale() - read locale from request(Accept-Language)
+
+* How to filter Json values/properties dynamically? -> MappingJacksonValue
+
+* To use data.sql, you need to add this to application.properties -  
+spring.jpa.defer-datasource-initialization=true
+
+latest spring cloud changes-(springboot v2.5.0)  
+Spring cloud load balancer instead ribbon  
+Spring cloud gateway instead of zuul  
+Resilience4j instead of hystrix  
+
+* Spring Config Server
+    spring.config.import
 
 
 
