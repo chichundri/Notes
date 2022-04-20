@@ -119,17 +119,17 @@
     | Thread can acquire object lock by 1) entering synchronized block 2) entering synchronized method | Thread can acquire lock on class's class object by 1) entering synchronized block 2) entering static synchronized method |
     | Multiple threads may exist on same object but only one thread of that object can enter synchronized method at a time. Threads on different object can enter same method at same time. | Multiple threads may exist on same or different objects of class but only one thread can enter static synchronized method at a time. |
     | Multiple objects of class may exist and every object has it’s own lock. | Multiple objects of class may exist but there is always one class’s class object lock available. |
-    | ex - synchronized(myClass) | ex - synchronized(MyClass.class) |
-    | ``` 
-    public class DemoClass 
-{ 
+    | ex - synchronized(myClass) | ex - synchronized(MyClass.class) |  
+
+*Object level locking:*  
+```
+public class DemoClass { 
   public synchronized void demoMethod(){} 
 } 
 
 or 
 
-public class DemoClass 
-{ 
+public class DemoClass { 
   public void demoMethod(){ 
   synchronized (this) 
   { 
@@ -140,17 +140,18 @@ public class DemoClass
 
 or 
 
-public class DemoClass 
-{ 
+public class DemoClass { 
   private final Object lock = new Object(); 
   public void demoMethod(){ 
-  synchronized (lock) 
- { 
+  synchronized (lock) { 
   //other thread safe code 
  } 
 } 
-    ``` | ```
-    public class DemoClass 
+```
+
+*Class level locking:*
+```
+public class DemoClass 
 { 
   public synchronized static void demoMethod(){} 
 } 
@@ -178,9 +179,8 @@ public class DemoClass
    //other thread safe code 
   } 
  } 
-}
-        ```
-        |
+} 
+```
 
 * Suppose you have 2 threads (Thread-1 on object1 and Thread-2 on object2). Thread-1 is in static
   synchronized method1(), can Thread-2 enter static synchronized method2() of same class at same time in java?  
