@@ -1240,6 +1240,7 @@ Example -  Let’s say 10 friends (friends are threads) have planned for picnic 
 
 
 115. How to use Exchanger for sharing Object between Threads in Java?  
+    https://javarevisited.blogspot.com/2020/04/how-to-use-exchanger-in-java-with-example.html
 116. What is semaphore?  
     semaphore controls access to a shared resource by using permits in java.  
     1. If permits are greater than zero, then semaphore allow access to shared resource.  
@@ -1267,7 +1268,7 @@ Example -  Let’s say 10 friends (friends are threads) have planned for picnic 
 
 123. How to implement queue functionality into stack?  
 124. How to implement stack functionality into queue?  
-125. What classes should i prefer to use a key in HashMap in java?
+125. What classes should i prefer to use a key in HashMap in java?  
     All wrapper classes because they are immutable and they implements equals() and hashCode() methods.
 
 126. What do you mean by fail-fast and fast-safe?  
@@ -1593,8 +1594,8 @@ ClassName::new
     No, container doesn't handle synchronization/thread-safety, it handles life cycle of object.  
 146. Interface With Default Methods vs Abstract Class 
 147. map vs flatMap?  
-    Both `map` and `flatMap` can be applied to a `Stream<T>` and they both return a `Stream<R>`. The difference is that the map operation produces *one output* value for each input value, whereas the flatMap operation produces an *arbitrary number* (zero or more) values for each input value.  
-    One line answer: flatMap helps to flatten a `Collection<Collection<T>>` into a `Collection<T>`. In the same way, it will also flatten an Optional<Optional<T>> into Optional<T>  
+    Both `map` and `flatMap` can be applied to a `Stream<T>` and they both return a `Stream<R>`. The difference is that the map operation produces ***one output* value for each input value**, whereas the flatMap operation produces an ***arbitrary number* (zero or more) values for each input value**.  
+    One line answer: flatMap helps to flatten a `Collection<Collection<T>>` into a `Collection<T>`. In the same way, it will also flatten an `Optional<Optional<T>>` into `Optional<T>`  
     Example -  
 
 
@@ -1755,9 +1756,10 @@ Custom comparator -
 157. SOLID principle and how you used in your project?
 
 *map() - transform one object into other by applying a function*  
-*filter() - filters elements based upon a condition*  
+*filter() - filters elements based upon a condition/predicate*  
 
-158. Does Immutability Really Mean Thread Safety?
+158. Does Immutability Really Mean Thread Safety?  
+    https://dzone.com/articles/do-immutability-really-means
 159. Upper bounded wildcards vs lower bounded wildcards?  
     Upper bounded wildcards -  
     `List<? extends Number> list`  
@@ -1918,8 +1920,8 @@ order by salary desc limit 1,1;
     System.out.println(list);
 
     for reverse order  
-    1. sorted(Map.Entry.comparingByValue(`Collections`.reverseOrder()))  
-    2. sorted(Map.Entry.comparingByValue(`Comparator`.reverseOrder())) 
+    1. sorted(Map.Entry.comparingByValue(Collections.reverseOrder()))  
+    2. sorted(Map.Entry.comparingByValue(Comparator.reverseOrder())) 
 
 
 170. summary of collection?  
@@ -1976,7 +1978,7 @@ order by salary desc limit 1,1;
     }
     ```
     ```
-    @Procedure(name = "Car.getTotalCardsbyModelEntity")
+    @Procedure(name = "Car.getTotalCarsbyModelEntity")
     int getTotalCarsByModelEntiy(@Param("model_in") String model);
     ```
 - Reference a Stored Procedure with @Query Annotation
@@ -2088,8 +2090,8 @@ public enum SingletonEnum {
 ```
 
 186. Pessimistic Locking vs. Optimistic Locking?  
-    *Optimistic Locking* - optimistic locking is based on detecting changes on entities by checking their version attribute. If any concurrent update takes place, OptmisticLockException occurs.  
-    *Pessimistic locking* - pessimistic locking mechanism involves locking entities on the database level. Each transaction can acquire a lock on data. As long as it holds the lock, no transaction can read, delete or make any updates on the locked data  
+    *Optimistic Locking* - optimistic locking is based on **detecting changes on entities** by checking their version attribute. If any concurrent update takes place, OptmisticLockException occurs.  
+    *Pessimistic locking* - pessimistic locking mechanism involves **locking entities on the database level**. Each transaction can acquire a lock on data. As long as it holds the lock, no transaction can read, delete or make any updates on the locked data  
 * PESSIMISTIC_READ  
 * PESSIMISTIC_WRITE  
 * PESSIMISTIC_FORCE_INCREMENT
@@ -2116,7 +2118,7 @@ Annotate entity with `@Cacheable`, collections(association objets) are not `cach
 
 
 190. CORS? -> @CrossOrigin on method,.. on controller to enable all origin  
-CORS(Cross Origin Resource Sharing) was implemented due to the limitations of the single-origin policy.The same-origin policy restricts resources to interact only with resources located in the same domain.  
+CORS(Cross Origin Resource Sharing) was implemented due to the limitations of the single-origin policy. The same-origin policy restricts resources to interact only with resources located in the same domain.  
 The host that serves the JS (e.g. example.com) is different from the host that serves the data (e.g. api.example.com). In such a case, CORS enables cross-domain communication.  
 
 * disable CSRF when we have non-browser clients  
