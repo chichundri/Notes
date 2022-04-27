@@ -1233,7 +1233,7 @@ Example -  Let’s say 10 friends (friends are threads) have planned for picnic 
     | ClassNotFoundException | NoClassDefFoundError |
     | ---------------------- | -------------------- |
     | ClassNotFoundException is Checked (compile time) Exception in java. | NoClassDefFoundError is a Error in java. Error and its subclasses are regarded as unchecked exceptions in java. |
-    | ClassNotFoundException is thrown when JVM tries to load class from classpath but it does not find that class. | NoClassDefFoundError is thrown when JVM tries to load class which  1. was NOT available at runtime but  2. was available at compile time. |
+    | ClassNotFoundException is thrown when JVM tries to load class from classpath but it does not find that class. | NoClassDefFoundError is thrown when JVM tries to load class which 1. was NOT available at runtime but  2. was available at compile time. |
     
 
 
