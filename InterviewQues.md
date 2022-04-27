@@ -240,17 +240,7 @@ public class DemoClass
 * Suppose you have 2 threads (Thread-1 and Thread-2) on same object. Thread-1 is in synchronized method1(), can Thread-2 enter synchronized method2() at same time in java?  
     No, here when Thread-1 is in synchronized method1() it must be holding lock on object’s monitor and will release lock on object’s monitor only when it exits synchronized method1(). So, Thread-2 will have to wait for Thread-1 to release lock on object’s monitor so that it could enter synchronized method2().  
     Likewise, Thread-2 even cannot enter synchronized method1() which is being executed by Thread-1. Thread-2 will have to wait for Thread-1 to release lock on object’s monitor so that it could enter synchronized method1().  
-
-* Suppose you have 2 threads (Thread-1 and Thread-2) on same object. Thread-1 is in static synchronized
-  method1(), can Thread-2 enter static synchronized method2() at same time in java?  
-    No, here when Thread-1 is in static synchronized method1() it must be holding lock on class class’s object and will release lock on class’s class object only when it exits static synchronized method1(). So, Thread-2 will have to wait for Thread-1 to release lock on class’s class object so that it could enter static synchronized method2().  
-    Likewise, Thread-2 even cannot enter static synchronized method1() which is being executed by Thread-1. Thread-2 will have to wait for Thread-1 to release lock on  class’s class object so that it could enter static synchronized method1().  
-
-* Suppose you have 2 threads (Thread-1 on object1 and Thread-2 on object2). Thread-1 is in static 
-    synchronized method1(), can Thread-2 enter static synchronized method2() at same time in java?  
-    No, it might confuse you a bit that threads are created on different objects. But, not to forgot that multiple objects may exist but there is always one class’s class object lock available.  
-    Here, when Thread-1 is in static synchronized method1() it must be holding lock on class class’s object and will release lock on class’s class object only when it exits static synchronized method1(). So, Thread-2 will have to wait for Thread-1 to release lock on class’s class object so that it could enter static synchronized method2().  
-    Likewise, Thread-2 even cannot enter static synchronized method1() which is being executed by Thread-1. Thread-2 will have to wait for Thread-1 to release lock on  class’s class object so that it could enter static synchronized method1().  
+  
 
 * Suppose you have thread and it is in synchronized method and now can thread enter other synchronized
     method from that method in java? -> Yes  
@@ -265,15 +255,16 @@ public class DemoClass
 * Does Thread implements their own Stack, if yes how? -> Yes
 * When we implement Runnable interface, same object is shared amongst multiple threads, but when we extend Thread class each and every thread gets associated with new object.   
 
-* How can you ensure all threads that started from main must end in order in which they started and also main should end in last? -> by calling join method on threads, in short it waits for thread to die on which thread has been called.  
+* How can you ensure all threads that started from main must end in order in which they started and also main should end in last?  
+by calling join method on threads, in short it waits for thread to die on which thread has been called.  
 
 * wait vs sleep?
     | wait      | sleep     |
     | -------   | -------   |
-    | always called from synchronized block | need not to be called from synchronized block |
+    | releases object lock | holds object lock |
     | belongs to Object class | belongs to Thread class | 
     | called on object | called on thread  |
-    | releases object lock | holds object lock |
+    | always called from synchronized block | need not to be called from synchronized block |
 
 * solve Producer-consumer problem using wait and notify?
     ```
@@ -557,8 +548,12 @@ This can be done using Thread.UncaughtExceptionHandler.
 ```
 
 
-8. how to swap two strings without using third variable/temp variable
-9. Wildcard arguements? ->a) with unknown type b) with upper bound c) with lower bound.
+8. how to swap two strings without using third variable/temp variable  
+    https://javaconceptoftheday.com/swap-two-string-variables-without-using-third-or-temp-variable-in-java/
+9. Generics Wildcard arguements?  
+    a) with unknown type(?)--any type (Object) is accepted as typed-parameter.    
+    b) with upper bound(? extends Number)  
+    c) with lower bound(? super Integer)  
 10. can we use abstract and static together? -> No
 11. Auto boxing and unboxing?  
 Autoboxing refers to the automatic conversion of a primitive type variable to its corresponding wrapper class object, and reverse is unboxing.  
@@ -605,7 +600,8 @@ spring cloud bus is used to refresh configuration using POST in config service.
 22. How to achieve thread safety in java?
     - Stateless Implementation - Method should neither relies on external state nor maintain state at all. Declare all variables in method only.
     - Immutable class
-    - Thread local fields - we can create thread-safe classes that don’t share state between threads by making their fields thread-local.
+    - Thread local fields - we can create thread-safe classes that don’t share state between threads by making their fields thread-local.  
+    `private ThreadLocal threadLocal = new ThreadLocal();`
     - Synchronized collections - `Collections.synchronizedCollection(new ArrayList<>());`
     - Concurrent Collections - `Map<String,String> concurrentMap = new ConcurrentHashMap<>();`
     - Atomic objects - AtomicInteger, AtomicLong, AtomicBoolean, and AtomicReference
@@ -637,8 +633,12 @@ spring cloud bus is used to refresh configuration using POST in config service.
 24) Encapsulation - restricting direct access to variables
 25) Abstraction - hiding internal implementation.
 26) How to divide two numbers without using division (/) operator in java/ How to find remainder of division of two numbers using minus (-) operator / Java program to find remainder of division using –
-27) Restemplate vs WebClient?
+27) Restemplate vs WebClient?  
+    RestTemplate - synchronous and blocking operation, degrades performance  
+    WebClient - non-blocking operation, better performance, WebFlux based.  
 28) @Secured vs @PreAuthorize?
+    PreAuthorize uses spring expression language  
+    `@PreAuthorize("@someComponent.hasRole('ROLE_VIEWER')")`  
 29. Object class and methods of it? - equals, hascode, toString, wait(), wait(long,int), wait(long), notify, notifyAll, finalize, clone, getClass
 30. What is aggregation and composition?  
     *composition*- belongs to, strong kind of *part-of* relationship, the objects lifecycles are tied.
@@ -664,9 +664,10 @@ spring cloud bus is used to refresh configuration using POST in config service.
         String id,name; 
     }
     ```
-31. when abstract class and interface are used? 
+31. when abstract class and interface are used?  
     classes that extends abstract class, have many common methods or fields(closely related classes-vehicle,car,volvoCar,OtherCar)
-32. String immutability and reason? state of object remains constant after its creation, why?-caching, security, synchronization, performance,thread-safe
+32. String immutability and reason?  
+    state of object remains constant after its creation, why?-caching, security, synchronization, performance,thread-safe  
 33. Instance lock(attached to single object) vs Static lock(attached to class)?  
     - Instance lock - Acquiring the instance lock only blocks other threads from invoking a synchronized instance method; it does not block other threads from invoking an un-synchronized method, nor does it block them from invoking a static synchronized method
     (http://www.javapractices.com/topic/TopicAction.do?Id=35)  
@@ -747,9 +748,9 @@ spring cloud bus is used to refresh configuration using POST in config service.
         throw new CloneNotSupportedException();
     }
     ```
-36. how will you store the Hashmap of <Emp,values>
+36. how will you store the Hashmap of <Emp,values>  
     Employee class should properly override equals() and hashCode() methods to store employee object as key in hashmap. Improper implementation of these methods results in wrong data 
-37. string reverse without built in method?
+37. string reverse without built in method? -> use charAt() iterate from last  
 38. can we print hello widout main?
     Yes,but java 7 onwards it will not work
     ```
@@ -766,9 +767,9 @@ spring cloud bus is used to refresh configuration using POST in config service.
     Map cards2Length = cards.stream()
         .collect(Collectors.toMap(Function.identity(), String::length, (e1, e2) -> e1));
     ```
-39. Why Map is not the part of Collection interface?
-    Each collection(list,set,queue) stores a single value whereas map stores key-value pair which itselfs is incompatible with collection methods like add, addAll, removeAll
-40. when Outofmemory will occur?
+39. Why Map is not the part of Collection interface?  
+    Each collection(list,set,queue) stores a single value whereas map stores key-value pair which itselfs is incompatible with collection methods like add, addAll, removeAll  
+40. when Outofmemory will occur?  
 41. What is diff between heap memory and permgen memory?  
     Java heap memory - all objects are created in heap memory and garbage collector removes unused objects  
     PermGen - keep information about loaded classes,string pool. Garbage collector is not much effective in this area.
@@ -813,7 +814,8 @@ spring cloud bus is used to refresh configuration using POST in config service.
     5. Initialize all the fields via a constructor performing deep copy
     6. Perform cloning of objects in the getter methods to return a copy rather than returning the actual object reference.
 51. HashMap working?
-52. why wait and notify call in the synchronized block?(https://stackoverflow.com/questions/2779484/why-must-wait-always-be-in-synchronized-block)
+52. why wait and notify call in the synchronized block?  
+    (https://stackoverflow.com/questions/2779484/why-must-wait-always-be-in-synchronized-block)  
     A wait() only makes sense when there is also a notify(), so it's always about communication between threads, and that needs synchronization to work 
     correctly. Mostly wait, notify, notifyAll used in inter thread communication 
     We must use synchronnization to avoid - 
@@ -850,7 +852,7 @@ spring cloud bus is used to refresh configuration using POST in config service.
 54. http://java-latte.blogspot.com/2014/04/Semaphore-CountDownLatch-CyclicBarrier-Phaser-Exchanger-in-Java.html
 55. java concurrency - https://www.javacodegeeks.com/2015/09/the-java-util-concurrent-package.html
 56. CountDownLatch- is used to make sure that a task waits for other threads before it starts. To understand its application, let us consider a server where the main task can only start when all the required services have started.  
-Working of CountDownLatch: When we create an object of CountDownLatch, we specify the number of threads it should wait for, all such thread are required to do count down by calling `CountDownLatch.countDown()` once they are completed or ready to the job. As soon as count reaches zero, the waiting task starts running.
+*Working of CountDownLatch:* When we create an object of CountDownLatch, we specify the number of threads it should wait for, all such thread are required to do count down by calling `CountDownLatch.countDown()` once they are completed or ready to the job. As soon as count reaches zero, the waiting task starts running.
 
 57. File upload and download in sring boot
     application.properties
@@ -1014,10 +1016,11 @@ https://www.interviewbit.com/java-8-interview-questions/
     `peek(Consumer)` - Apply a consumer without modification to the stream.  
     `flatMap(mapper)` - Transform each element to a stream of its constituent elements and flatten all the streams into a single stream.  
 73. What is the stateful intermediate operation? Give some examples of stateful intermediate operations.  
-    To complete some of the intermediate operations, some state is to be maintained, and such intermediate operations are called stateful intermediate operations e.g sorted(), distinct()  
+    To complete some of the intermediate operations, some state is to be maintained, and such intermediate operations are called stateful intermediate operations.  
+    e.g sorted(), distinct()  
 74. common type of terminal operations?  
     `collect(), reduce(), count(), min(), max(), anyMatch(), noneMatch(), forEach(), forEachOrdered()`
-75. collection vs stream?  
+75. collection vs stream?[que no 4.]  
 76. What is the feature of the new Date and Time API in Java 8?  
     - Immutable classes and Thread-safe
     - Timezone support
@@ -1049,13 +1052,13 @@ https://www.interviewbit.com/java-8-interview-questions/
     interface with one single abstract method.  
     Functional Interface can be used with lambda expression.  
     e.g Runnable, Comparable
-81. default method?
+81. default method?  
+    Java 8 has introduced the concept of default methods which allow the interfaces to have methods with implementation without affecting the classes that implement the interface.
 82. lambda expression?
     lambda expression is a function that we can reference and pass around as an object.(Anonymous function)  
 83. Final variable can be accessed in lambda expression in java 8? - yes
 84. non-Final variable can be accessed in lambda expression in java 8?  
-yes,but it is effectively final in lambda expression
-Any attempt to modify x will produce compilation error
+    yes,but it is effectively final in lambda expression. Any attempt to modify x will produce compilation error
 85. Instance and static variables are accessible and modifiable in lambda expression
 86. Byte stream vs Character stream? (FileInputStream vs FileReader and 8-bit byte vs 16-bit unicode)
 87. Runtime class vs System class?\
@@ -1130,7 +1133,7 @@ automatic conversion of primitive data types into its equivalent Wrapper type is
 
 102. What is a Memory Leak? How can a memory leak appear in garbage collected language?\
     objects are no longer being used by the application, but the Garbage Collector is unable to remove them from working memory.\
-    tools to identify useless objects\
+    tools to identify useless objects  
 
     - HP Openview
     - HP JMeter
@@ -1146,13 +1149,13 @@ automatic conversion of primitive data types into its equivalent Wrapper type is
 
 Serial Garbage Collector
 
-Serial garbage collector works by holding all the application threads. It is designed for the single-threaded environments. It uses just a single thread for garbage collection. The way it works by freezing all the application threads while doing garbage collection may not be suitable for a server environment. It is best suited for simple command-line programs.
+Serial garbage collector works by holding all the application threads. It is designed for the single-threaded environments. **It uses just a single thread for garbage collection.** The way it works by freezing all the application threads while doing garbage collection may not be suitable for a server environment. It is best suited for simple command-line programs.
 
 Turn on the -XX:+UseSerialGC JVM argument to use the serial garbage collector.
 
 Parallel Garbage Collector
 
-Parallel garbage collector is also called as throughput collector. It is the default garbage collector of the JVM. Unlike serial garbage collector, this uses multiple threads for garbage collection. Similar to serial garbage collector this also freezes all the application threads while performing garbage collection.
+Parallel garbage collector is also called as throughput collector. It is the default garbage collector of the JVM. Unlike serial garbage collector, **this uses multiple threads for garbage collection.** Similar to serial garbage collector this also freezes all the application threads while performing garbage collection.
 
 107. What is difference between WeakReference and SoftReference in Java?  
 - Strong reference: This is the default type/class of Reference Object.
@@ -1162,10 +1165,11 @@ Parallel garbage collector is also called as throughput collector. It is the def
  - Phantom References: The objects which are being referenced by phantom references are eligible for garbage collection. But, before removing them from the memory, JVM puts them in a queue called ‘reference queue’.
 
 108. What is a compile time constant in Java? What is the risk of using it?  
-a constant whose value known at compile time and compile replaces constant name with value everywhere in code.  
+a constant whose value known at compile time and compiler replaces constant name with value everywhere in code.  
 `private final int x = 10;`
 
 109.  How bootstrap class loader works in java?  
+
     - Bootstrap class loader  
     - Extension class loader  
     - System class loader  
@@ -1206,9 +1210,9 @@ Example -  Let’s say 10 friends (friends are threads) have planned for picnic 
 
 * If superclass method throws/declare **unchecked/RuntimeException** in java -  
     - overridden method of subclass can declare/throw any unchecked/RuntimeException (superclass or subclass)  
-    - overridden method of subclass cannot declare/throw any checked exception in java  
+    - overridden method of subclass **cannot** declare/throw any **checked exception** in java  
     - overridden method of subclass can declare/throw same exception in java  
-    - overridden method of subclass may not declare/throw any exception in java  
+    - overridden method of subclass *may not declare/throw any exception* in java  
 
 * If superclass method throws/declare **checked/compileTime** exception in java -   
     - overridden method of subclass can declare/throw narrower (subclass of) checked exception  
@@ -1217,8 +1221,8 @@ Example -  Let’s say 10 friends (friends are threads) have planned for picnic 
     - overridden method of subclass may not declare/throw any exception in java  
 
 * If superclass method **does not throw/declare** any exception in java -  
-    - overridden method of subclass can declare/throw any unchecked /RuntimeException  
-    - overridden method of subclass cannot declare/throw any checked exception  
+    - overridden method of subclass **can** declare/throw any **unchecked/RuntimeException**  
+    - overridden method of subclass **cannot** declare/throw any **checked exception**  
     - overridden method of subclass may not declare/throw any exception in java  
 
 * What will happen when catch and finally block both return value, also when try and finally both return value in java?  
@@ -1229,7 +1233,9 @@ Example -  Let’s say 10 friends (friends are threads) have planned for picnic 
     | ClassNotFoundException | NoClassDefFoundError |
     | ---------------------- | -------------------- |
     | ClassNotFoundException is Checked (compile time) Exception in java. | NoClassDefFoundError is a Error in java. Error and its subclasses are regarded as unchecked exceptions in java. |
-    | ClassNotFoundException is thrown when JVM tries to class from classpath but it does not find that class. | NoClassDefFoundError is thrown when JVM tries to load class which   1. was NOT available at runtime but  2. was available at compile time. |
+    | ClassNotFoundException is thrown when JVM tries to load class from classpath but it does not find that class. | NoClassDefFoundError is thrown when JVM tries to load class which  
+    1. was NOT available at runtime but  
+    2. was available at compile time. |
     
 
 
