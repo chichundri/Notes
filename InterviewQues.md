@@ -2046,7 +2046,9 @@ https://findanyanswer.com/how-does-mongodb-ensure-eventual-consistency
 | Internally Uses Linked nodes to store | internally uses array |
 | Optionally bounded queue | bounded queue |
 
-* prometheus - Data source
+* Jaeger - distributed tracing
+* Kiali - Observability to service mesh
+* prometheus - Data source,metrics-based monitoring system
 * grafana - query, visualize, and alert metrics
 
 
@@ -2237,12 +2239,59 @@ For example, for an empty stack, you can create a stub that just returns true fo
 Whereas in Mock object is initialized with data and behaviour is tested.
 212. serverless vs containers?
 
+213. Why to avoid substraction while comparing two integers using comparator?  
+    https://www.baeldung.com/java-comparator-comparable#avoid-subtraction
 
+214. What is the difference between transient and volatile variable in Java?
+    **Volatile:** The volatile modifier tells the JVM that writes to the field should always be synchronously flushed to memory, and that reads of the field should always read from memory. This means that fields marked as volatile can be safely accessed and updated in a multi-thread application without using native or standard library-based synchronization.
+    **Transient:** The transient modifier tells the Java object serialization subsystem to exclude the field when serializing an instance of the class. When the object is then deserialized, the field will be initialized to the default value; i.e. null for a reference type, and zero or false for a primitive type.
 
+215. How to make an ArrayList read only in Java?
+    use `Collections.unmodifiableList()` to make list as read only.
 
+216. How does HashMap handle collisions in java?  
+    Prior to Java 8, HashMap and all other hash table based Map implementation classes in Java handle collision by chaining, i.e. they use linked list to store map entries which ended in the same bucket due to a collision. If a key end up in same bucket location where an entry is already stored then this entry is just added at the head of the linked list there. In the worst case this degrades the performance of the get() method of HashMap to O(n) from O(1). In order to address this issue in the case of frequent HashMap collisions, Java 8 has started using a balanced tree instead of linked list for storing collided entries. This also means that in the worst case you will get a performance boost from O(n) to O(log n).  
+    The threshold of switching to the balanced tree is defined as TREEIFY_THRESHOLD constant in java.util.HashMap JDK 8 code. Currently, it's value is 8, which means if there are more than 8 elements in the same bucket than HashMap will use a tree instead of linked list to hold them in the same bucket.
+
+217. scope of variables in stram? effectively final??
+218. Scenario, you must create a cache thread pool using executor framework, but you don’t know the capacity or number of threads needed to achieve that task. how will you determine how much threads you will need based on your requirement? is there any mechanism in executor’s framework to know the capacity of it. (if you know the answers please comment below we can discuss a lot)?  
+
+219. Microservices Communication Design Patterns?
+    1. One-to-one interactions - 
+        > synchronous
+        > Asynchronous
+        > one way notification
+    2. one-to-many interaction
+    
+220. having vs group by?
 
 
     
+Istio service mesh
+nginx - load balancer/kubernetes networking
+Ingress - is an object that allows access to your Kubernetes services from outside the Kubernetes cluster.
+custom CRD - 
+VirtualServices - 
+```
+   - match:
+        - uri:
+            prefix: /api/storage/
+      route:
+        - destination:
+            host: storage
+            port:
+              number: 8080
+    - match:
+        - uri:
+            prefix: /api/search/
+      route:
+        - destination:
+            host: search-service
+            port:
+              number: 8080
+```              
+    
+AuthorizationPolicies
 
 
 
@@ -2349,11 +2398,72 @@ if object is modified in the transaction, then its state will be updated automat
     2. subselect fetching strategy
     3. disabling lazy loading
 
-14. 
+14. What is difference between merge() and update() methods in Hibernate?  
+    Both update() and merge() methods in hibernate are used to convert the object which is in *detached state into persistence state*.  
+
+15. JPA Cascade Type?
+    > ALL - propagates all operations — including Hibernate-specific ones — from a parent to a child entity.
+    > PERSIST - propagates the persist operation from a parent to a child entity. When we save the person entity, the address entity will also get saved.
+    > MERGE - propagates the merge operation from a parent to a child entity.
+    > REMOVE - propagates the remove operation from parent to child entity.
+    > REFRESH - reread the value of a given instance from the database.
+    > DETACH - When we use CascadeType.DETACH, the child entity will also get removed from the persistent context.
+
+16. Hibernate Cascade Type?
+REPLICATE
+SAVE_UPDATE
+LOCK
+
 
 
 # Design pattern
 https://javatechonline.com/design-patterns-in-java-3/
+https://rahulmitt.github.io/interviewpedia/?course=dp
+
+*Factory Design pattern*
+The Factory design pattern is used when we have a super class with multiple sub-classes and based on input, we need to return one of the sub-classes. This pattern takes out the responsibility of instantiation of a class from a client program to the factory class.  
+```
+    public interface IMobile {
+        public void cost();
+        public void pictureCapacity();
+        public void batteryPower();
+    }
+```
+```
+    public class Lenovo implements IMobile {
+        ...
+    }
+
+    public class Samsung implements IMobile {
+        ...
+    }
+
+    public class MobileFactory {
+        public MobileFactory(){
+        }
+
+        IMobile createMobile(String type){
+
+            IMobile mob=null;
+            if("len".equalsIgnoreCase(type)){
+                mob=new Lenovo();
+                System.out.println("Lenovo created");
+            }else if("sam".equalsIgnoreCase(type)){
+                mob=new Samsung();
+                System.out.println("Samsung created");
+            }
+            return mob;
+        }
+    }
+```
+> Factory pattern offers an approach to code for interface rather than implementation.
+
+*Abstract Factory Pattern*
+Factory of factories
+
+*Builder pattern*
+The intent of the Builder Pattern is to separate the construction of a complex object from its representation, so that the same construction process can create different representations.  
+
 
 
 

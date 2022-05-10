@@ -30,3 +30,7 @@ Ingress exposes HTTP and HTTPS routes from outside the cluster to services withi
 
 * You must have an Ingress controller to satisfy an Ingress. Only creating an Ingress resource has no effect.
 You may need to deploy an Ingress controller such as ingress-nginx.
+
+
+minikube service web --url
+
