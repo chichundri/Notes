@@ -509,13 +509,14 @@ by calling join method on threads, in short it waits for thread to die on which 
     More than one thread trying to access shared resource without synchronization causes race condition  
 
 * Executors - creates pool of threads and manages life cycle of all threads in it.  
+    examples - newFixedThreadPool(), newWorkStealingPool(), newCachedThreadPool(), newScheduledThreadPool().
 * wait until all threads finish their work in java using Executor framework?  
     1. Using join() on threads
     2. CountDownLatch, consider CyclicBarrier if want to reset the counter.
     3. iterate through all `Future` objects after submitting to ExecutorService
 
 * How can you catch an exception thrown by another thread in Java?  
-This can be done using Thread.UncaughtExceptionHandler.
+This can be done using Thread.UncaughtExceptionHandler(), it is FinctionalInterface in thread class.
 ```
     // create our uncaught exception handler
     Thread.UncaughtExceptionHandler handler = new Thread.UncaughtExceptionHandler() {
@@ -793,10 +794,11 @@ spring cloud bus is used to refresh configuration using POST in config service.
     A marker interface is an interface that has no methods or constants inside it. It provides run-time type information about objects, so the compiler and JVM
     have additional information about the object.
     Example - Serializable, Cloneable
-47. can we override and overload main methods? Yes
+47. can we override and overload main methods?   
+    we can overload main() method but we can not override main() method, because a static method cannot be overridden
 48. ClassNotFoundException vs NoClassDefFoundError  
     *ClassNotFoundException* - occurs when you try to load a class at runtime using Class.forName() or loadClass() methods and requested classes are not found in classpath. Checked exception derived from java.lang.Exception  
-    *NoClassDefFoundError* - occurs when class was present during compile time and program was compiled and linked successfully but class was not present during runtime. It is error which is derived from LinkageError. occurs at runtime  
+    *NoClassDefFoundError* - occurs when class was present during compile time and program was compiled and linked successfully but class is not present during runtime. It is error which is derived from LinkageError. occurs at runtime  
 
 49. shallow copy vs deep copy?
     | Shallow copy | Deep copy |
@@ -813,7 +815,7 @@ spring cloud bus is used to refresh configuration using POST in config service.
     4. Make all mutable fields final so that its value can be assigned only once through constructor.
     5. Initialize all the fields via a constructor performing deep copy
     6. Perform cloning of objects in the getter methods to return a copy rather than returning the actual object reference.
-51. HashMap working?
+51. HashMap working?   https://javaconceptoftheday.com/how-hashmap-works-internally-in-java/
 52. why wait and notify call in the synchronized block?  
     (https://stackoverflow.com/questions/2779484/why-must-wait-always-be-in-synchronized-block)  
     A wait() only makes sense when there is also a notify(), so it's always about communication between threads, and that needs synchronization to work 
@@ -989,7 +991,7 @@ spring cloud bus is used to refresh configuration using POST in config service.
 66. What is a CommandLineRunner and ApplicationRunner?  
     `ApplicationRunner` and `CommandLineRunner` interfaces use to execute the code after the Spring Boot application is started.  
 67. ApplicationRunner vs CommandLineRunner?  
-    `ApplicationRunner`'s run() method accepts single args whereas `CommandLineRunner`'s run() methods accepts var-args  
+    `ApplicationRunner`'s run(ApplicationArguments args) method accepts single args whereas `CommandLineRunner`'s run(String... args) methods accepts var-args  
 67. How to implement Exception Handling in Spring Boot?  
     create class by extending `ResponseEntityExceptionHandler`,annotate with `@RestControllerAdvice`, override default `@ExceptionHandler`  
     https://reflectoring.io/spring-boot-exception-handling/
@@ -1199,8 +1201,8 @@ Example: OutOfMemoryError, VirtualMachineError, AssertionError
 
 114. CyclicBarrier?  
     2 or more threads wait for each other to reach a common barrier point. When all threads have reached common barrier point.  
-* All waiting threads are released  
-* Event can be triggered as well.  
+    > All waiting threads are released  
+    > Event can be triggered as well.  
 Count can be reset hence called cyclic barrier  
 Example -  Let’s say 10 friends (friends are threads) have planned for picnic on place A (Here place A is common barrier point). And they all decided to play certain game (game is event) only on everyones arrival at place A. So, all 10 friends must wait for each other to reach place A before launching event.   
 
@@ -1352,7 +1354,7 @@ Example -  Let’s say 10 friends (friends are threads) have planned for picnic 
     ```
     public void iterateUsingEntrySet(Map<String, Integer> map) {
         for (Map.Entry<String, Integer> entry : map.entrySet()) {
-            System.out.println(entry.getKey() + ":" + entry.getValue();
+            System.out.println(entry.getKey() + ":" + entry.getValue());
         }
     }
     ```
@@ -1655,7 +1657,8 @@ ClassName::new
 
 Kiali - Kiali is a management console for Istio service mesh  
 Jaeger - is open source software for tracing transactions between distributed services. Internally uses zipkin. Jaeger used in distributed environment to independantly scaled.  
-Grafana - metrics visualization
+Grafana - metrics visualization  
+Prometheus - excels in metric data collection, whereas Grafana champions metric visualizations
 
 153. create thread using java8?  
 
@@ -2242,8 +2245,8 @@ Whereas in Mock object is initialized with data and behaviour is tested.
 213. Why to avoid substraction while comparing two integers using comparator?  
     https://www.baeldung.com/java-comparator-comparable#avoid-subtraction
 
-214. What is the difference between transient and volatile variable in Java?
-    **Volatile:** The volatile modifier tells the JVM that writes to the field should always be synchronously flushed to memory, and that reads of the field should always read from memory. This means that fields marked as volatile can be safely accessed and updated in a multi-thread application without using native or standard library-based synchronization.
+214. What is the difference between transient and volatile variable in Java?  
+    **Volatile:** The volatile modifier tells the JVM that writes to the field should always be synchronously flushed to memory, and that reads of the field should always read from memory. This means that fields marked as volatile can be safely accessed and updated in a multi-thread application without using native or standard library-based synchronization.  
     **Transient:** The transient modifier tells the Java object serialization subsystem to exclude the field when serializing an instance of the class. When the object is then deserialized, the field will be initialized to the default value; i.e. null for a reference type, and zero or false for a primitive type.
 
 215. How to make an ArrayList read only in Java?
@@ -2254,22 +2257,22 @@ Whereas in Mock object is initialized with data and behaviour is tested.
     The threshold of switching to the balanced tree is defined as TREEIFY_THRESHOLD constant in java.util.HashMap JDK 8 code. Currently, it's value is 8, which means if there are more than 8 elements in the same bucket than HashMap will use a tree instead of linked list to hold them in the same bucket.
 
 217. scope of variables in stram? effectively final??
-218. Scenario, you must create a cache thread pool using executor framework, but you don’t know the capacity or number of threads needed to achieve that task. how will you determine how much threads you will need based on your requirement? is there any mechanism in executor’s framework to know the capacity of it. (if you know the answers please comment below we can discuss a lot)?  
+218. Scenario, you must create a cache thread pool using executor framework, but you don’t know the capacity or number of threads needed to achieve that task. how will you determine how much threads you will need based on your requirement? is there any mechanism in executor’s framework to know the capacity of it.?  
 
-219. Microservices Communication Design Patterns?
-    1. One-to-one interactions - 
-        > synchronous
-        > Asynchronous
-        > one way notification
+219. Microservices Communication Design Patterns?  
+    1. One-to-one interactions  
+        > synchronous  
+        > Asynchronous  
+        > one way notification  
     2. one-to-many interaction
     
 220. having vs group by?
 
 
     
-Istio service mesh
-nginx - load balancer/kubernetes networking
-Ingress - is an object that allows access to your Kubernetes services from outside the Kubernetes cluster.
+Istio service mesh  
+nginx - load balancer/kubernetes networking  
+Ingress - is an object that allows access to your Kubernetes services from outside the Kubernetes cluster.  
 custom CRD - 
 VirtualServices - 
 ```
@@ -2391,7 +2394,7 @@ if object is modified in the transaction, then its state will be updated automat
     `hibernate.cache.use_query_cache=true`
 11. What is cascading in Hiberante and can you list types of cascading?  
     ALL, DEATCH, MERGE, PERSIST, REMOVE, REFRESH
-12. What is the N+1 SELECT problem in Hibernate?
+12. What is the N+1 SELECT problem in Hibernate?  
     The N+1 SELECT problem is a result of lazy loading and load on demand fetching strategy. In this case, Hibernate ends up executing N+1 SQL queries to populate a collection of N elements.
 13. What are some strategies to solve the N+1 SELECT problem in Hibernate?  
     1. pre-fetching in batches, will reduce the N+1 problem to N/K + 1 problem where  K is the size of the batch
@@ -2402,12 +2405,12 @@ if object is modified in the transaction, then its state will be updated automat
     Both update() and merge() methods in hibernate are used to convert the object which is in *detached state into persistence state*.  
 
 15. JPA Cascade Type?
-    > ALL - propagates all operations — including Hibernate-specific ones — from a parent to a child entity.
-    > PERSIST - propagates the persist operation from a parent to a child entity. When we save the person entity, the address entity will also get saved.
-    > MERGE - propagates the merge operation from a parent to a child entity.
-    > REMOVE - propagates the remove operation from parent to child entity.
-    > REFRESH - reread the value of a given instance from the database.
-    > DETACH - When we use CascadeType.DETACH, the child entity will also get removed from the persistent context.
+    > ALL - propagates all operations — including Hibernate-specific ones — from a parent to a child entity.  
+    > PERSIST - propagates the persist operation from a parent to a child entity. When we save the person entity, the address entity will also get saved.  
+    > MERGE - propagates the merge operation from a parent to a child entity.  
+    > REMOVE - propagates the remove operation from parent to child entity.  
+    > REFRESH - reread the value of a given instance from the database.  
+    > DETACH - When we use CascadeType.DETACH, the child entity will also get removed from the persistent context.  
 
 16. Hibernate Cascade Type?
 REPLICATE
@@ -2458,10 +2461,9 @@ The Factory design pattern is used when we have a super class with multiple sub-
 ```
 > Factory pattern offers an approach to code for interface rather than implementation.
 
-*Abstract Factory Pattern*
-Factory of factories
+*Abstract Factory Pattern* - Factory of factories
 
-*Builder pattern*
+*Builder pattern* - 
 The intent of the Builder Pattern is to separate the construction of a complex object from its representation, so that the same construction process can create different representations.  
 
 
@@ -2517,10 +2519,10 @@ What are the main features of CouchDB?
 
 * @Secured vs @RolesAllowed vs @PreAuthorize?  
     @Secured and @RolesAllowed are the same the only difference is @RolesAllowed is a standard annotation (i.e. not only spring security) whereas @Secured is spring security only.  
-    @secured - `@EnableGlobalMethodSecurity(securedEnabled=true)`
+    @secured - `@EnableGlobalMethodSecurity(securedEnabled=true)`  
     @RolesAllowed - `@EnableGlobalMethodSecurity(jsr250Enabled=true)`
 
-    @PreAuthorize is different in a way that it is more powerful then the other 2. It allows for SpEL expression for a more fine-grained control.  
+    @PreAuthorize is different in a way that it is more powerful then the other two. It allows for SpEL expression for a more fine-grained control.  
     @preAuthorize - `@EnableGlobalMethodSecurity(prePostEnabled=true)`
 
 * What is the role of @PreFilter and @PostFilter in spring security?  
@@ -2666,7 +2668,7 @@ Resilience4j instead of hystrix
 
 
 ***Design patterns***
-* Solid Design principles
+* SOLID Design principles
     1. Single responsibility principle - one class has one responsibility.
     2. Open-Closed principle - specification, open for extension closed for modification.i.e add new feature only by adding new code.
     3. Liskov Substitution principle - Subtypes must be substitutable for their base types.
@@ -2677,12 +2679,12 @@ Resilience4j instead of hystrix
      construct a complex object through a step-by-step process.
 
 * Top 10 Object oriented design principles
-    1. DRY(Don't repeat yourself) - avoid uplication in code.
+    1. DRY(Don't repeat yourself) - avoid duplication in code.
     2. Encapsulate what changes - hides implementation details, helps in maintainance.
     3. Open-Closed principle - open for extension closed for modification
     4. SRP(Single Responsibility Principle) - one class should do one thing and do it well.
     5. DIP(Dependency Inversion Principle) - don't ask, let framework give to you.
-    6. Favor composition over inheritance - code reuse without cost od inflexibility.
+    6. Favor composition over inheritance - code reuse without cost of inflexibility.
     7. LSP(Liskov substitution Principle) - Subtype must be substitutable for super type.
     8. ISP(Interface Segregation Principle) - Avoid monolithic interface, reduce pain on client side
     9. Programming for interface - helps in maintainance,improves flexibility
