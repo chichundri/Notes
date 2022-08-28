@@ -21,7 +21,7 @@ public class DeadLockDemo {
 }
 
 ```
-* Longest consecutive sequence in array
+* Longest consecutive sequence in array?  
 Approach 1
 ```
 	public int longestConsecutive1(int[] nums) {
