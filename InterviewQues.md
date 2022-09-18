@@ -1,4 +1,8 @@
 ==== Links =====  
+
+https://github.com/tssovi/grokking-the-object-oriented-design-interview  
+
+
 **https://github.com/learning-zone/spring-interview-questions/blob/spring/microservices.md**  
 **https://github.com/in28minutes/spring-interview-guide**
 
@@ -2266,7 +2270,18 @@ Whereas in Mock object is initialized with data and behaviour is tested.
         > one way notification  
     2. one-to-many interaction
     
-220. having vs group by?
+220. having vs group by?  
+221. build your own custom ExecutorService?  
+https://medium.com/@itsmynameangad/java-build-your-own-custom-executorservice-threadpool-213e46159326  
+
+Curated list of top 75 leetcode question - https://www.teamblind.com/post/New-Year-Gift---Curated-List-of-Top-75-LeetCode-Questions-to-Save-Your-Time-OaM1orEU  
+
+Grokking system design - https://github.com/Jeevan-kumar-Raj/Grokking-System-Design   
+custom thread pool?  
+https://www.javacodemonk.com/implement-custom-thread-pool-in-java-without-executor-framework-ca10e61d  
+
+
+
 
 
     
@@ -2466,8 +2481,121 @@ The Factory design pattern is used when we have a super class with multiple sub-
 *Builder pattern* - 
 The intent of the Builder Pattern is to separate the construction of a complex object from its representation, so that the same construction process can create different representations.  
 
+# Adapter - also known as Wrapper
+It is a structural design pattern that allows objects with incompatible interface to collaborate.
+Example - you are creating stock market monitoring app which fetches data from different sources, and these sources send data in XML format, also you want to use 3rd party analytics library to generate analytics but this library consumes data in JSON format, in this case adapter required to convert XML data to JSON data.  
+
+ An Adapter wraps an existing class with a new interface so that it becomes compatible with the client’s interface.  
+
+ It's usually implemented once the application is designed.  
+
+ Example 2 -
+  there is an app that's developed in the US which returns the top speed of luxury cars in miles per hour (MPH). Now we need to use the same app for our client in the UK that wants the same results but in kilometers per hour (km/h).
+
+```
+public interface Movable {
+    //retruns speed in miles per hour
+    public abstract double getSpeed();
+}
+
+public class Bugatti implements Movable {
+    public double getSpeed() {
+        return 260; //this is in MPH
+    }
+}
+
+public interface MovableAdapter {
+    //return speed in KM/H
+    public abstract double getSpeed();
+}
+
+public class MovableAdapterImpl implements MovableAdapter {
+    private LuxuryCar luxuryCar;
+    public MovableAdapterImpl(LuxuryCar car){
+        this.luxuryCar = car;
+    }
+
+    public double getSpeed() {
+        return convertMPHtoKPH(luxuryCar.getSpeed());
+    }
+
+    private convertMPHtoKPH(double mph) {
+        retrun mph*1.60;
+    }
+}
+
+main() {
+    Movable bugatti = new Bugatti();
+    MovableAdapter bugattiAdapter = new MovableAdapterImpl(bugatti);
+}
+
+```
+
+Example from library - 
+> Arrays.asList  
+> InputStreamReader retruns Reader  
+> PutputStreamReader return Writer  
+> javax.xml.bind.annotation.adapters.XmlAdapter.marshal() and unmarshal()  
 
 
+# Bridge -  
+is a structural design pattern that lets you split large class or set of closely related class into two separate hierarchies.
+
+Problem - say you have geometric `Shape` and have to subclasses `Circle` and `Square`. You want to extend this hierarchy to incorporate colors, so plan to create `Red` and `blue` subclasses of `Shape`, however we already have two subclasses of shape and to incorporate color we will end up creating four subclasses of shape
+```
+class Shape{
+}
+
+class RedSquare implements Shape{}
+class RedCircle implements Shape{}
+class BlueSquare implements Shape{}
+class BlueSquare implements Shape{}
+```
+
+Adding in Shape and Color to the hierachy will grow exponentially. for example to add triangle shape you need to add two subclasses, one for each color.  
+
+Solution - The Bridge pattern attempts to solve this problem by switching from inheritance to the object composition.  
+
+```
+public interface Shape {
+    public abstract void draw();
+}
+
+public interface Color{
+    public abstract applyColor();
+}
+public Red implemets Color {
+    public void applyColor(){
+    }
+}
+
+public Blue implements Color{
+    public void applyColor(){
+    }
+}
+
+public Circle implements Shape{
+    Color color;
+}
+
+public Square implements Shape{
+    Color color;
+    public Square(Color colour){
+        this.color = colour;
+    }
+    public void draw(){
+        color.applyColor();
+    }
+
+public Circle implements Shape{
+       // same above ...
+    }
+}
+```
+
+Bridge is designed up-front letting you develop parts of application independently whereas adapter is used on existing application to make incompatible interfaces work together.  
+
+# Factory method
 
 
 
