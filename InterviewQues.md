@@ -2822,6 +2822,55 @@ Resilience4j instead of hystrix
 
 
 
+** agile methodology **  
+agile model - iterative and incremental approach.
+Principles -   
+1. Customer no need to wait for final product  
+2. we release few pieces of features/fast delivery  
+3. we accept requrement changes
+
+Advantages - 
+1. requirement schanges allowed in any stage of development.
+2. fast releases  
+
+
+Disadvantages -   
+1. less documentation
+
+** Scrum **  
+agile tells process and to follow process we have scrum.  
+Scrum is framework to develop and test the software by following agile principles.  
+
+team - scrum manager, product owner, developers, tester  
+
+# Product owner -   
+1. define features of product.
+2. prioritize features.
+4. accept/reject the work result.
+
+
+# scrum master - 
+1. facilitating and driving the agile process.
+
+# dev and qa - develop and test features.  
+
+# scrum terminologies
+
+user story - feature/module of product  
+epic - collection of user stories  
+product backlog - list of stories, prepared by product owner,   
+sprint/iteration - span of time to complete user stories, decide by product owner and team, usually 2-4 weeks.  
+sprint planning meeting - conducts with teams to decide what can be delivered in sprint  
+sprint backlog - list of stories committed by dev/qa to work within sprint period  
+scrum call/meeting/standup - conducted by scrum master to track the work, delay, blocker. work done yesterday, today and tomorrow.  
+sprint retrospective - once after completion of sprint. what went well/wrong and improvement in next sprint.  
+story point - rough estimation by dev and qa in the form of fibonacci series.  
+burndown chart - how much work remaining in sprint.  
+sprint review - demo to product owner.  
+scrum board - maintain list of stories, and updated by teams working on stories.  
+
+
+
 
 
 
