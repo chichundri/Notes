@@ -2898,30 +2898,24 @@ ls -l
 
 ======================================================
 # Apache camel
-* what is enterprise integration patterns?
+* what is enterprise integration patterns?  
   Enterprise Integration Patterns (EIP) are a set of design patterns used to address the challenges of integrating various software systems in an enterprise environment.
   
-Some of the key concepts and patterns covered in Enterprise Integration Patterns include:
+Some of the key concepts and patterns covered in Enterprise Integration Patterns include:  
+1. Messaging: Patterns related to sending and receiving messages between systems, including Message Channel, Message Router, and Message Filter.
+2. Message Construction: Patterns for constructing and formatting messages, such as Message Translator and Envelope Wrapper.
+3. Message Routing: Patterns for routing messages to their intended destinations based on certain criteria, such as Content-Based Router and Message Router.
+4. Message Transformation: Patterns for transforming messages from one format to another, such as Message Translator and Content Enricher.
+5. System Management: Patterns for managing the integration infrastructure, such as Control Bus and Detour.
+6. Message Endpoint: Patterns related to interacting with external systems, such as Messaging Gateway and Transactional Client.  
 
-Messaging: Patterns related to sending and receiving messages between systems, including Message Channel, Message Router, and Message Filter.
-
-Message Construction: Patterns for constructing and formatting messages, such as Message Translator and Envelope Wrapper.
-
-Message Routing: Patterns for routing messages to their intended destinations based on certain criteria, such as Content-Based Router and Message Router.
-
-Message Transformation: Patterns for transforming messages from one format to another, such as Message Translator and Content Enricher.
-
-System Management: Patterns for managing the integration infrastructure, such as Control Bus and Detour.
-
-Message Endpoint: Patterns related to interacting with external systems, such as Messaging Gateway and Transactional Client.  
-
-* what is apache camel?
+* what is apache camel?  
   Apache Camel is an open-source integration framework that provides a powerful rule-based routing and mediation engine.
 
-* Explain: Components in Apache Camel?
-  A component is a collection of endpoint instances. We can configure components and add them in a CamelContext in an IoC container. Not only that, we can auto-discover the components using URIs.
+* Explain: Components in Apache Camel?  
+  A component is a collection of endpoint instances. We can configure components and add them in a CamelContext in an IoC container. Not only that, we can auto-discover the components using URIs.  
 
-* What are the key features of Apache Camel?
+* What are the key features of Apache Camel?  
   1. Apache Camel is a lightweight integration framework
   2. It is easy to use and scale
   3. It supports over 50 data formats
@@ -2934,18 +2928,18 @@ Message Endpoint: Patterns related to interacting with external systems, such as
   10. It can process streaming as well as event-based messages seamlessly
   11. It supports various Enterprises Integration Patterns (EIPs)and protocols
 
-* apache camel vs apache kafka?
-* What do you mean by a processor in Apache Camel?
+* apache camel vs apache kafka?  
+* What do you mean by a processor in Apache Camel?  
   A processor is nothing but a node that exists in the routing of Apache Camel. It is an essential building block of Apache Camel. Generally, processors create, use, and change exchanges.
-* What do you understand by message in Apache Camel?
+* What do you understand by message in Apache Camel?  
  A message in Apache Camel contains a header, body, and also attachments.
-* What do you mean by Exchange in Apache Camel?
+* What do you mean by Exchange in Apache Camel?  
   An exchange in Apache Camel is a message holder. It carries the message that it is routed in the Apache Camel route. It includes the request message as well as the corresponding reply message.
-* What is Routes in Camel?
+* What is Routes in Camel?  
   A route in the Apache camel is a message channel connecting two endpoints together. One endpoint is the produced message, and another is the consumed message.
-* What is CamelContext?
+* What is CamelContext?  
   CamelContext is the runtime system used to execute routes. It contains all the elements connected with a route, such as type converters, endpoints, data formats, languages, etc.
-* List the different types of routing used in Apache Camel?
+* List the different types of routing used in Apache Camel?  
   1. Content-based Routing
   2. Multicast Routing
   3. Recipient list Routing
@@ -2953,16 +2947,16 @@ Message Endpoint: Patterns related to interacting with external systems, such as
   5. Dynamic Routing
   6. Template Routing
 
-* What do you understand about the Idempotent Consumer Pattern in Apache Camel?
+* What do you understand about the Idempotent Consumer Pattern in Apache Camel?  
   We generally use the idempotent consumer pattern to remove duplicate data. In other words, it acts as a message filter to remove duplicate patterns. As a result, we can avoid consuming the same message multiple times.
 
-* What are the different message exchange patterns of Apache Camel?
+* What are the different message exchange patterns of Apache Camel?  
   1. event message
   2. request-reply
-* What are the different Message Exchange Patterns (MEPs) used in Apache Camel?
+* What are the different Message Exchange Patterns (MEPs) used in Apache Camel?  
   1. In only
   2. In Out
-* consumer is in camel?
+* consumer is in camel?  
   1. Event-driven consumer - An event-driven consumer remains idle until a message arrives, at which point it wakes up and consumes the message.(asynchronous receiver)
   2. Polling consumer - A polling consumer actively checks for new messages.(synchronous receiver)
 
@@ -2980,6 +2974,9 @@ Message Endpoint: Patterns related to interacting with external systems, such as
 
 ==================================
 # Apache kafka
+
+https://www.interviewbit.com/kafka-interview-questions/  
+
 1. What is apache kafka?
    Apache Kafka is an open-source distributed event streaming platform designed to handle high-throughput, real-time data feeds.
    * features
@@ -2991,6 +2988,28 @@ Message Endpoint: Patterns related to interacting with external systems, such as
      6. Message Retention: Kafka retains messages for a configurable period, allowing consumers to replay or process historical data.
      7. Connectors: Kafka Connect is a framework for building and running connectors that enable seamless integration with external systems such as databases, message queues, and file systems.
      8. Security: Kafka supports authentication, authorization, encryption, and other security features to protect data and ensure compliance with security policies.
+
+* Kafka architecture?
+  ![Apache-kafka-aechitecture](https://github.com/chichundri/Notes/assets/24777069/759b6096-e650-452d-9599-dd11ab271aa5)
+
+* Explain the four core API architecture that Kafka uses?  
+  1. Producer API - allows an application to publish stream of records to one or more kafka topic.
+  2. Consumer API - An application can subscribe to one or more Kafka topics using the Kafka Consumer API. It also enables the application to process streams of records generated in relation to such topics.
+  3. Stream API - An application can use this API to take input streams from one or more topics, process them using streams operations, and generate output streams to transmit to one or more topics.
+  4. Connect API - The Kafka Connector API connects Kafka topics to applications. This opens up possibilities for constructing and managing the operations of producers and consumers, as well as establishing reusable links between these solutions. A connector, for example, may capture all database updates and ensure that they are made available in a Kafka topic.
+
+* What do you mean by a Partition in Kafka?  
+  Kafka topics are separated into partitions, each of which contains records in a fixed order. A unique offset is assigned and attributed to each record in a partition. Multiple partition logs can be found in a single topic. This allows several users to read from the same topic at the same time. Topics can be parallelized via partitions, which split data into a single topic among numerous brokers.  
+  Replication in Kafka is done at the partition level. A replica is the redundant element of a topic partition. Each partition often contains one or more replicas, which means that partitions contain messages that are duplicated across many Kafka brokers in the cluster.  
+  One server serves as the leader of each partition (replica), while the others function as followers. The leader replica is in charge of all read-write requests for the partition, while the followers replicate the leader. If the lead server goes down, one of the followers takes over as the leader. To disperse the burden, we should aim for a good balance of leaders, with each broker leading an equal number of partitions.  
+
+* znode in zookeeper?  
+  1. Persistence Znode: These are znodes that continue to function even after the client who created them has been disconnected. Unless otherwise specified, all znodes are persistent by default.
+2. Ephemeral Znode: Ephemeral znodes are only active while the client is still alive. When the client who produced them disconnects from the ZooKeeper ensemble, the ephemeral Znodes are automatically removed. They have a significant part in the election of the leader.
+3. Sequential Znode: When znodes are constructed, the ZooKeeper can be asked to append an increasing counter to the path's end. The parent znode's counter is unique. Sequential nodes can be either persistent or ephemeral.
+  
+
+  
 
 
 
