@@ -2909,6 +2909,10 @@ Some of the key concepts and patterns covered in Enterprise Integration Patterns
 5. System Management: Patterns for managing the integration infrastructure, such as Control Bus and Detour.
 6. Message Endpoint: Patterns related to interacting with external systems, such as Messaging Gateway and Transactional Client.  
 
+* Apache camel architecture?
+  ![image](https://github.com/chichundri/Notes/assets/24777069/8fd9c238-3060-4a11-8af1-01bc2a17b7d2)
+
+
 * what is apache camel?  
   Apache Camel is an open-source integration framework that provides a powerful rule-based routing and mediation engine.
 
