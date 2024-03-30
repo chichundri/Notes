@@ -2966,7 +2966,10 @@ Some of the key concepts and patterns covered in Enterprise Integration Patterns
 
 
 
-
+# Random
+Virtualization - is a way to segregate physical machine resources to emulate a real machine.  
+Hypervisor - is the software that manages the virtual machines and creates the hardware abstraction on top of one hosting operating system.  
+cloud native means “made for the Kubernetes ecosystem.”  
 
 
 
